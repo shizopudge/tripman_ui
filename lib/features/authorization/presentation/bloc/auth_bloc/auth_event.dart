@@ -11,10 +11,4 @@ class AuthLoginEvent extends AuthEvent {
   AuthLoginEvent({required this.authType});
 }
 
-class AuthCheckPhoneCodeEvent extends AuthEvent {
-  final String code;
-
-  AuthCheckPhoneCodeEvent({required this.code});
-}
-
 class AuthTryAgainEvent extends AuthEvent {}

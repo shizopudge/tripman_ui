@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../styles/styles.dart';
+import '../bloc/phone_code_verification_cubit/phone_code_verification_cubit.dart';
 import '../widgets/login_confirm_phone_button.dart';
 import '../widgets/login_phone_textfield.dart';
 import '../widgets/notice.dart';
@@ -57,122 +59,138 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
         PageTransition(
           duration: const Duration(milliseconds: 250),
           type: PageTransitionType.fade,
-          child: const CodeConfirmationPage(),
+          child: CodeConfirmationPage(
+            phoneNumber: _phoneController.text,
+          ),
         ),
       );
+
+  void _sendVerificationCode() => context
+      .read<PhoneCodeVerificationCubit>()
+      .sendVerificationCode(phoneNumber: _phoneController.text);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 25,
-                      top: 58,
-                      right: 20,
-                    ),
-                    child: Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 25,
+                          top: 58,
+                          right: 20,
+                        ),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () => Navigator.of(context).pop(),
+                              borderRadius: BorderRadius.circular(20),
+                              child: SvgPicture.asset(
+                                'assets/icons/arrow_back.svg',
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 17,
+                            ),
+                            Text(
+                              'Вход',
+                              style: kSFProDisplaySemiBold.copyWith(
+                                color: kBlack,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
+                        child: Text(
+                          'Для использования приложения пожалуйста укажите ваш номер телефона',
+                          style: kSFProDisplayRegular.copyWith(
+                            color: kBlack,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 28,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 21,
+                          right: 19,
+                        ),
+                        child: Text(
+                          'Номер телефона',
+                          style: kSFProDisplayRegular.copyWith(
+                            color: kBlack50,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 21,
+                          right: 19,
+                        ),
+                        child: LoginPhoneTextField(
+                          isEmptyNotifier: _isEmptyNotifier,
+                          phoneController: _phoneController,
+                          phoneFieldFocusNode: _phoneFieldFocusNode,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Column(
                       children: [
-                        InkWell(
-                          onTap: () => Navigator.of(context).pop(),
-                          borderRadius: BorderRadius.circular(20),
-                          child: SvgPicture.asset(
-                            'assets/icons/arrow_back.svg',
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                          ),
+                          child: LoginConfirmPhoneButton(
+                            onTap: () {
+                              _sendVerificationCode();
+                              _navigateToCodeConfirmationPage();
+                            },
+                            isValidatedNotifier: _isValidatedNotifier,
                           ),
                         ),
                         const SizedBox(
-                          width: 17,
+                          height: 20,
                         ),
-                        Text(
-                          'Вход',
-                          style: kSFProDisplaySemiBold.copyWith(
-                            color: kBlack,
-                            fontSize: 20,
-                          ),
+                        const Notice(),
+                        const SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    child: Text(
-                      'Для использования приложения пожалуйста укажите ваш номер телефона',
-                      style: kSFProDisplayRegular.copyWith(
-                        color: kBlack,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 21,
-                      right: 19,
-                    ),
-                    child: Text(
-                      'Номер телефона',
-                      style: kSFProDisplayRegular.copyWith(
-                        color: kBlack50,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 21,
-                      right: 19,
-                    ),
-                    child: LoginPhoneTextField(
-                      isEmptyNotifier: _isEmptyNotifier,
-                      phoneController: _phoneController,
-                      phoneFieldFocusNode: _phoneFieldFocusNode,
-                    ),
-                  ),
                 ],
               ),
-              Center(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
-                      child: LoginConfirmPhoneButton(
-                        onTap: () => _navigateToCodeConfirmationPage(),
-                        isValidatedNotifier: _isValidatedNotifier,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Notice(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

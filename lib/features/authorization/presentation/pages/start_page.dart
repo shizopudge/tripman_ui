@@ -3,13 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../../core/animations/fade_animation.dart';
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/common_widgets/error_message_widget.dart';
 import '../../../../core/common_widgets/loader.dart';
 import '../../../../core/enums/auth_type.dart';
 import '../../../../styles/styles.dart';
 import '../../../home/presentation/pages/home_page.dart';
-import '../bloc/auth_bloc.dart';
+import '../bloc/auth_bloc/auth_bloc.dart';
 import '../widgets/authorization_type_menu.dart';
 import '../widgets/logo.dart';
 import 'login_with_phone_page.dart';
@@ -67,7 +69,11 @@ class StartPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const Spacer(),
-                      const Logo(),
+                      FadeAnimationYDown(
+                        key: UniqueKey(),
+                        delay: 1,
+                        child: const Logo(),
+                      ),
                       const Spacer(),
                       AuthorizationTypeMenu(
                         withPhone: () => _navigateToLoginWithPhonePage(context),
@@ -85,15 +91,19 @@ class StartPage extends StatelessWidget {
                 ),
               );
             case AuthLoadingState:
-              return const SafeArea(
+              return SafeArea(
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Spacer(),
-                      Logo(),
-                      Spacer(),
-                      Padding(
+                      const Spacer(),
+                      FadeAnimationYDown(
+                        key: UniqueKey(),
+                        delay: .25,
+                        child: const Logo(),
+                      ),
+                      const Spacer(),
+                      const Padding(
                         padding: EdgeInsets.only(
                           bottom: 90,
                         ),
@@ -114,24 +124,11 @@ class StartPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const Spacer(),
-                      FadeAnimationYDown(
+                      FadeAnimation(
                         delay: 1,
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/error.svg',
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              errorState.message,
-                              textAlign: TextAlign.center,
-                              style: kSFProDisplayRegular.copyWith(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
+                        child: ErrorMessageWidget(
+                          iconPath: 'assets/icons/error.svg',
+                          message: errorState.message,
                         ),
                       ),
                       const Spacer(),

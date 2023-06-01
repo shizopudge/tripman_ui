@@ -17,7 +17,3 @@ class AuthErrorState extends AuthState {
 }
 
 class AuthAuthorizedState extends AuthActionState {}
-
-class AuthCodeConfirmedState extends AuthActionState {}
-
-class AuthCodeErrorState extends AuthActionState {}
