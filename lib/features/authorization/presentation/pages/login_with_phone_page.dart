@@ -19,22 +19,35 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
   late final TextEditingController _phoneController;
   late final ValueNotifier<bool> _isEmptyNotifier;
   late final ValueNotifier<bool> _isValidatedNotifier;
+  late final FocusNode _phoneFieldFocusNode;
 
   @override
   void initState() {
     _phoneController = TextEditingController()..addListener(_onChange);
+    _phoneFieldFocusNode = FocusNode();
     _isEmptyNotifier = ValueNotifier<bool>(true);
     _isValidatedNotifier = ValueNotifier<bool>(false);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _isEmptyNotifier.dispose();
+    _isValidatedNotifier.dispose();
+    _phoneFieldFocusNode.dispose();
+    super.dispose();
+  }
+
   void _onChange() {
-    debugPrint('Phone changed');
     if (_phoneController.text.isNotEmpty) {
       _isEmptyNotifier.value = false;
+    } else {
+      _isEmptyNotifier.value = true;
     }
     if (_phoneController.text.length > 3) {
       _isValidatedNotifier.value = true;
+      _phoneFieldFocusNode.unfocus();
     } else {
       _isValidatedNotifier.value = false;
     }
@@ -52,96 +65,116 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25, top: 58, right: 20),
-                child: Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 25,
+                      top: 58,
+                      right: 20,
+                    ),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () => Navigator.of(context).pop(),
+                          borderRadius: BorderRadius.circular(20),
+                          child: SvgPicture.asset(
+                            'assets/icons/arrow_back.svg',
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 17,
+                        ),
+                        Text(
+                          'Вход',
+                          style: kSFProDisplaySemiBold.copyWith(
+                            color: kBlack,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: Text(
+                      'Для использования приложения пожалуйста укажите ваш номер телефона',
+                      style: kSFProDisplayRegular.copyWith(
+                        color: kBlack,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 28,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 21,
+                      right: 19,
+                    ),
+                    child: Text(
+                      'Номер телефона',
+                      style: kSFProDisplayRegular.copyWith(
+                        color: kBlack50,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 21,
+                      right: 19,
+                    ),
+                    child: LoginPhoneTextField(
+                      isEmptyNotifier: _isEmptyNotifier,
+                      phoneController: _phoneController,
+                      phoneFieldFocusNode: _phoneFieldFocusNode,
+                    ),
+                  ),
+                ],
+              ),
+              Center(
+                child: Column(
                   children: [
-                    InkWell(
-                      onTap: () => Navigator.of(context).pop(),
-                      borderRadius: BorderRadius.circular(20),
-                      child: SvgPicture.asset(
-                        'assets/icons/arrow_back.svg',
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      child: LoginConfirmPhoneButton(
+                        onTap: () => _navigateToCodeConfirmationPage(),
+                        isValidatedNotifier: _isValidatedNotifier,
                       ),
                     ),
                     const SizedBox(
-                      width: 17,
+                      height: 20,
                     ),
-                    Text(
-                      'Вход',
-                      style: kSFProDisplaySemiBold.copyWith(
-                        color: kBlack,
-                        fontSize: 20,
-                      ),
+                    const Notice(),
+                    const SizedBox(
+                      height: 20,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Для использования приложения\nпожалуйста укажите ваш номер телефона',
-                  style: kSFProDisplayRegular.copyWith(
-                    color: kBlack,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 28,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 21, right: 19),
-                child: Text(
-                  'Номер телефона',
-                  style: kSFProDisplayRegular.copyWith(
-                    color: kBlack50,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 21, right: 19),
-                child: LoginPhoneTextField(
-                  isEmptyNotifier: _isEmptyNotifier,
-                  phoneController: _phoneController,
-                ),
-              ),
             ],
           ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: LoginConfirmPhoneButton(
-                  onTap: () => _navigateToCodeConfirmationPage(),
-                  isValidatedNotifier: _isValidatedNotifier,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Notice(),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

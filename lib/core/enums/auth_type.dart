@@ -1,4 +1,4 @@
-enum AuthorizationType {
+enum AuthType {
   phone,
   google,
   apple,
