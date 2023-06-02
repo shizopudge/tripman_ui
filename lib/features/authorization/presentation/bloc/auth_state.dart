@@ -17,3 +17,9 @@ class AuthErrorState extends AuthState {
 }
 
 class AuthAuthorizedState extends AuthActionState {}
+
+class AuthPhoneCodeInputState extends AuthActionState {}
+
+class AuthPhoneCodeVerifiedState extends AuthActionState {}
+
+class AuthPhoneCodeErrorState extends AuthActionState {}

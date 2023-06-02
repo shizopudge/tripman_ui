@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../styles/styles.dart';
+import '../../../../core/styles/styles.dart';
 
 class NoticeBottomSheet extends StatelessWidget {
   const NoticeBottomSheet({super.key});

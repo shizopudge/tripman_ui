@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../styles/styles.dart';
+import '../styles/styles.dart';
 
 class RoundedRowIconButton extends StatelessWidget {
   final String iconPath;
   final String text;
-  final bool invertColor;
+  final Color backgroundColor;
+  final Color borderColor;
+  final Color textColor;
   final VoidCallback onTap;
   final double verticalPadding;
+  final double horizontalPadding;
+  final double inRowPadding;
   const RoundedRowIconButton({
     super.key,
     required this.iconPath,
     required this.text,
-    this.invertColor = false,
     required this.onTap,
     required this.verticalPadding,
+    this.horizontalPadding = 0,
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.textColor,
+    this.inRowPadding = 15,
   });
 
   @override
@@ -26,16 +34,13 @@ class RoundedRowIconButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: verticalPadding,
+          horizontal: horizontalPadding,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: invertColor ? kBlack : Colors.transparent,
+          color: backgroundColor,
           border: Border.all(
-            color: invertColor
-                ? kBlack
-                : kBlack.withOpacity(
-                    .2,
-                  ),
+            color: borderColor,
           ),
         ),
         child: Row(
@@ -44,13 +49,13 @@ class RoundedRowIconButton extends StatelessWidget {
             SvgPicture.asset(
               iconPath,
             ),
-            const SizedBox(
-              width: 14,
+            SizedBox(
+              width: inRowPadding,
             ),
             Text(
               text,
               style: kSFProDisplayMedium.copyWith(
-                color: invertColor ? kWhite : kBlack,
+                color: textColor,
                 fontSize: 16,
               ),
             ),

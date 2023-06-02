@@ -9,9 +9,9 @@ import '../../../../core/animations/fade_animation_y_up.dart';
 import '../../../../core/common_widgets/error_message_widget.dart';
 import '../../../../core/common_widgets/loader.dart';
 import '../../../../core/enums/auth_type.dart';
-import '../../../../styles/styles.dart';
+import '../../../../core/styles/styles.dart';
 import '../../../home/presentation/pages/home_page.dart';
-import '../bloc/auth_bloc/auth_bloc.dart';
+import '../bloc/auth_bloc.dart';
 import '../widgets/authorization_type_menu.dart';
 import '../widgets/logo.dart';
 import 'login_with_phone_page.dart';
@@ -40,7 +40,7 @@ class StartPage extends StatelessWidget {
 
   void _login(BuildContext context, AuthType authType) =>
       context.read<AuthBloc>().add(
-            AuthLoginEvent(authType: authType),
+            AuthLoginWithGoogleOrAppleEvent(authType: authType),
           );
 
   void _tryAgain(BuildContext context) => context.read<AuthBloc>().add(
@@ -75,7 +75,7 @@ class StartPage extends StatelessWidget {
                         child: const Logo(),
                       ),
                       const Spacer(),
-                      AuthorizationTypeMenu(
+                      AuthTypeMenu(
                         withPhone: () => _navigateToLoginWithPhonePage(context),
                         withGoogle: () => _login(
                           context,

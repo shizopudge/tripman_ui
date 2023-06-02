@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/animations/fade_animation_y_up.dart';
 import '../../../../core/common_widgets/rounded_row_icon_button.dart';
+import '../../../../core/styles/styles.dart';
 import 'notice.dart';
 
-class AuthorizationTypeMenu extends StatelessWidget {
+class AuthTypeMenu extends StatelessWidget {
   final VoidCallback withPhone;
   final VoidCallback withGoogle;
   final VoidCallback withApple;
-
-  const AuthorizationTypeMenu({
+  const AuthTypeMenu({
     super.key,
     required this.withPhone,
     required this.withGoogle,
@@ -39,6 +39,9 @@ class AuthorizationTypeMenu extends StatelessWidget {
               child: RoundedRowIconButton(
                 iconPath: 'assets/icons/phone.svg',
                 text: 'Войти по номеру телефона',
+                backgroundColor: kWhite,
+                borderColor: kBlack.withOpacity(.2),
+                textColor: kBlack,
                 onTap: withPhone,
                 verticalPadding: 13,
               ),
@@ -50,6 +53,9 @@ class AuthorizationTypeMenu extends StatelessWidget {
               child: RoundedRowIconButton(
                 iconPath: 'assets/icons/google.svg',
                 text: 'Войти через Google',
+                backgroundColor: kWhite,
+                borderColor: kBlack.withOpacity(.2),
+                textColor: kBlack,
                 onTap: withGoogle,
                 verticalPadding: 13,
               ),
@@ -61,7 +67,9 @@ class AuthorizationTypeMenu extends StatelessWidget {
               child: RoundedRowIconButton(
                 iconPath: 'assets/icons/apple.svg',
                 text: 'Войти через Apple',
-                invertColor: true,
+                backgroundColor: kBlack,
+                borderColor: kBlack,
+                textColor: kWhite,
                 onTap: withApple,
                 verticalPadding: 13,
               ),

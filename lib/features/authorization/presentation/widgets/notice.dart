@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../styles/styles.dart';
+import '../../../../core/styles/styles.dart';
 import 'notice_bottom_sheet.dart';
 
 class Notice extends StatelessWidget {
