@@ -8,9 +8,8 @@ class Notice extends StatelessWidget {
 
   void onTap(BuildContext context) => showModalBottomSheet(
         context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         useSafeArea: true,
         isScrollControlled: true,
         builder: (BuildContext context) {

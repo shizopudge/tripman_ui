@@ -6,10 +6,12 @@ import '../styles/styles.dart';
 class ErrorMessageWidget extends StatelessWidget {
   final String iconPath;
   final String message;
+  final Color? color;
   const ErrorMessageWidget({
     super.key,
     required this.message,
     required this.iconPath,
+    this.color,
   });
 
   @override
@@ -18,6 +20,8 @@ class ErrorMessageWidget extends StatelessWidget {
       children: [
         SvgPicture.asset(
           iconPath,
+          colorFilter:
+              color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
         ),
         const SizedBox(
           height: 10,
@@ -27,6 +31,7 @@ class ErrorMessageWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           style: kSFProDisplayRegular.copyWith(
             fontSize: 14,
+            color: color,
           ),
         ),
       ],

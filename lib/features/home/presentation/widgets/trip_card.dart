@@ -18,9 +18,8 @@ class TripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
       child: Container(
         height: 451,
         width: double.infinity,
@@ -138,18 +137,19 @@ class TripCard extends StatelessWidget {
                   top: 16,
                   right: 16,
                 ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.235,
-                  child: RoundedRowIconButton(
-                    iconPath: 'assets/icons/map_arrow.svg',
-                    text: '${trip.distance} км',
-                    onTap: onMapTap,
-                    verticalPadding: 6.0,
-                    horizontalPadding: 8,
-                    inRowPadding: 6,
-                    backgroundColor: kWhite,
-                    borderColor: kWhite,
-                    textColor: kBlack,
+                child: RoundedRowIconButton(
+                  mainAxisSize: MainAxisSize.min,
+                  iconPath: 'assets/icons/map_arrow.svg',
+                  text: '${trip.distance} км',
+                  onTap: () {},
+                  verticalPadding: 8,
+                  horizontalPadding: 8,
+                  backgroundColor: kWhite,
+                  borderColor: kWhite,
+                  inRowPadding: 6,
+                  textStyle: kSFProDisplayRegular.copyWith(
+                    color: kBlack,
+                    fontSize: 15,
                   ),
                 ),
               ),

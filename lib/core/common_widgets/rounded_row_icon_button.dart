@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../styles/styles.dart';
-
 class RoundedRowIconButton extends StatelessWidget {
   final String iconPath;
   final String text;
   final Color backgroundColor;
   final Color borderColor;
-  final Color textColor;
   final VoidCallback onTap;
   final double verticalPadding;
   final double horizontalPadding;
   final double inRowPadding;
+  final TextStyle textStyle;
+  final MainAxisSize mainAxisSize;
   const RoundedRowIconButton({
     super.key,
     required this.iconPath,
@@ -22,8 +21,9 @@ class RoundedRowIconButton extends StatelessWidget {
     this.horizontalPadding = 0,
     required this.backgroundColor,
     required this.borderColor,
-    required this.textColor,
     this.inRowPadding = 15,
+    required this.textStyle,
+    this.mainAxisSize = MainAxisSize.max,
   });
 
   @override
@@ -45,6 +45,7 @@ class RoundedRowIconButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: mainAxisSize,
           children: [
             SvgPicture.asset(
               iconPath,
@@ -52,11 +53,11 @@ class RoundedRowIconButton extends StatelessWidget {
             SizedBox(
               width: inRowPadding,
             ),
-            Text(
-              text,
-              style: kSFProDisplayMedium.copyWith(
-                color: textColor,
-                fontSize: 16,
+            Flexible(
+              child: Text(
+                text,
+                overflow: TextOverflow.ellipsis,
+                style: textStyle,
               ),
             ),
           ],

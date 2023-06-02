@@ -41,7 +41,10 @@ class AuthTypeMenu extends StatelessWidget {
                 text: 'Войти по номеру телефона',
                 backgroundColor: kWhite,
                 borderColor: kBlack.withOpacity(.2),
-                textColor: kBlack,
+                textStyle: kSFProDisplayMedium.copyWith(
+                  color: kBlack,
+                  fontSize: 16,
+                ),
                 onTap: withPhone,
                 verticalPadding: 13,
               ),
@@ -55,9 +58,12 @@ class AuthTypeMenu extends StatelessWidget {
                 text: 'Войти через Google',
                 backgroundColor: kWhite,
                 borderColor: kBlack.withOpacity(.2),
-                textColor: kBlack,
                 onTap: withGoogle,
                 verticalPadding: 13,
+                textStyle: kSFProDisplayMedium.copyWith(
+                  color: kBlack,
+                  fontSize: 16,
+                ),
               ),
             ),
             Padding(
@@ -69,7 +75,10 @@ class AuthTypeMenu extends StatelessWidget {
                 text: 'Войти через Apple',
                 backgroundColor: kBlack,
                 borderColor: kBlack,
-                textColor: kWhite,
+                textStyle: kSFProDisplayMedium.copyWith(
+                  color: kWhite,
+                  fontSize: 16,
+                ),
                 onTap: withApple,
                 verticalPadding: 13,
               ),

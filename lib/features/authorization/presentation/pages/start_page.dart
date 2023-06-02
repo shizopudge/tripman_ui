@@ -109,7 +109,9 @@ class StartPage extends StatelessWidget {
                         ),
                         child: FadeAnimationYUp(
                           delay: .25,
-                          child: Loader(),
+                          child: Loader(
+                            color: kWhite,
+                          ),
                         ),
                       ),
                     ],
