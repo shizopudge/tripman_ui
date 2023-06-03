@@ -98,11 +98,9 @@ class TripCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  '${DateFormater(date: trip.startDate).dMonthRuFormat(
-                                    usecase: DateUseCase.parent,
-                                  )} - ${DateFormater(date: trip.endDate).dMonthRuFormat(
-                                    usecase: DateUseCase.parent,
-                                  )}',
+                                  DateFormater.tripCardDateFormater(
+                                    interval: trip.interval,
+                                  ),
                                   overflow: TextOverflow.ellipsis,
                                   style: kSFProDisplayRegular.copyWith(
                                     color: kBlack50,

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/service/date_formater.dart';
 import '../../../../core/styles/styles.dart';
 
 class DatesField extends StatelessWidget {
-  final String? interval;
+  final DateTimeRange? interval;
   final VoidCallback onTap;
+  final VoidCallback onClear;
   const DatesField({
     super.key,
     required this.interval,
     required this.onTap,
+    required this.onClear,
   });
 
   @override
@@ -29,28 +32,34 @@ class DatesField extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/calendar.svg',
-                  height: 18,
-                  width: 20,
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  interval ?? 'Даты поездки',
-                  style: kSFProDisplayMedium.copyWith(
-                    color: interval != null ? kBlack : kBlack50,
-                    fontSize: 16,
+            Flexible(
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/calendar.svg',
+                    height: 18,
+                    width: 20,
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Flexible(
+                    child: Text(
+                      DateFormater.datesFieldDateFormater(interval: interval),
+                      overflow: TextOverflow.ellipsis,
+                      style: kSFProDisplayMedium.copyWith(
+                        color: interval != null ? kBlack : kBlack50,
+                        height: 1,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             if (interval != null)
               InkWell(
-                onTap: () {},
+                onTap: onClear,
                 borderRadius: BorderRadius.circular(21),
                 child: SvgPicture.asset(
                   'assets/icons/close.svg',

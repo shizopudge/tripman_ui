@@ -8,12 +8,17 @@ import 'dates_field.dart';
 import 'trip_type_card.dart';
 
 class HomeAppBar extends StatelessWidget {
+  final VoidCallback onDatesFieldTap;
+  final VoidCallback onClear;
+  final DateTimeRange? interval;
+  final ValueNotifier<TripType> _selectedTripTypeNotifier;
   const HomeAppBar({
     super.key,
     required ValueNotifier<TripType> selectedTripTypeNotifier,
+    required this.onDatesFieldTap,
+    required this.interval,
+    required this.onClear,
   }) : _selectedTripTypeNotifier = selectedTripTypeNotifier;
-
-  final ValueNotifier<TripType> _selectedTripTypeNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +28,9 @@ class HomeAppBar extends StatelessWidget {
           children: [
             Expanded(
               child: DatesField(
-                onTap: () {},
-                interval: null,
+                onTap: onDatesFieldTap,
+                onClear: onClear,
+                interval: interval,
               ),
             ),
             const SizedBox(

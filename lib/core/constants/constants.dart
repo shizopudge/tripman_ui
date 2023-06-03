@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../entities/trip.dart';
 import '../entities/trip_type.dart';
 
@@ -24,8 +26,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -34,8 +38,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -44,8 +50,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -54,8 +62,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -64,8 +74,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -74,8 +86,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -84,8 +98,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,
@@ -94,8 +110,10 @@ final List<Trip> trips = [
   Trip(
     title: 'Глэминг Караидель',
     image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
-    startDate: DateTime(2023, 6, 1),
-    endDate: DateTime(2023, 6, 8),
+    interval: DateTimeRange(
+      start: DateTime(2023, 6, 1),
+      end: DateTime(2023, 6, 8),
+    ),
     minCost: 15000,
     minMembersCount: 6,
     maxMembersCount: 12,

@@ -8,13 +8,11 @@ class HomeInititalEvent extends HomeEvent {}
 class HomeGetTripsEvent extends HomeEvent {
   final String type;
   final bool isRefresh;
-  final DateTime? startDate;
-  final DateTime? endDate;
+  final DateTimeRange? interval;
 
   HomeGetTripsEvent({
     required this.type,
-    this.startDate,
-    this.endDate,
-    required this.isRefresh,
+    this.interval,
+    this.isRefresh = false,
   });
 }

@@ -12,6 +12,7 @@ import '../../../../core/entities/trip.dart';
 import '../../../../core/entities/trip_type.dart';
 import '../../../../core/styles/styles.dart';
 import '../bloc/home_bloc.dart';
+import '../widgets/dates_picker_bottom_sheet.dart';
 import '../widgets/home_app_bar.dart';
 import '../widgets/trip_card.dart';
 
@@ -24,12 +25,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final ValueNotifier<TripType> _selectedTripTypeNotifier;
+  late final ValueNotifier<DateTimeRange?> _selectedDatesNotifier;
   late final HomeBloc _homeBloc;
 
   @override
   void initState() {
     _selectedTripTypeNotifier = ValueNotifier<TripType>(tripTypes.first)
       ..addListener(_tripTypeListener);
+    _selectedDatesNotifier = ValueNotifier<DateTimeRange?>(null)
+      ..addListener(_datesListener);
     _homeBloc = HomeBloc()..add(HomeInititalEvent());
     super.initState();
   }
@@ -41,14 +45,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _tripTypeListener() {
-    debugPrint('Get ${_selectedTripTypeNotifier.value.title} trips');
+    debugPrint(
+        'Get ${_selectedTripTypeNotifier.value.title} trips ont trip type change');
     _homeBloc.add(
       HomeGetTripsEvent(
         type: _selectedTripTypeNotifier.value.title,
-        isRefresh: false,
+        interval: _selectedDatesNotifier.value,
       ),
     );
   }
+
+  void _datesListener() {
+    debugPrint(
+        'Get ${_selectedTripTypeNotifier.value.title} trips on dates change');
+    _homeBloc.add(
+      HomeGetTripsEvent(
+        type: _selectedTripTypeNotifier.value.title,
+        interval: _selectedDatesNotifier.value,
+      ),
+    );
+  }
+
+  void _onDatesFieldTap() => showModalBottomSheet(
+        context: context,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        useSafeArea: true,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return DatePickerBottomSheet(
+            selectedDatesNotifier: _selectedDatesNotifier,
+          );
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +95,14 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           title: FadeAnimationYDown(
             delay: 1,
-            child: HomeAppBar(
-              selectedTripTypeNotifier: _selectedTripTypeNotifier,
+            child: ValueListenableBuilder(
+              valueListenable: _selectedDatesNotifier,
+              builder: (context, selectedDates, _) => HomeAppBar(
+                onClear: () => _selectedDatesNotifier.value = null,
+                onDatesFieldTap: _onDatesFieldTap,
+                interval: selectedDates,
+                selectedTripTypeNotifier: _selectedTripTypeNotifier,
+              ),
             ),
           ),
         ),
@@ -184,45 +219,52 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   }
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 76),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text:
-                              'Свободных объектов не найдено. Попробуйте изменить ',
-                          style: kSFProDisplayRegular.copyWith(
-                            fontSize: 15,
-                            color: kBlack50,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'даты поездки.',
-                              style: kSFProDisplayRegular.copyWith(
-                                fontSize: 15,
-                                color: kBlack,
-                              ),
-                              recognizer: TapGestureRecognizer()..onTap = () {},
+                  return FadeAnimationYDown(
+                    delay: 1,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 76),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text:
+                                'Свободных объектов не найдено. Попробуйте изменить ',
+                            style: kSFProDisplayRegular.copyWith(
+                              fontSize: 15,
+                              color: kBlack50,
                             ),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: 'даты поездки.',
+                                style: kSFProDisplayRegular.copyWith(
+                                  fontSize: 15,
+                                  color: kBlack,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {},
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
                 case HomeErrorState:
                   final errorState = state as HomeErrorState;
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        ErrorMessageWidget(
-                          message: errorState.message,
-                          iconPath: 'assets/icons/error.svg',
-                          color: kBlack,
-                        ),
-                      ],
+                  return FadeAnimationYDown(
+                    delay: 1,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ErrorMessageWidget(
+                            message: errorState.message,
+                            iconPath: 'assets/icons/error.svg',
+                            color: kBlack,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 default:

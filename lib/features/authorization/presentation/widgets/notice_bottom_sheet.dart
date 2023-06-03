@@ -8,9 +8,12 @@ class NoticeBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: .75,
+      heightFactor: .8,
       child: Column(
         children: [
+          const SizedBox(
+            height: 20,
+          ),
           Container(
             height: 6,
             width: MediaQuery.of(context).size.width * .2,

@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
 class Trip {
   final String title;
   final String image;
-  final DateTime startDate;
-  final DateTime endDate;
+  final DateTimeRange interval;
   final int minCost;
   final int minMembersCount;
   final int maxMembersCount;
@@ -11,8 +12,7 @@ class Trip {
   const Trip({
     required this.title,
     required this.image,
-    required this.startDate,
-    required this.endDate,
+    required this.interval,
     required this.minCost,
     required this.minMembersCount,
     required this.maxMembersCount,

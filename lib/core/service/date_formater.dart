@@ -1,13 +1,25 @@
+import 'package:flutter/material.dart';
+
 enum DateUseCase {
   parent,
+  basic,
 }
 
 class DateFormater {
-  final DateTime date;
-  DateFormater({required this.date});
+  static String _ruWeekdayShort({required int dayNumber}) {
+    return switch (dayNumber) {
+      1 => 'пн',
+      2 => 'вт',
+      3 => 'ср',
+      4 => 'чт',
+      5 => 'пт',
+      6 => 'сб',
+      7 => 'вс',
+      _ => 'undefined',
+    };
+  }
 
-  String _ruMonth({required DateUseCase usecase}) {
-    final month = date.month;
+  static String _ruMonth({required DateUseCase usecase, required int month}) {
     late final String ruMonth;
     if (usecase == DateUseCase.parent) {
       ruMonth = switch (month) {
@@ -46,9 +58,51 @@ class DateFormater {
     }
   }
 
-  String dMonthRuFormat({required DateUseCase usecase}) {
+  static String _dMonthRuFormat(
+      {required DateUseCase usecase, required DateTime date}) {
     final int day = date.day;
-    final month = _ruMonth(usecase: usecase);
+    final String month = _ruMonth(usecase: usecase, month: date.month);
     return '$day $month';
+  }
+
+  static String tripCardDateFormater({
+    required DateTimeRange interval,
+  }) {
+    return '${_dMonthRuFormat(usecase: DateUseCase.parent, date: interval.start)} - ${_dMonthRuFormat(
+      usecase: DateUseCase.parent,
+      date: interval.end,
+    )}';
+  }
+
+  static String datesFieldDateFormater({
+    required DateTimeRange? interval,
+  }) {
+    if (interval != null) {
+      final (int firstDateYear, int secondDateYear) dateYears =
+          (interval.start.year, interval.end.year);
+      if (dateYears.$1 == dateYears.$2) {
+        return '${_dMonthRuFormat(usecase: DateUseCase.parent, date: interval.start)} - ${_dMonthRuFormat(
+          usecase: DateUseCase.parent,
+          date: interval.end,
+        )} ${dateYears.$1}';
+      } else {
+        return '${_dMonthRuFormat(usecase: DateUseCase.parent, date: interval.start)} - ${_dMonthRuFormat(
+          usecase: DateUseCase.parent,
+          date: interval.end,
+        )} ${dateYears.$1}-${dateYears.$2}';
+      }
+    } else {
+      return 'Даты поездки';
+    }
+  }
+
+  static String datePickerMonthYearFormater(
+      {required int month, required int year}) {
+    final ruMonth = _ruMonth(usecase: DateUseCase.basic, month: month);
+    return '$ruMonth $year';
+  }
+
+  static String datePickerWeekdayFormater({required int dayNumber}) {
+    return _ruWeekdayShort(dayNumber: dayNumber);
   }
 }
