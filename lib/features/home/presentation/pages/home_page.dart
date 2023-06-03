@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/common_widgets/date_range_picker/calendar_bottom_sheet.dart';
 import '../../../../core/common_widgets/error_message_widget.dart';
 import '../../../../core/common_widgets/loader.dart';
 import '../../../../core/common_widgets/rounded_row_icon_button.dart';
@@ -12,7 +13,6 @@ import '../../../../core/entities/trip.dart';
 import '../../../../core/entities/trip_type.dart';
 import '../../../../core/styles/styles.dart';
 import '../bloc/home_bloc.dart';
-import '../widgets/dates_picker_bottom_sheet.dart';
 import '../widgets/home_app_bar.dart';
 import '../widgets/trip_card.dart';
 
@@ -66,14 +66,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _onDatesFieldTap() => showModalBottomSheet(
+  void _showCalendar() => showModalBottomSheet(
         context: context,
         elevation: 0,
         backgroundColor: Colors.transparent,
         useSafeArea: true,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return DatePickerBottomSheet(
+          return CalendarBottomSheet(
             selectedDatesNotifier: _selectedDatesNotifier,
           );
         },
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               valueListenable: _selectedDatesNotifier,
               builder: (context, selectedDates, _) => HomeAppBar(
                 onClear: () => _selectedDatesNotifier.value = null,
-                onDatesFieldTap: _onDatesFieldTap,
+                onDatesFieldTap: _showCalendar,
                 interval: selectedDates,
                 selectedTripTypeNotifier: _selectedTripTypeNotifier,
               ),
@@ -166,13 +166,10 @@ class _HomePageState extends State<HomePage> {
                               itemCount: trips.length,
                               itemBuilder: (context, index) {
                                 final Trip trip = trips[index];
-                                return FadeAnimationYUp(
-                                  delay: .3,
-                                  child: TripCard(
-                                    onMapTap: () {},
-                                    onTap: () {},
-                                    trip: trip,
-                                  ),
+                                return TripCard(
+                                  onMapTap: () {},
+                                  onTap: () {},
+                                  trip: trip,
                                 );
                               },
                             ),
@@ -207,13 +204,10 @@ class _HomePageState extends State<HomePage> {
                         itemCount: trips.length,
                         itemBuilder: (context, index) {
                           final Trip trip = trips[index];
-                          return FadeAnimationYUp(
-                            delay: .3,
-                            child: TripCard(
-                              onMapTap: () {},
-                              onTap: () {},
-                              trip: trip,
-                            ),
+                          return TripCard(
+                            onMapTap: () {},
+                            onTap: () {},
+                            trip: trip,
                           );
                         },
                       ),
@@ -241,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                                   color: kBlack,
                                 ),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {},
+                                  ..onTap = _showCalendar,
                               ),
                             ],
                           ),

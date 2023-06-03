@@ -18,25 +18,28 @@ class TripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 451,
-        width: double.infinity,
-        margin: const EdgeInsets.only(bottom: 12),
-        decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.circular(
-            20,
+    return Container(
+      height: 451,
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: kWhite,
+        borderRadius: BorderRadius.circular(
+          20,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: kBlack.withOpacity(.1),
+            blurRadius: 5.0,
+            spreadRadius: 1.5,
+            offset: const Offset(1.5, 5),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: kBlack.withOpacity(.1),
-              blurRadius: 5.0,
-              spreadRadius: 1.5,
-              offset: const Offset(1.5, 5),
-            ),
-          ],
+        ],
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(
+          20,
         ),
         child: Stack(
           children: [

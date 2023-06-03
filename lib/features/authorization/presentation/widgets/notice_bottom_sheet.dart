@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/common_widgets/bottom_sheet_divider.dart';
 import '../../../../core/styles/styles.dart';
 
 class NoticeBottomSheet extends StatelessWidget {
@@ -11,25 +12,7 @@ class NoticeBottomSheet extends StatelessWidget {
       heightFactor: .8,
       child: Column(
         children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 6,
-            width: MediaQuery.of(context).size.width * .2,
-            color: Colors.transparent,
-            child: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: kWhite,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
+          const BottomSheetDivider(),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),

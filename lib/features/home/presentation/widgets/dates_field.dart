@@ -18,7 +18,7 @@ class DatesField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: interval == null ? onTap : null,
       borderRadius: BorderRadius.circular(8),
       child: Container(
         height: 48,
@@ -33,38 +33,36 @@ class DatesField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/calendar.svg',
-                    height: 18,
-                    width: 20,
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Flexible(
-                    child: Text(
-                      DateFormater.datesFieldDateFormater(interval: interval),
-                      overflow: TextOverflow.ellipsis,
-                      style: kSFProDisplayMedium.copyWith(
-                        color: interval != null ? kBlack : kBlack50,
-                        height: 1,
-                        fontSize: 16,
+              child: InkWell(
+                onTap: interval == null ? null : onTap,
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/calendar.svg',
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Flexible(
+                      child: Text(
+                        DateFormater.datesFieldDateFormater(interval: interval),
+                        overflow: TextOverflow.ellipsis,
+                        style: kSFProDisplayMedium.copyWith(
+                          color: interval != null ? kBlack : kBlack50,
+                          height: 1,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             if (interval != null)
               InkWell(
                 onTap: onClear,
-                borderRadius: BorderRadius.circular(21),
                 child: SvgPicture.asset(
                   'assets/icons/close.svg',
-                  height: 12,
-                  width: 12,
                 ),
               ),
           ],
