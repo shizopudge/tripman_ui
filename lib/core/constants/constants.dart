@@ -26,7 +26,15 @@ final List<Trip> trips = [
   Trip(
     id: '1',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ],
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -39,7 +47,15 @@ final List<Trip> trips = [
   Trip(
     id: '2',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ],
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -52,7 +68,15 @@ final List<Trip> trips = [
   Trip(
     id: '3',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ],
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -65,7 +89,15 @@ final List<Trip> trips = [
   Trip(
     id: '4',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ],
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -78,7 +110,15 @@ final List<Trip> trips = [
   Trip(
     id: '5',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ].reversed.toList(),
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -91,7 +131,15 @@ final List<Trip> trips = [
   Trip(
     id: '6',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ].reversed.toList(),
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -104,7 +152,15 @@ final List<Trip> trips = [
   Trip(
     id: '7',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ].reversed.toList(),
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),
@@ -117,7 +173,15 @@ final List<Trip> trips = [
   Trip(
     id: '8',
     title: 'Глэминг Караидель',
-    image: 'assets/images/c67add00-2934-4814-994c-88e2459b295b.jpg',
+    images: [
+      'https://images.unsplash.com/photo-1593053272490-e0ed6d6a42c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1516402707257-787c50fc3898?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1536854310359-ccc07f5e72de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      'https://images.unsplash.com/photo-1508974462591-3c124867fdf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      'https://images.unsplash.com/photo-1599056407101-7c557a4a0144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
+      'https://images.unsplash.com/photo-1593534560771-4f0fc0cabd94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      'https://images.unsplash.com/photo-1632367294096-4e77d53c4ae9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+    ].reversed.toList(),
     interval: DateTimeRange(
       start: DateTime(2023, 6, 1),
       end: DateTime(2023, 6, 8),

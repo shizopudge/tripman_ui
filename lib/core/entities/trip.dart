@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Trip {
   final String id;
   final String title;
-  final String image;
+  final List<String> images;
   final DateTimeRange interval;
   final int minCost;
   final int minMembersCount;
@@ -13,7 +13,7 @@ class Trip {
   const Trip({
     required this.id,
     required this.title,
-    required this.image,
+    required this.images,
     required this.interval,
     required this.minCost,
     required this.minMembersCount,

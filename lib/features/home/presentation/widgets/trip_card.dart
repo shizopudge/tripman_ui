@@ -1,65 +1,87 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/common_widgets/rounded_row_icon_button.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/service/date_formater.dart';
 import '../../../../core/styles/styles.dart';
+import '../../../trip/presentation/pages/trip_page.dart';
+import '../../../../core/common_widgets/trip_images_carousel.dart';
 
-class TripCard extends StatelessWidget {
+class TripCard extends StatefulWidget {
   final Trip trip;
-  final VoidCallback onTap;
-  final VoidCallback onMapTap;
   const TripCard({
     super.key,
     required this.trip,
-    required this.onMapTap,
-    required this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 451,
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: kWhite,
-        borderRadius: BorderRadius.circular(
-          20,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: kBlack.withOpacity(.1),
-            blurRadius: 5.0,
-            spreadRadius: 1.5,
-            offset: const Offset(1.5, 5),
+  State<TripCard> createState() => _TripCardState();
+}
+
+class _TripCardState extends State<TripCard> {
+  late final CarouselController _carouselController;
+  late final ValueNotifier<int> _currentImageNotifier;
+  @override
+  void initState() {
+    _carouselController = CarouselController();
+    _currentImageNotifier = ValueNotifier<int>(0);
+    super.initState();
+  }
+
+  void _navigateToTripPage(
+          {required BuildContext context, required Trip trip}) =>
+      Navigator.of(context).push(
+        PageTransition(
+          duration: const Duration(milliseconds: 250),
+          type: PageTransitionType.fade,
+          child: TripPage(
+            trip: trip,
+            carouselController: _carouselController,
+            currentImageNotifier: _currentImageNotifier,
           ),
-        ],
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(
-          20,
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _navigateToTripPage(context: context, trip: widget.trip),
+      child: Container(
+        height: 451,
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: kWhite,
+          borderRadius: BorderRadius.circular(
+            20,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: kBlack.withOpacity(.1),
+              blurRadius: 5.0,
+              spreadRadius: 1.5,
+              offset: const Offset(1.5, 5),
+            ),
+          ],
         ),
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 335,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
+                Hero(
+                  tag: widget.trip.id,
+                  child: TripImagesCarousel(
+                    height: 335,
+                    controller: _carouselController,
+                    currentImageNotifier: _currentImageNotifier,
+                    images: widget.trip.images,
+                    imagesBorderRadius: const BorderRadius.vertical(
                       top: Radius.circular(
                         20,
                       ),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        trip.image,
-                      ),
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -72,7 +94,7 @@ class TripCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        trip.title,
+                        widget.trip.title,
                         overflow: TextOverflow.ellipsis,
                         style: kSFProDisplaySemiBold.copyWith(
                           color: kBlack,
@@ -88,7 +110,7 @@ class TripCard extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              'от ${trip.minCost} ₽',
+                              'от ${widget.trip.minCost} ₽',
                               overflow: TextOverflow.ellipsis,
                               style: kSFProDisplayMedium.copyWith(
                                 fontSize: 16,
@@ -102,7 +124,7 @@ class TripCard extends StatelessWidget {
                               children: [
                                 Text(
                                   DateFormater.tripCardDateFormater(
-                                    interval: trip.interval,
+                                    interval: widget.trip.interval,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                   style: kSFProDisplayRegular.copyWith(
@@ -111,7 +133,7 @@ class TripCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${trip.minMembersCount}-${trip.maxMembersCount} гостей',
+                                  '${widget.trip.minMembersCount}-${widget.trip.maxMembersCount} гостей',
                                   overflow: TextOverflow.ellipsis,
                                   style: kSFProDisplayRegular.copyWith(
                                     color: kBlack50,
@@ -141,7 +163,7 @@ class TripCard extends StatelessWidget {
                 child: RoundedRowIconButton(
                   mainAxisSize: MainAxisSize.min,
                   iconPath: 'assets/icons/map_arrow.svg',
-                  text: '${trip.distance} км',
+                  text: '${widget.trip.distance} км',
                   onTap: () {},
                   verticalPadding: 8,
                   horizontalPadding: 8,

@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:tripman/features/authorization/presentation/pages/start_page.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
@@ -13,7 +15,8 @@ import '../../../../core/entities/trip.dart';
 import '../../../../core/entities/trip_type.dart';
 import '../../../../core/styles/styles.dart';
 import '../bloc/home_bloc.dart';
-import '../widgets/home_app_bar.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/menu.dart';
 import '../widgets/trip_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final ValueNotifier<TripType> _selectedTripTypeNotifier;
   late final ValueNotifier<DateTimeRange?> _selectedDatesNotifier;
+  late final ValueNotifier<bool> _isMenuNotifier;
   late final HomeBloc _homeBloc;
 
   @override
@@ -34,6 +38,7 @@ class _HomePageState extends State<HomePage> {
       ..addListener(_tripTypeListener);
     _selectedDatesNotifier = ValueNotifier<DateTimeRange?>(null)
       ..addListener(_datesListener);
+    _isMenuNotifier = ValueNotifier<bool>(false);
     _homeBloc = HomeBloc()..add(HomeInititalEvent());
     super.initState();
   }
@@ -41,6 +46,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _selectedTripTypeNotifier.dispose();
+    _selectedDatesNotifier.dispose();
+    _isMenuNotifier.dispose();
+    _homeBloc.close();
     super.dispose();
   }
 
@@ -79,192 +87,203 @@ class _HomePageState extends State<HomePage> {
         },
       );
 
+  void _closeShowMenu() {
+    if (_isMenuNotifier.value == true) {
+      _isMenuNotifier.value = false;
+    } else {
+      _isMenuNotifier.value = true;
+    }
+  }
+
+  void _clearInterval() => _selectedDatesNotifier.value = null;
+
+  void _logout() => Navigator.of(context).push(
+        PageTransition(
+          duration: const Duration(milliseconds: 250),
+          type: PageTransitionType.fade,
+          child: const StartPage(),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       //TODO? onWillPop
       onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: 150,
-          titleSpacing: 20,
-          centerTitle: true,
-          backgroundColor: kWhite,
-          forceMaterialTransparency: true,
-          elevation: 0,
-          title: FadeAnimationYDown(
-            delay: 1,
-            child: ValueListenableBuilder(
-              valueListenable: _selectedDatesNotifier,
-              builder: (context, selectedDates, _) => HomeAppBar(
-                onClear: () => _selectedDatesNotifier.value = null,
-                onDatesFieldTap: _showCalendar,
-                interval: selectedDates,
-                selectedTripTypeNotifier: _selectedTripTypeNotifier,
+      child: ValueListenableBuilder(
+        valueListenable: _isMenuNotifier,
+        builder: (context, isMenu, _) => Scaffold(
+          appBar: isMenu
+              ? buildMenu(
+                  context,
+                  closeShowMenu: _closeShowMenu,
+                  logout: _logout,
+                )
+              : buildAppBar(
+                  closeShowMenu: _closeShowMenu,
+                  showCalendar: _showCalendar,
+                  clear: _clearInterval,
+                  selectedDatesNotifier: _selectedDatesNotifier,
+                  selectedTripTypeNotifier: _selectedTripTypeNotifier,
+                ),
+          floatingActionButton: FadeAnimationYUp(
+            delay: 1.2,
+            child: RoundedRowIconButton(
+              mainAxisSize: MainAxisSize.min,
+              iconPath: 'assets/icons/map.svg',
+              text: 'На карте',
+              onTap: () {},
+              verticalPadding: 14,
+              horizontalPadding: 25,
+              backgroundColor: kBlack,
+              borderColor: kBlack,
+              inRowPadding: 13,
+              textStyle: kSFProDisplayMedium.copyWith(
+                fontSize: 16,
               ),
             ),
           ),
-        ),
-        floatingActionButton: FadeAnimationYUp(
-          delay: 1.2,
-          child: RoundedRowIconButton(
-            mainAxisSize: MainAxisSize.min,
-            iconPath: 'assets/icons/map.svg',
-            text: 'На карте',
-            onTap: () {},
-            verticalPadding: 14,
-            horizontalPadding: 25,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          body: RefreshIndicator(
+            onRefresh: () async {
+              _homeBloc.add(
+                HomeGetTripsEvent(
+                  type: _selectedTripTypeNotifier.value.title,
+                  isRefresh: true,
+                ),
+              );
+            },
+            color: kWhite,
             backgroundColor: kBlack,
-            borderColor: kBlack,
-            inRowPadding: 13,
-            textStyle: kSFProDisplayMedium.copyWith(
-              fontSize: 16,
-            ),
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: RefreshIndicator(
-          onRefresh: () async {
-            _homeBloc.add(
-              HomeGetTripsEvent(
-                type: _selectedTripTypeNotifier.value.title,
-                isRefresh: true,
-              ),
-            );
-          },
-          color: kWhite,
-          backgroundColor: kBlack,
-          child: BlocConsumer<HomeBloc, HomeState>(
-            bloc: _homeBloc,
-            listener: (context, state) {},
-            builder: (context, state) {
-              switch (state.runtimeType) {
-                case HomeLoadingState:
-                  final isRefreshing = (state as HomeLoadingState).isRefreshing;
-                  if (isRefreshing) {
-                    return FadeAnimationYDown(
-                      delay: 1.1,
-                      child: Column(
-                        children: [
-                          const FadeAnimationYDown(
-                            delay: 0,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 22,
-                              ),
-                              child: Loader(
-                                color: kBlack,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20)
-                                      .copyWith(top: 18),
-                              itemCount: trips.length,
-                              itemBuilder: (context, index) {
-                                final Trip trip = trips[index];
-                                return TripCard(
-                                  onMapTap: () {},
-                                  onTap: () {},
-                                  trip: trip,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return const Center(
-                      child: FadeAnimationYDown(
-                        delay: 0,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 22,
-                          ),
-                          child: Loader(
-                            color: kBlack,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                case HomeLoadedState:
-                  final loadedState = state as HomeLoadedState;
-                  final trips = loadedState.trips;
-                  if (trips.isNotEmpty) {
-                    return FadeAnimationYDown(
-                      delay: 1.1,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 20)
-                            .copyWith(top: 18),
-                        itemCount: trips.length,
-                        itemBuilder: (context, index) {
-                          final Trip trip = trips[index];
-                          return TripCard(
-                            onMapTap: () {},
-                            onTap: () {},
-                            trip: trip,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                  return FadeAnimationYDown(
-                    delay: 1,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 76),
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text:
-                                'Свободных объектов не найдено. Попробуйте изменить ',
-                            style: kSFProDisplayRegular.copyWith(
-                              fontSize: 15,
-                              color: kBlack50,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: 'даты поездки.',
-                                style: kSFProDisplayRegular.copyWith(
-                                  fontSize: 15,
+            child: BlocConsumer<HomeBloc, HomeState>(
+              bloc: _homeBloc,
+              listener: (context, state) {},
+              builder: (context, state) {
+                switch (state.runtimeType) {
+                  case HomeLoadingState:
+                    final isRefreshing =
+                        (state as HomeLoadingState).isRefreshing;
+                    if (isRefreshing) {
+                      return FadeAnimationYDown(
+                        delay: 1.1,
+                        child: Column(
+                          children: [
+                            const FadeAnimationYDown(
+                              delay: 0,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 22,
+                                ),
+                                child: Loader(
                                   color: kBlack,
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = _showCalendar,
                               ),
-                            ],
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20)
+                                        .copyWith(top: 18),
+                                itemCount: trips.length,
+                                itemBuilder: (context, index) {
+                                  final Trip trip = trips[index];
+                                  return TripCard(
+                                    trip: trip,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: FadeAnimationYDown(
+                          delay: 0,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 22,
+                            ),
+                            child: Loader(
+                              color: kBlack,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  case HomeLoadedState:
+                    final loadedState = state as HomeLoadedState;
+                    final trips = loadedState.trips;
+                    if (trips.isNotEmpty) {
+                      return FadeAnimationYDown(
+                        delay: 1.1,
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 20)
+                              .copyWith(top: 18),
+                          itemCount: trips.length,
+                          itemBuilder: (context, index) {
+                            final Trip trip = trips[index];
+                            return TripCard(
+                              trip: trip,
+                            );
+                          },
+                        ),
+                      );
+                    }
+                    return FadeAnimationYDown(
+                      delay: 1,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 76),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text:
+                                  'Свободных объектов не найдено. Попробуйте изменить ',
+                              style: kSFProDisplayRegular.copyWith(
+                                fontSize: 15,
+                                color: kBlack50,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'даты поездки.',
+                                  style: kSFProDisplayRegular.copyWith(
+                                    fontSize: 15,
+                                    color: kBlack,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = _showCalendar,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                case HomeErrorState:
-                  final errorState = state as HomeErrorState;
-                  return FadeAnimationYDown(
-                    delay: 1,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ErrorMessageWidget(
-                            message: errorState.message,
-                            iconPath: 'assets/icons/error.svg',
-                            color: kBlack,
-                          ),
-                        ],
+                    );
+                  case HomeErrorState:
+                    final errorState = state as HomeErrorState;
+                    return FadeAnimationYDown(
+                      delay: 1,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ErrorMessageWidget(
+                              message: errorState.message,
+                              iconPath: 'assets/icons/error.svg',
+                              color: kBlack,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                default:
-                  return const SizedBox();
-              }
-            },
+                    );
+                  default:
+                    return const SizedBox();
+                }
+              },
+            ),
           ),
         ),
       ),

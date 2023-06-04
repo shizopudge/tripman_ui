@@ -222,7 +222,7 @@ class _CalendarState extends State<Calendar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FadeAnimationX(
-                      delay: 1.1,
+                      delay: .6,
                       child: Text(
                         DateFormater.datePickerMonthYearFormater(
                           month: monthAndYearAndStartWeekday.month,
@@ -249,7 +249,7 @@ class _CalendarState extends State<Calendar> {
                       itemBuilder: (context, index) {
                         if (index < 7) {
                           return FadeAnimationX(
-                            delay: 1 + index / 50,
+                            delay: .2 + index / 50,
                             child: Center(
                               child: Text(
                                 DateFormater.datePickerWeekdayFormater(
@@ -269,7 +269,7 @@ class _CalendarState extends State<Calendar> {
                                 7 + monthAndYearAndStartWeekday.startWeekday) {
                           k++;
                           return FadeAnimationX(
-                            delay: 1.1 + index / 50,
+                            delay: .2 + index / 50,
                             child: DisabledDay(
                               day: lastPeviousMonthDays.reversed
                                   .toList()[k - 1]
@@ -282,7 +282,7 @@ class _CalendarState extends State<Calendar> {
                                 monthAndYearAndStartWeekday.startWeekday,
                             month: monthAndYearAndStartWeekday.month)) {
                           return FadeAnimationX(
-                            delay: 1.1 + index / 50,
+                            delay: .2 + index / 50,
                             child: DisabledDay(
                               day: (index -
                                       6 -
@@ -292,7 +292,7 @@ class _CalendarState extends State<Calendar> {
                           );
                         } else {
                           return FadeAnimationX(
-                            delay: 1.1 + index / 50,
+                            delay: .2 + index / 50,
                             child: Center(
                               child: InkWell(
                                 onTap: () => _onDateCellTap(
@@ -385,7 +385,7 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
         FadeAnimationYUp(
-          delay: 1.2,
+          delay: .8,
           child: ValueListenableBuilder(
             valueListenable: _calendarSelectedDatesNotifier,
             builder: (context, selectedDates, _) => CalendarBottomContainer(

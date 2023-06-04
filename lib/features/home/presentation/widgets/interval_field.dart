@@ -4,15 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/service/date_formater.dart';
 import '../../../../core/styles/styles.dart';
 
-class DatesField extends StatelessWidget {
+class IntervalField extends StatelessWidget {
   final DateTimeRange? interval;
   final VoidCallback onTap;
-  final VoidCallback onClear;
-  const DatesField({
+  final VoidCallback clear;
+  const IntervalField({
     super.key,
     required this.interval,
     required this.onTap,
-    required this.onClear,
+    required this.clear,
   });
 
   @override
@@ -60,7 +60,7 @@ class DatesField extends StatelessWidget {
             ),
             if (interval != null)
               InkWell(
-                onTap: onClear,
+                onTap: clear,
                 child: SvgPicture.asset(
                   'assets/icons/close.svg',
                 ),
