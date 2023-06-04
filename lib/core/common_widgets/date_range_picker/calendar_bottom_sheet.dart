@@ -8,11 +8,11 @@ import '../bottom_sheet_divider.dart';
 import 'calendar.dart';
 
 class CalendarBottomSheet extends StatelessWidget {
-  final ValueNotifier<DateTimeRange?> _selectedDatesNotifier;
+  final ValueNotifier<DateTimeRange?> _selectedIntervalNotifier;
   const CalendarBottomSheet({
     super.key,
-    required ValueNotifier<DateTimeRange?> selectedDatesNotifier,
-  }) : _selectedDatesNotifier = selectedDatesNotifier;
+    required ValueNotifier<DateTimeRange?> selectedIntervalNotifier,
+  }) : _selectedIntervalNotifier = selectedIntervalNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class CalendarBottomSheet extends StatelessWidget {
                     ),
                     Expanded(
                       child: Calendar(
-                        selectedDatesNotifier: _selectedDatesNotifier,
+                        selectedIntervalNotifier: _selectedIntervalNotifier,
                       ),
                     ),
                   ],

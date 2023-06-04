@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../../core/common_widgets/rounded_row_icon_button.dart';
+import 'distance.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/service/date_formater.dart';
 import '../../../../core/styles/styles.dart';
@@ -153,29 +153,8 @@ class _TripCardState extends State<TripCard> {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 16,
-                  right: 16,
-                ),
-                child: RoundedRowIconButton(
-                  mainAxisSize: MainAxisSize.min,
-                  iconPath: 'assets/icons/map_arrow.svg',
-                  text: '${widget.trip.distance} км',
-                  onTap: () {},
-                  verticalPadding: 8,
-                  horizontalPadding: 8,
-                  backgroundColor: kWhite,
-                  borderColor: kWhite,
-                  inRowPadding: 6,
-                  textStyle: kSFProDisplayRegular.copyWith(
-                    color: kBlack,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
+            Distance(
+              distance: widget.trip.distance,
             ),
           ],
         ),

@@ -27,7 +27,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
   @override
   void initState() {
     _phoneController = TextEditingController()..addListener(_phoneListener);
-    _phoneFieldFocusNode = FocusNode();
+    _phoneFieldFocusNode = FocusNode()..requestFocus();
     _isEmptyNotifier = ValueNotifier<bool>(true);
     _isValidatedNotifier = ValueNotifier<bool>(false);
     super.initState();

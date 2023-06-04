@@ -12,7 +12,7 @@ AppBar buildAppBar({
   required VoidCallback closeShowMenu,
   required VoidCallback showCalendar,
   required VoidCallback clear,
-  required ValueNotifier<DateTimeRange?> selectedDatesNotifier,
+  required ValueNotifier<DateTimeRange?> selectedIntervalNotifier,
   required ValueNotifier<TripType> selectedTripTypeNotifier,
 }) {
   return AppBar(
@@ -25,8 +25,8 @@ AppBar buildAppBar({
     title: FadeAnimationYDown(
       delay: .2,
       child: ValueListenableBuilder(
-        valueListenable: selectedDatesNotifier,
-        builder: (context, selectedDates, _) => Column(
+        valueListenable: selectedIntervalNotifier,
+        builder: (context, selectedInterval, _) => Column(
           children: [
             Row(
               children: [
@@ -34,7 +34,7 @@ AppBar buildAppBar({
                   child: IntervalField(
                     onTap: showCalendar,
                     clear: clear,
-                    interval: selectedDates,
+                    interval: selectedInterval,
                   ),
                 ),
                 const SizedBox(

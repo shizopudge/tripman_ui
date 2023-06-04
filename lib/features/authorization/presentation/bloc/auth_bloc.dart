@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSendPhoneCodeEvent>(_authSendPhoneCodeEvent);
     on<AuthCheckPhoneCodeEvent>(_authCheckPhoneCodeEvent);
     on<AuthTryAgainEvent>(_authTryAgainEvent);
+    on<AuthLogoutEvent>(_authLogoutEvent);
   }
 
   FutureOr<void> _authLoginWithGoogleOrAppleEvent(
@@ -81,6 +82,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _authTryAgainEvent(
       AuthTryAgainEvent event, Emitter<AuthState> emit) {
+    emit(AuthInititalState());
+  }
+
+  FutureOr<void> _authLogoutEvent(
+      AuthLogoutEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoadingState());
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1000,
+      ),
+    );
     emit(AuthInititalState());
   }
 }

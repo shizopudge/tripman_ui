@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:tripman/features/authorization/presentation/pages/start_page.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
@@ -14,6 +13,8 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/entities/trip_type.dart';
 import '../../../../core/styles/styles.dart';
+import '../../../authorization/presentation/bloc/auth_bloc.dart';
+import '../../../authorization/presentation/pages/start_page.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/menu.dart';
@@ -28,17 +29,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final ValueNotifier<TripType> _selectedTripTypeNotifier;
-  late final ValueNotifier<DateTimeRange?> _selectedDatesNotifier;
-  late final ValueNotifier<bool> _isMenuNotifier;
+  late final ValueNotifier<DateTimeRange?> _selectedIntervalNotifier;
+  late final ValueNotifier<bool> _isMenuOpenedNotifier;
   late final HomeBloc _homeBloc;
 
   @override
   void initState() {
     _selectedTripTypeNotifier = ValueNotifier<TripType>(tripTypes.first)
       ..addListener(_tripTypeListener);
-    _selectedDatesNotifier = ValueNotifier<DateTimeRange?>(null)
+    _selectedIntervalNotifier = ValueNotifier<DateTimeRange?>(null)
       ..addListener(_datesListener);
-    _isMenuNotifier = ValueNotifier<bool>(false);
+    _isMenuOpenedNotifier = ValueNotifier<bool>(false);
     _homeBloc = HomeBloc()..add(HomeInititalEvent());
     super.initState();
   }
@@ -46,30 +47,30 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _selectedTripTypeNotifier.dispose();
-    _selectedDatesNotifier.dispose();
-    _isMenuNotifier.dispose();
+    _selectedIntervalNotifier.dispose();
+    _isMenuOpenedNotifier.dispose();
     _homeBloc.close();
     super.dispose();
   }
 
   void _tripTypeListener() {
     debugPrint(
-        'Get ${_selectedTripTypeNotifier.value.title} trips ont trip type change');
+        'Get ${_selectedTripTypeNotifier.value.title} trips on trip type change');
     _homeBloc.add(
       HomeGetTripsEvent(
         type: _selectedTripTypeNotifier.value.title,
-        interval: _selectedDatesNotifier.value,
+        interval: _selectedIntervalNotifier.value,
       ),
     );
   }
 
   void _datesListener() {
     debugPrint(
-        'Get ${_selectedTripTypeNotifier.value.title} trips on dates change');
+        'Get ${_selectedTripTypeNotifier.value.title} trips on interval change');
     _homeBloc.add(
       HomeGetTripsEvent(
         type: _selectedTripTypeNotifier.value.title,
-        interval: _selectedDatesNotifier.value,
+        interval: _selectedIntervalNotifier.value,
       ),
     );
   }
@@ -82,38 +83,40 @@ class _HomePageState extends State<HomePage> {
         isScrollControlled: true,
         builder: (BuildContext context) {
           return CalendarBottomSheet(
-            selectedDatesNotifier: _selectedDatesNotifier,
+            selectedIntervalNotifier: _selectedIntervalNotifier,
           );
         },
       );
 
   void _closeShowMenu() {
-    if (_isMenuNotifier.value == true) {
-      _isMenuNotifier.value = false;
+    if (_isMenuOpenedNotifier.value == true) {
+      _isMenuOpenedNotifier.value = false;
     } else {
-      _isMenuNotifier.value = true;
+      _isMenuOpenedNotifier.value = true;
     }
   }
 
-  void _clearInterval() => _selectedDatesNotifier.value = null;
+  void _clearInterval() => _selectedIntervalNotifier.value = null;
 
-  void _logout() => Navigator.of(context).push(
-        PageTransition(
-          duration: const Duration(milliseconds: 250),
-          type: PageTransitionType.fade,
-          child: const StartPage(),
-        ),
-      );
+  void _logout() {
+    Navigator.of(context).push(
+      PageTransition(
+        duration: const Duration(milliseconds: 250),
+        type: PageTransitionType.fade,
+        child: const StartPage(),
+      ),
+    );
+    context.read<AuthBloc>().add(AuthLogoutEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      //TODO? onWillPop
       onWillPop: () async => false,
       child: ValueListenableBuilder(
-        valueListenable: _isMenuNotifier,
-        builder: (context, isMenu, _) => Scaffold(
-          appBar: isMenu
+        valueListenable: _isMenuOpenedNotifier,
+        builder: (context, isMenuOpened, _) => Scaffold(
+          appBar: isMenuOpened
               ? buildMenu(
                   context,
                   closeShowMenu: _closeShowMenu,
@@ -123,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                   closeShowMenu: _closeShowMenu,
                   showCalendar: _showCalendar,
                   clear: _clearInterval,
-                  selectedDatesNotifier: _selectedDatesNotifier,
+                  selectedIntervalNotifier: _selectedIntervalNotifier,
                   selectedTripTypeNotifier: _selectedTripTypeNotifier,
                 ),
           floatingActionButton: FadeAnimationYUp(

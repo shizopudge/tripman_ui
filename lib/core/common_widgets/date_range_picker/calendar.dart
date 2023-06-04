@@ -11,18 +11,20 @@ import 'interval_point.dart';
 import 'start_end_point.dart';
 
 class Calendar extends StatefulWidget {
-  final ValueNotifier<DateTimeRange?> _selectedDatesNotifier;
+  final ValueNotifier<DateTimeRange?> _selectedIntervalNotifier;
+  final List<DateTime>? availableDates;
   const Calendar({
     super.key,
-    required ValueNotifier<DateTimeRange?> selectedDatesNotifier,
-  }) : _selectedDatesNotifier = selectedDatesNotifier;
+    required ValueNotifier<DateTimeRange?> selectedIntervalNotifier,
+    this.availableDates,
+  }) : _selectedIntervalNotifier = selectedIntervalNotifier;
 
   @override
   State<Calendar> createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
-  late final ValueNotifier<DateTimeRange?> _calendarSelectedDatesNotifier;
+  late final ValueNotifier<DateTimeRange?> _calendarSelectedIntervalNotifier;
   late final int calendarFirstAvailableDay;
   final List<int> pastDaysOfTheMonth = [];
   final List<int> lastPeviousMonthDays = [];
@@ -32,8 +34,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   void initState() {
-    _calendarSelectedDatesNotifier =
-        ValueNotifier<DateTimeRange?>(widget._selectedDatesNotifier.value);
+    _calendarSelectedIntervalNotifier =
+        ValueNotifier<DateTimeRange?>(widget._selectedIntervalNotifier.value);
     for (int j = 0; j < currentDay; j++) {
       pastDaysOfTheMonth.add(j);
     }
@@ -43,7 +45,7 @@ class _CalendarState extends State<Calendar> {
 
   @override
   void dispose() {
-    _calendarSelectedDatesNotifier.dispose();
+    _calendarSelectedIntervalNotifier.dispose();
     super.dispose();
   }
 
@@ -90,7 +92,8 @@ class _CalendarState extends State<Calendar> {
       month == now.month;
 
   void _onButtonTap() {
-    widget._selectedDatesNotifier.value = _calendarSelectedDatesNotifier.value;
+    widget._selectedIntervalNotifier.value =
+        _calendarSelectedIntervalNotifier.value;
     Navigator.of(context).pop();
   }
 
@@ -102,28 +105,28 @@ class _CalendarState extends State<Calendar> {
       r: r,
     );
     final DateTimeRange? currentDateRange =
-        _calendarSelectedDatesNotifier.value;
+        _calendarSelectedIntervalNotifier.value;
     if (currentDateRange != null) {
       if (currentDateRange.start.isAtSameMomentAs(date)) {
-        _calendarSelectedDatesNotifier.value = null;
+        _calendarSelectedIntervalNotifier.value = null;
       } else if (currentDateRange.end.isAtSameMomentAs(date)) {
-        _calendarSelectedDatesNotifier.value = DateTimeRange(
+        _calendarSelectedIntervalNotifier.value = DateTimeRange(
           start: date,
           end: date,
         );
       } else if (currentDateRange.start.isAfter(date)) {
-        _calendarSelectedDatesNotifier.value = DateTimeRange(
+        _calendarSelectedIntervalNotifier.value = DateTimeRange(
           start: date,
-          end: _calendarSelectedDatesNotifier.value!.end,
+          end: _calendarSelectedIntervalNotifier.value!.end,
         );
       } else {
-        _calendarSelectedDatesNotifier.value = DateTimeRange(
-          start: _calendarSelectedDatesNotifier.value!.start,
+        _calendarSelectedIntervalNotifier.value = DateTimeRange(
+          start: _calendarSelectedIntervalNotifier.value!.start,
           end: date,
         );
       }
     } else {
-      _calendarSelectedDatesNotifier.value = DateTimeRange(
+      _calendarSelectedIntervalNotifier.value = DateTimeRange(
         start: date,
         end: date,
       );
@@ -300,7 +303,7 @@ class _CalendarState extends State<Calendar> {
                                     r: monthAndYearAndStartWeekday),
                                 child: ValueListenableBuilder(
                                   valueListenable:
-                                      _calendarSelectedDatesNotifier,
+                                      _calendarSelectedIntervalNotifier,
                                   builder: (context, selectedDates, _) =>
                                       switch (selectedDates) {
                                     (DateTimeRange range)
@@ -387,10 +390,10 @@ class _CalendarState extends State<Calendar> {
         FadeAnimationYUp(
           delay: .8,
           child: ValueListenableBuilder(
-            valueListenable: _calendarSelectedDatesNotifier,
-            builder: (context, selectedDates, _) => CalendarBottomContainer(
+            valueListenable: _calendarSelectedIntervalNotifier,
+            builder: (context, selectedInterval, _) => CalendarBottomContainer(
               onTap: _onButtonTap,
-              selectedDates: selectedDates,
+              selectedInterval: selectedInterval,
             ),
           ),
         ),

@@ -22,7 +22,7 @@ AppBar buildMenu(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ).copyWith(
-            top: 60,
+            top: 40,
             bottom: 24,
           ),
           decoration: const BoxDecoration(
@@ -43,13 +43,12 @@ AppBar buildMenu(
                   Text(
                     'Меню',
                     style: kSFProDisplaySemiBold.copyWith(
-                      fontSize: 20,
+                      fontSize: MediaQuery.of(context).size.width / 100 * 4.5,
                     ),
                   ),
-                  InkWell(
-                    onTap: closeShowMenu,
-                    borderRadius: BorderRadius.circular(20),
-                    child: SvgPicture.asset(
+                  IconButton(
+                    onPressed: closeShowMenu,
+                    icon: SvgPicture.asset(
                       'assets/icons/close.svg',
                       colorFilter: const ColorFilter.mode(
                         kWhite,
@@ -59,31 +58,52 @@ AppBar buildMenu(
                   ),
                 ],
               ),
-              Text(
-                'Объекты',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: kSFProDisplaySemiBold.copyWith(
-                  fontSize: 16,
+              InkWell(
+                onTap: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Объекты',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: kSFProDisplaySemiBold.copyWith(
+                        fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                'Добавить объекты',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: kSFProDisplaySemiBold.copyWith(
-                  fontSize: 16,
+              InkWell(
+                onTap: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Добавить объекты',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: kSFProDisplaySemiBold.copyWith(
+                        fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               InkWell(
                 onTap: logout,
-                child: Text(
-                  'Выход',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: kSFProDisplaySemiBold.copyWith(
-                    fontSize: 16,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Выход',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: kSFProDisplaySemiBold.copyWith(
+                        fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

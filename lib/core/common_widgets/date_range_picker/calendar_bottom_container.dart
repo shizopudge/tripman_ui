@@ -6,11 +6,11 @@ import '../rounded_text_button.dart';
 
 class CalendarBottomContainer extends StatelessWidget {
   final VoidCallback onTap;
-  final DateTimeRange? selectedDates;
+  final DateTimeRange? selectedInterval;
   const CalendarBottomContainer({
     super.key,
     required this.onTap,
-    this.selectedDates,
+    this.selectedInterval,
   });
 
   @override
@@ -38,12 +38,12 @@ class CalendarBottomContainer extends StatelessWidget {
               flex: 2,
               child: Text(
                 DateFormater.datesFieldDateFormater(
-                  interval: selectedDates,
+                  interval: selectedInterval,
                 ),
                 overflow: TextOverflow.visible,
                 style: kSFProDisplayMedium.copyWith(
                   fontSize: 16,
-                  color: selectedDates != null ? kBlack : kBlack50,
+                  color: selectedInterval != null ? kBlack : kBlack50,
                 ),
               ),
             ),
@@ -53,10 +53,10 @@ class CalendarBottomContainer extends StatelessWidget {
             Flexible(
               flex: 3,
               child: RoundedTextButton(
-                backgroundColor: selectedDates != null ? kBlack : kBlack10,
-                textColor: selectedDates != null ? kWhite : kBlack50,
+                backgroundColor: selectedInterval != null ? kBlack : kBlack10,
+                textColor: selectedInterval != null ? kWhite : kBlack50,
                 text: 'Забронировать',
-                onTap: selectedDates != null ? onTap : null,
+                onTap: selectedInterval != null ? onTap : null,
               ),
             ),
           ],

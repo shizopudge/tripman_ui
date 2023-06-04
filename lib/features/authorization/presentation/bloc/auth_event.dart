@@ -30,3 +30,5 @@ class AuthCheckPhoneCodeEvent extends AuthEvent {
 }
 
 class AuthTryAgainEvent extends AuthEvent {}
+
+class AuthLogoutEvent extends AuthEvent {}
