@@ -18,12 +18,14 @@ class TripReviewDialog extends StatefulWidget {
 }
 
 class _TripReviewDialogState extends State<TripReviewDialog> {
+  late final ValueNotifier<double> _ratingNotifier;
   late final TextEditingController _commentController;
   late final FocusNode _commentFocusNode;
   @override
   void initState() {
     _commentController = TextEditingController();
     _commentFocusNode = FocusNode();
+    _ratingNotifier = ValueNotifier<double>(0.0);
     super.initState();
   }
 
@@ -31,6 +33,7 @@ class _TripReviewDialogState extends State<TripReviewDialog> {
   void dispose() {
     _commentController.dispose();
     _commentFocusNode.dispose();
+    _ratingNotifier.dispose();
     super.dispose();
   }
 
@@ -111,6 +114,7 @@ class _TripReviewDialogState extends State<TripReviewDialog> {
                             horizontal:
                                 MediaQuery.of(context).size.width * .025,
                           ),
+                          itemSize: MediaQuery.of(context).size.width * .09,
                           ratingWidget: RatingWidget(
                             full: SvgPicture.asset(
                               'assets/icons/star_filled.svg',
@@ -120,7 +124,8 @@ class _TripReviewDialogState extends State<TripReviewDialog> {
                               'assets/icons/star_empty.svg',
                             ),
                           ),
-                          onRatingUpdate: (rating) {},
+                          onRatingUpdate: (rating) =>
+                              _ratingNotifier.value = rating,
                         ),
                       ),
                     ),
@@ -153,11 +158,16 @@ class _TripReviewDialogState extends State<TripReviewDialog> {
                     ),
                     FadeAnimationYDown(
                       delay: 1,
-                      child: RoundedTextButton(
-                        backgroundColor: kBlack,
-                        textColor: kWhite,
-                        text: 'Отправить',
-                        onTap: () => Navigator.of(context).pop(),
+                      child: ValueListenableBuilder(
+                        valueListenable: _ratingNotifier,
+                        builder: (context, rating, _) => RoundedTextButton(
+                          backgroundColor: rating != 0.0 ? kBlack : kBlack10,
+                          textColor: rating != 0.0 ? kWhite : kBlack50,
+                          text: 'Отправить',
+                          onTap: rating != 0.0
+                              ? () => Navigator.of(context).pop()
+                              : null,
+                        ),
                       ),
                     ),
                   ],

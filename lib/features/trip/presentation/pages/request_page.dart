@@ -51,6 +51,8 @@ class _RequestPageState extends State<RequestPage> {
       _isPhoneFieldEmptyNotifier.value = false;
       if (_phoneController.text.length > 3) {
         _isPhoneFieldValidatedNotifier.value = true;
+      } else {
+        _isPhoneFieldValidatedNotifier.value = false;
       }
     } else {
       _isPhoneFieldEmptyNotifier.value = true;

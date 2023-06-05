@@ -5,7 +5,7 @@ import '../animations/fade_animation_y_down.dart';
 import 'bottom_sheet_divider.dart';
 import '../styles/styles.dart';
 
-class CommentBottomSheet extends StatelessWidget {
+class CommentBottomSheet extends StatefulWidget {
   final TextEditingController _commentController;
   final FocusNode _commentFocusNode;
   const CommentBottomSheet({
@@ -16,15 +16,27 @@ class CommentBottomSheet extends StatelessWidget {
         _commentFocusNode = commentFocusNode;
 
   @override
+  State<CommentBottomSheet> createState() => _CommentBottomSheetState();
+}
+
+class _CommentBottomSheetState extends State<CommentBottomSheet> {
+  @override
+  void initState() {
+    widget._commentFocusNode.requestFocus();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _commentFocusNode.requestFocus();
-    return FractionallySizedBox(
-      heightFactor: .65,
-      child: Column(
-        children: [
-          const BottomSheetDivider(),
-          Expanded(
-            child: Container(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Align(
+        alignment: Alignment.bottomCenter,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const BottomSheetDivider(),
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: const BoxDecoration(
                 color: kWhite,
@@ -33,7 +45,8 @@ class CommentBottomSheet extends StatelessWidget {
                   topRight: Radius.circular(20),
                 ),
               ),
-              child: ListView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(
                     height: 16,
@@ -68,10 +81,10 @@ class CommentBottomSheet extends StatelessWidget {
                   FadeAnimationYDown(
                     delay: .5,
                     child: TextField(
-                      controller: _commentController,
-                      focusNode: _commentFocusNode,
+                      controller: widget._commentController,
+                      focusNode: widget._commentFocusNode,
                       cursorColor: kBlack,
-                      maxLines: 10,
+                      maxLines: 5,
                       style: kSFProDisplayRegular.copyWith(
                         color: kBlack,
                         fontSize: 15,
@@ -87,8 +100,8 @@ class CommentBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
