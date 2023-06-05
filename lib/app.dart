@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripman/features/authorization/presentation/pages/start_page.dart';
+import 'package:tripman/features/home/presentation/pages/home_page.dart';
 
 import 'features/authorization/presentation/bloc/auth_bloc.dart';
 import 'core/styles/styles.dart';
-import 'features/home/presentation/pages/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

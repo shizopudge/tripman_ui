@@ -23,7 +23,7 @@ AppBar buildAppBar({
     forceMaterialTransparency: true,
     elevation: 0,
     title: FadeAnimationYDown(
-      delay: .2,
+      delay: 0,
       child: ValueListenableBuilder(
         valueListenable: selectedIntervalNotifier,
         builder: (context, selectedInterval, _) => Column(

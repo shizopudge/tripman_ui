@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:tripman/core/common_widgets/rounded_text_button.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
@@ -109,6 +113,54 @@ class _HomePageState extends State<HomePage> {
     context.read<AuthBloc>().add(AuthLogoutEvent());
   }
 
+  void _mapTap() {
+    ScaffoldMessenger.of(context).clearMaterialBanners();
+    final int random = Random().nextInt(3);
+    ScaffoldMessenger.of(context).showMaterialBanner(
+      switch (random) {
+        (int random) when random == 0 => const MaterialBanner(
+            backgroundColor: Colors.transparent,
+            margin: EdgeInsets.symmetric(vertical: 8),
+            dividerColor: Colors.transparent,
+            actions: [
+              SizedBox(),
+            ],
+            content: MessageBanner(
+              iconPath: 'assets/icons/checkbox.svg',
+              text: 'Автоматическое разрешение\nпроблемы',
+              backgroundColor: kBlack,
+            ),
+          ),
+        (int random) when random == 1 => const MaterialBanner(
+            backgroundColor: Colors.transparent,
+            margin: EdgeInsets.symmetric(vertical: 8),
+            dividerColor: Colors.transparent,
+            actions: [
+              SizedBox(),
+            ],
+            content: MessageBanner(
+              iconPath: 'assets/icons/error_cross.svg',
+              text: 'Ошибка загрузки страниц, неполадок с сервером и тд',
+              backgroundColor: kRed,
+            ),
+          ),
+        (_) => const MaterialBanner(
+            backgroundColor: Colors.transparent,
+            margin: EdgeInsets.symmetric(vertical: 8),
+            dividerColor: Colors.transparent,
+            actions: [
+              SizedBox(),
+            ],
+            content: MessageBanner(
+              iconPath: 'assets/icons/error.svg',
+              text: 'Предупреждающие сообщения о работе системы',
+              backgroundColor: kBlack50,
+            ),
+          ),
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -135,7 +187,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               iconPath: 'assets/icons/map.svg',
               text: 'На карте',
-              onTap: () {},
+              onTap: _mapTap,
               verticalPadding: 14,
               horizontalPadding: 25,
               backgroundColor: kBlack,
@@ -289,6 +341,64 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MessageBanner extends StatelessWidget {
+  final String iconPath;
+  final String text;
+  final Color backgroundColor;
+  const MessageBanner({
+    super.key,
+    required this.iconPath,
+    required this.text,
+    required this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          16,
+        ),
+        color: backgroundColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(
+                iconPath,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Flexible(
+                child: Text(
+                  text,
+                  overflow: TextOverflow.visible,
+                  style: kSFProDisplayRegular.copyWith(
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          RoundedTextButton(
+            backgroundColor: kWhite,
+            textColor: kBlack,
+            text: 'Кнопка',
+            onTap: () => ScaffoldMessenger.of(context).clearMaterialBanners(),
+          ),
+        ],
       ),
     );
   }

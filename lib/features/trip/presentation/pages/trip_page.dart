@@ -37,6 +37,7 @@ class TripPage extends StatefulWidget {
 class _TripPageState extends State<TripPage> {
   late final ValueNotifier<DateTimeRange?> _selectedIntervalNotifier;
   late final ValueNotifier<bool> _isRequestSentNotifier;
+  late final ValueNotifier<bool> _isErrorNotifier;
 
   @override
   void initState() {
@@ -44,6 +45,8 @@ class _TripPageState extends State<TripPage> {
       ..addListener(_selectedIntervalListener);
     _isRequestSentNotifier = ValueNotifier<bool>(false)
       ..addListener(_isRequestSentListener);
+    _isErrorNotifier =
+        ValueNotifier<bool>(widget.trip.id == '2' ? true : false);
     super.initState();
   }
 
@@ -129,223 +132,289 @@ class _TripPageState extends State<TripPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              Hero(
-                tag: widget.trip.id,
-                child: TripImagesCarousel(
-                  height: MediaQuery.of(context).size.height * .35,
-                  controller: widget._carouselController,
-                  currentImageNotifier: widget._currentImageNotifier,
-                  images: widget.trip.images,
-                  gradient: LinearGradient(
-                    colors: [
-                      kBlack.withOpacity(.35),
-                      kBlack.withOpacity(.2),
-                      kBlack.withOpacity(.1),
-                    ],
+      body: ValueListenableBuilder(
+        valueListenable: _isErrorNotifier,
+        builder: (context, isError, _) {
+          if (isError) {
+            return SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FadeAnimationYDown(
+                    delay: .5,
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 25, top: 20),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: kBlack,
+                          size: 28,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              FadeAnimationYDown(
-                delay: .5,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  padding: const EdgeInsets.only(left: 25, top: 40),
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: kWhite,
-                    size: 28,
+                  Center(
+                    child: Text(
+                      'Объект удалён или не найден.',
+                      style: kSFProDisplayRegular.copyWith(
+                        color: kBlack50,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(0),
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        flex: 3,
-                        child: FadeAnimationYDown(
-                          delay: .6,
-                          child: Text(
-                            widget.trip.title,
-                            overflow: TextOverflow.visible,
-                            maxLines: 2,
-                            style: kSFProDisplaySemiBold.copyWith(
-                              height: 1,
-                              fontSize: 24,
-                              color: kBlack,
+                  FadeAnimationYUp(
+                    delay: 1.2,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: kWhite,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 12,
+                            color: kBlack10,
+                            offset: Offset(
+                              2,
+                              -4,
                             ),
                           ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: RoundedTextButton(
+                          backgroundColor: kBlack,
+                          textColor: kWhite,
+                          text: 'На главную',
+                          onTap: () => Navigator.of(context).pop(),
                         ),
                       ),
-                      Flexible(
-                        child: FadeAnimationYDown(
-                          delay: .7,
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/map_arrow.svg',
-                              ),
-                              const SizedBox(
-                                width: 6,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  '${widget.trip.distance} км',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: kSFProDisplayMedium.copyWith(
-                                    color: kBlack,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: FadeAnimationYDown(
-                    delay: .8,
-                    child: Text(
-                      widget.trip.locationName,
-                      overflow: TextOverflow.visible,
-                      style: kSFProDisplayRegular.copyWith(
-                        color: kBlack50,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: FadeAnimationYDown(
-                    delay: .8,
-                    child: Text(
-                      widget.trip.description,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      style: kSFProDisplayRegular.copyWith(
-                        color: kBlack50,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: FadeAnimationYDown(
-                    delay: .8,
-                    child: GestureDetector(
-                      onTap: _showMore,
-                      child: Text(
-                        'Подробнее',
-                        overflow: TextOverflow.ellipsis,
-                        style: kSFProDisplayMedium.copyWith(
-                          color: kBlack,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeAnimationX(
-                      delay: .7,
-                      child: TripActionButton(
-                        onTap: () {},
-                        iconPath: 'assets/icons/phone.svg',
-                        text: 'Позвонить',
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    FadeAnimationX(
-                      delay: .8,
-                      child: TripActionButton(
-                        onTap: () {},
-                        iconPath: 'assets/icons/message.svg',
-                        text: 'Написать',
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    FadeAnimationX(
-                      delay: .9,
-                      child: TripActionButton(
-                        onTap: () {},
-                        iconPath: 'assets/icons/share.svg',
-                        text: 'Поделиться',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          FadeAnimationYUp(
-            delay: 1,
-            child: BottomContainer(
-              text: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${widget.trip.minMembersCount}-${widget.trip.maxMembersCount} гостей',
-                    style: kSFProDisplayRegular.copyWith(
-                      color: kBlack50,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    '${widget.trip.minCost} ₽ / сутки',
-                    style: kSFProDisplayMedium.copyWith(
-                      color: kBlack,
-                      fontSize: 16,
                     ),
                   ),
                 ],
               ),
-              button: RoundedTextButton(
-                backgroundColor: kBlack,
-                textColor: kWhite,
-                text: 'Свободные даты',
-                onTap: _showCalendar,
-              ),
-            ),
-          ),
-        ],
+            );
+          } else {
+            return Column(
+              children: [
+                Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    Hero(
+                      tag: widget.trip.id,
+                      child: TripImagesCarousel(
+                        height: MediaQuery.of(context).size.height * .35,
+                        controller: widget._carouselController,
+                        currentImageNotifier: widget._currentImageNotifier,
+                        images: widget.trip.images,
+                        gradient: LinearGradient(
+                          colors: [
+                            kBlack.withOpacity(.35),
+                            kBlack.withOpacity(.2),
+                            kBlack.withOpacity(.1),
+                          ],
+                        ),
+                      ),
+                    ),
+                    FadeAnimationYDown(
+                      delay: .5,
+                      child: IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        padding: const EdgeInsets.only(left: 25, top: 40),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: kWhite,
+                          size: 28,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(0),
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              flex: 3,
+                              child: FadeAnimationYDown(
+                                delay: .6,
+                                child: Text(
+                                  widget.trip.title,
+                                  overflow: TextOverflow.visible,
+                                  maxLines: 2,
+                                  style: kSFProDisplaySemiBold.copyWith(
+                                    height: 1,
+                                    fontSize: 24,
+                                    color: kBlack,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: FadeAnimationYDown(
+                                delay: .7,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/map_arrow.svg',
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        '${widget.trip.distance} км',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: kSFProDisplayMedium.copyWith(
+                                          color: kBlack,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: FadeAnimationYDown(
+                          delay: .8,
+                          child: Text(
+                            widget.trip.locationName,
+                            overflow: TextOverflow.visible,
+                            style: kSFProDisplayRegular.copyWith(
+                              color: kBlack50,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: FadeAnimationYDown(
+                          delay: .8,
+                          child: Text(
+                            widget.trip.description,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: kSFProDisplayRegular.copyWith(
+                              color: kBlack50,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: FadeAnimationYDown(
+                          delay: .8,
+                          child: GestureDetector(
+                            onTap: _showMore,
+                            child: Text(
+                              'Подробнее',
+                              overflow: TextOverflow.ellipsis,
+                              style: kSFProDisplayMedium.copyWith(
+                                color: kBlack,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FadeAnimationX(
+                            delay: .7,
+                            child: TripActionButton(
+                              onTap: () {},
+                              iconPath: 'assets/icons/phone.svg',
+                              text: 'Позвонить',
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          FadeAnimationX(
+                            delay: .8,
+                            child: TripActionButton(
+                              onTap: () {},
+                              iconPath: 'assets/icons/message.svg',
+                              text: 'Написать',
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          FadeAnimationX(
+                            delay: .9,
+                            child: TripActionButton(
+                              onTap: () {},
+                              iconPath: 'assets/icons/share.svg',
+                              text: 'Поделиться',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                FadeAnimationYUp(
+                  delay: 1,
+                  child: BottomContainer(
+                    text: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.trip.minMembersCount}-${widget.trip.maxMembersCount} гостей',
+                          style: kSFProDisplayRegular.copyWith(
+                            color: kBlack50,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          '${widget.trip.minCost} ₽ / сутки',
+                          style: kSFProDisplayMedium.copyWith(
+                            color: kBlack,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    button: RoundedTextButton(
+                      backgroundColor: kBlack,
+                      textColor: kWhite,
+                      text: 'Свободные даты',
+                      onTap: _showCalendar,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }

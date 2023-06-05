@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
+import '../../../../core/common_widgets/error_screen.dart';
 import '../../../../core/common_widgets/trip_message_dialog.dart';
 import '../../../../core/styles/styles.dart';
 
@@ -60,7 +62,13 @@ AppBar buildMenu(
                 ],
               ),
               InkWell(
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(
+                  PageTransition(
+                    duration: const Duration(milliseconds: 250),
+                    type: PageTransitionType.fade,
+                    child: const ErrorScreen(),
+                  ),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
