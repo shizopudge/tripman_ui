@@ -4,7 +4,7 @@ class Trip {
   final String id;
   final String title;
   final String description;
-  final List<DateTime> availableDates;
+  final String locationName;
   final List<String> images;
   final DateTimeRange interval;
   final int minCost;
@@ -14,7 +14,7 @@ class Trip {
   const Trip({
     required this.id,
     required this.description,
-    required this.availableDates,
+    required this.locationName,
     required this.title,
     required this.images,
     required this.interval,

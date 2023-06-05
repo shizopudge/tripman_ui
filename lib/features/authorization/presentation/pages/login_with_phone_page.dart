@@ -7,7 +7,7 @@ import 'package:tripman/core/common_widgets/rounded_text_button.dart';
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/styles/styles.dart';
 import '../bloc/auth_bloc.dart';
-import '../widgets/login_phone_textfield.dart';
+import '../../../../core/common_widgets/trip_text_field.dart';
 import '../widgets/notice.dart';
 import 'code_confirmation_page.dart';
 
@@ -174,11 +174,10 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                           ),
                           child: ValueListenableBuilder(
                             valueListenable: _isEmptyNotifier,
-                            builder: (context, isEmpty, _) =>
-                                LoginPhoneTextField(
+                            builder: (context, isEmpty, _) => TripTextField(
                               onClear: _clearTextField,
-                              phoneController: _phoneController,
-                              phoneFieldFocusNode: _phoneFieldFocusNode,
+                              controller: _phoneController,
+                              focusNode: _phoneFieldFocusNode,
                               isEmpty: isEmpty,
                             ),
                           ),

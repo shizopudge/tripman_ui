@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
+import '../../../../core/common_widgets/trip_message_dialog.dart';
 import '../../../../core/styles/styles.dart';
 
 AppBar buildMenu(
@@ -11,12 +12,12 @@ AppBar buildMenu(
 }) {
   return AppBar(
     automaticallyImplyLeading: false,
-    toolbarHeight: MediaQuery.of(context).size.height * .25,
+    toolbarHeight: MediaQuery.of(context).size.height * .28,
     forceMaterialTransparency: true,
     elevation: 0,
     flexibleSpace: FlexibleSpaceBar(
       background: FadeAnimationYDown(
-        delay: .2,
+        delay: 0,
         child: Container(
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.symmetric(
@@ -68,14 +69,20 @@ AppBar buildMenu(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                        fontSize: MediaQuery.of(context).size.width / 100 * 4,
                       ),
                     ),
                   ],
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async => await showDialog(
+                  context: context,
+                  builder: (context) => const TripMessageDialog(
+                    title: 'Объект добавлен, ожидайте модерации. ',
+                    description: 'Время модерациив среднем\nзанимает 2-3 часа',
+                  ),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -84,7 +91,7 @@ AppBar buildMenu(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                        fontSize: MediaQuery.of(context).size.width / 100 * 4,
                       ),
                     ),
                   ],
@@ -100,7 +107,7 @@ AppBar buildMenu(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                        fontSize: MediaQuery.of(context).size.width / 100 * 4,
                       ),
                     ),
                   ],

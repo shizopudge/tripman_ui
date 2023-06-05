@@ -4,7 +4,8 @@ import '../../animations/fade_animation_x.dart';
 import '../../animations/fade_animation_y_up.dart';
 import '../../service/date_formater.dart';
 import '../../styles/styles.dart';
-import 'calendar_bottom_container.dart';
+import '../rounded_text_button.dart';
+import '../bottom_container.dart';
 import 'default_day.dart';
 import 'disabled_day.dart';
 import 'interval_point.dart';
@@ -12,11 +13,11 @@ import 'start_end_point.dart';
 
 class Calendar extends StatefulWidget {
   final ValueNotifier<DateTimeRange?> _selectedIntervalNotifier;
-  final List<DateTime>? availableDates;
+  final DateTimeRange? availableRange;
   const Calendar({
     super.key,
     required ValueNotifier<DateTimeRange?> selectedIntervalNotifier,
-    this.availableDates,
+    this.availableRange,
   }) : _selectedIntervalNotifier = selectedIntervalNotifier;
 
   @override
@@ -28,17 +29,22 @@ class _CalendarState extends State<Calendar> {
   late final int calendarFirstAvailableDay;
   final List<int> pastDaysOfTheMonth = [];
   final List<int> lastPeviousMonthDays = [];
+  final List<DateTime> availableDates = [];
   final DateTime now = DateTime.now();
   final int currentDay = DateTime.now().day;
   final int monthCount = 12;
 
   @override
   void initState() {
+    _getPastDaysOfTheMonth();
+    if (widget.availableRange != null) {
+      _getAvailableDates(
+        startDate: widget.availableRange!.start,
+        endDate: widget.availableRange!.end,
+      );
+    }
     _calendarSelectedIntervalNotifier =
         ValueNotifier<DateTimeRange?>(widget._selectedIntervalNotifier.value);
-    for (int j = 0; j < currentDay; j++) {
-      pastDaysOfTheMonth.add(j);
-    }
     calendarFirstAvailableDay = pastDaysOfTheMonth.last + 1;
     super.initState();
   }
@@ -47,6 +53,25 @@ class _CalendarState extends State<Calendar> {
   void dispose() {
     _calendarSelectedIntervalNotifier.dispose();
     super.dispose();
+  }
+
+  void _getAvailableDates(
+      {required DateTime startDate, required DateTime endDate}) {
+    for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+      availableDates.add(
+        DateTime(
+          startDate.year,
+          startDate.month,
+          startDate.day + i,
+        ),
+      );
+    }
+  }
+
+  void _getPastDaysOfTheMonth() {
+    for (int j = 0; j < currentDay; j++) {
+      pastDaysOfTheMonth.add(j);
+    }
   }
 
   ({int month, int year, int startWeekday}) _getMonthAndYearAndStartWeekday(
@@ -90,6 +115,30 @@ class _CalendarState extends State<Calendar> {
           required int month}) =>
       pastDaysOfTheMonth.contains(index - 6 - startWeekday - 1) &&
       month == now.month;
+
+  bool _isDayUnavailable({
+    required int index,
+    required ({int month, int year, int startWeekday}) r,
+  }) {
+    if (widget.availableRange == null) {
+      return _isDayPassed(
+        index: index,
+        startWeekday: r.startWeekday,
+        month: r.month,
+      );
+    } else {
+      final DateTime date = _generateDateTime(index: index, r: r);
+      if (!availableDates.contains(date) ||
+          _isDayPassed(
+            index: index,
+            startWeekday: r.startWeekday,
+            month: r.month,
+          )) {
+        return true;
+      }
+      return false;
+    }
+  }
 
   void _onButtonTap() {
     widget._selectedIntervalNotifier.value =
@@ -252,7 +301,7 @@ class _CalendarState extends State<Calendar> {
                       itemBuilder: (context, index) {
                         if (index < 7) {
                           return FadeAnimationX(
-                            delay: .2 + index / 50,
+                            delay: .2 + index / 25,
                             child: Center(
                               child: Text(
                                 DateFormater.datePickerWeekdayFormater(
@@ -272,20 +321,17 @@ class _CalendarState extends State<Calendar> {
                                 7 + monthAndYearAndStartWeekday.startWeekday) {
                           k++;
                           return FadeAnimationX(
-                            delay: .2 + index / 50,
+                            delay: .2 + index / 25,
                             child: DisabledDay(
                               day: lastPeviousMonthDays.reversed
                                   .toList()[k - 1]
                                   .toString(),
                             ),
                           );
-                        } else if (_isDayPassed(
-                            index: index,
-                            startWeekday:
-                                monthAndYearAndStartWeekday.startWeekday,
-                            month: monthAndYearAndStartWeekday.month)) {
+                        } else if (_isDayUnavailable(
+                            index: index, r: monthAndYearAndStartWeekday)) {
                           return FadeAnimationX(
-                            delay: .2 + index / 50,
+                            delay: .2 + index / 25,
                             child: DisabledDay(
                               day: (index -
                                       6 -
@@ -295,7 +341,7 @@ class _CalendarState extends State<Calendar> {
                           );
                         } else {
                           return FadeAnimationX(
-                            delay: .2 + index / 50,
+                            delay: .2 + index / 25,
                             child: Center(
                               child: InkWell(
                                 onTap: () => _onDateCellTap(
@@ -391,9 +437,38 @@ class _CalendarState extends State<Calendar> {
           delay: .8,
           child: ValueListenableBuilder(
             valueListenable: _calendarSelectedIntervalNotifier,
-            builder: (context, selectedInterval, _) => CalendarBottomContainer(
-              onTap: _onButtonTap,
-              selectedInterval: selectedInterval,
+            builder: (context, selectedInterval, _) => BottomContainer(
+              text: Text(
+                DateFormater.datesFieldDateFormater(
+                  interval: selectedInterval != null &&
+                          selectedInterval.start != selectedInterval.end
+                      ? selectedInterval
+                      : null,
+                ),
+                overflow: TextOverflow.visible,
+                style: kSFProDisplayMedium.copyWith(
+                  fontSize: 16,
+                  color: selectedInterval != null &&
+                          selectedInterval.start != selectedInterval.end
+                      ? kBlack
+                      : kBlack50,
+                ),
+              ),
+              button: RoundedTextButton(
+                backgroundColor: selectedInterval != null &&
+                        selectedInterval.start != selectedInterval.end
+                    ? kBlack
+                    : kBlack10,
+                textColor: selectedInterval != null &&
+                        selectedInterval.start != selectedInterval.end
+                    ? kWhite
+                    : kBlack50,
+                text: 'Забронировать',
+                onTap: selectedInterval != null &&
+                        selectedInterval.start != selectedInterval.end
+                    ? _onButtonTap
+                    : null,
+              ),
             ),
           ),
         ),

@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/styles/styles.dart';
+import '../styles/styles.dart';
 
-class LoginPhoneTextField extends StatelessWidget {
-  final bool isEmpty;
-  final VoidCallback onClear;
-  final TextEditingController _phoneController;
-  final FocusNode _phoneFieldFocusNode;
-  const LoginPhoneTextField({
+class TripTextField extends StatelessWidget {
+  final bool? isEmpty;
+  final bool isReadOnly;
+  final VoidCallback? onTap;
+  final VoidCallback? onClear;
+  final TextEditingController _controller;
+  final FocusNode? _focusNode;
+  const TripTextField({
     super.key,
-    required FocusNode phoneFieldFocusNode,
-    required TextEditingController phoneController,
-    required this.isEmpty,
-    required this.onClear,
-  })  : _phoneController = phoneController,
-        _phoneFieldFocusNode = phoneFieldFocusNode;
+    FocusNode? focusNode,
+    required TextEditingController controller,
+    this.isEmpty,
+    this.onClear,
+    this.onTap,
+    this.isReadOnly = false,
+  })  : _controller = controller,
+        _focusNode = focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: _phoneController,
-      focusNode: _phoneFieldFocusNode,
+      onTap: onTap,
+      controller: _controller,
+      focusNode: _focusNode,
       keyboardType: TextInputType.phone,
       cursorColor: kBlack,
       cursorWidth: 1.0,
@@ -30,19 +35,22 @@ class LoginPhoneTextField extends StatelessWidget {
         fontSize: 16,
         height: 1,
       ),
+      readOnly: isReadOnly,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 16,
         ),
-        suffixIcon: !isEmpty
-            ? IconButton(
-                onPressed: onClear,
-                icon: const Icon(
-                  Icons.close,
-                  color: kBlack,
-                ),
-              )
+        suffixIcon: isEmpty != null
+            ? isEmpty!
+                ? null
+                : IconButton(
+                    onPressed: onClear,
+                    icon: const Icon(
+                      Icons.close,
+                      color: kBlack,
+                    ),
+                  )
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
