@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/common_widgets/rounded_row_icon_button.dart';
 import '../../../../core/styles/styles.dart';
-import 'notice.dart';
+import '../../../../core/widgets/buttons/rounded_border_button.dart';
+import '../../../../core/widgets/text/notice.dart';
 
 class AuthTypeMenu extends StatelessWidget {
   final VoidCallback withPhone;
@@ -32,56 +33,80 @@ class AuthTypeMenu extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
+            RoundedBorderButton(
+              onTap: withPhone,
+              borderColor: kBlack.withOpacity(.2),
+              margin: const EdgeInsets.only(
                 bottom: 20,
               ),
-              child: RoundedRowIconButton(
-                iconPath: 'assets/icons/phone.svg',
-                text: 'Войти по номеру телефона',
-                backgroundColor: kWhite,
-                borderColor: kBlack.withOpacity(.2),
-                textStyle: kSFProDisplayMedium.copyWith(
-                  color: kBlack,
-                  fontSize: 16,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/phone.svg',
                 ),
-                onTap: withPhone,
-                verticalPadding: 13,
-              ),
+                const SizedBox(
+                  width: 14,
+                ),
+                Flexible(
+                  child: Text(
+                    'Войти по номеру телефона',
+                    overflow: TextOverflow.ellipsis,
+                    style: kSFProDisplayMedium.copyWith(
+                      fontSize: 16,
+                      color: kBlack,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(
+            RoundedBorderButton(
+              onTap: withGoogle,
+              borderColor: kBlack.withOpacity(.2),
+              margin: const EdgeInsets.only(
                 bottom: 20,
               ),
-              child: RoundedRowIconButton(
-                iconPath: 'assets/icons/google.svg',
-                text: 'Войти через Google',
-                backgroundColor: kWhite,
-                borderColor: kBlack.withOpacity(.2),
-                onTap: withGoogle,
-                verticalPadding: 13,
-                textStyle: kSFProDisplayMedium.copyWith(
-                  color: kBlack,
-                  fontSize: 16,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/google.svg',
                 ),
-              ),
+                const SizedBox(
+                  width: 14,
+                ),
+                Flexible(
+                  child: Text(
+                    'Войти через Google',
+                    overflow: TextOverflow.ellipsis,
+                    style: kSFProDisplayMedium.copyWith(
+                      fontSize: 16,
+                      color: kBlack,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(
+            RoundedBorderButton(
+              onTap: withApple,
+              backgroundColor: kBlack,
+              borderColor: kBlack,
+              margin: const EdgeInsets.only(
                 bottom: 20,
               ),
-              child: RoundedRowIconButton(
-                iconPath: 'assets/icons/apple.svg',
-                text: 'Войти через Apple',
-                backgroundColor: kBlack,
-                borderColor: kBlack,
-                textStyle: kSFProDisplayMedium.copyWith(
-                  color: kWhite,
-                  fontSize: 16,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/apple.svg',
                 ),
-                onTap: withApple,
-                verticalPadding: 13,
-              ),
+                const SizedBox(
+                  width: 14,
+                ),
+                Flexible(
+                  child: Text(
+                    'Войти через Apple',
+                    overflow: TextOverflow.ellipsis,
+                    style: kSFProDisplayMedium.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const Notice(),
           ],

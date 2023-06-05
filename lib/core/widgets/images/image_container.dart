@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class TripImage extends StatelessWidget {
+class ImageContainer extends StatelessWidget {
   final double height;
-  final ImageProvider<Object> imageProvider;
+  final DecorationImage image;
   final BorderRadius? borderRadius;
   final LinearGradient? gradient;
   final AlignmentGeometry? gradientAlignment;
-  const TripImage({
+  const ImageContainer({
     super.key,
     required this.height,
-    required this.imageProvider,
+    required this.image,
     this.borderRadius,
     this.gradient,
     this.gradientAlignment,
@@ -22,10 +22,7 @@ class TripImage extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        image: DecorationImage(
-          image: imageProvider,
-          fit: BoxFit.cover,
-        ),
+        image: image,
       ),
       child: gradient != null
           ? Container(

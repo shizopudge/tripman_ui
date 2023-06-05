@@ -1,13 +1,14 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'distance.dart';
+import '../../../../core/widgets/buttons/rounded_border_button.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/service/date_formater.dart';
 import '../../../../core/styles/styles.dart';
 import '../../../trip/presentation/pages/trip_page.dart';
-import '../../../../core/common_widgets/trip_images_carousel.dart';
+import '../../../../core/widgets/images/images_carousel.dart';
 
 class TripCard extends StatefulWidget {
   final Trip trip;
@@ -73,7 +74,7 @@ class _TripCardState extends State<TripCard> {
               children: [
                 Hero(
                   tag: widget.trip.id,
-                  child: TripImagesCarousel(
+                  child: ImagesCarousel(
                     height: 335,
                     controller: _carouselController,
                     currentImageNotifier: _currentImageNotifier,
@@ -153,8 +154,35 @@ class _TripCardState extends State<TripCard> {
                 ),
               ],
             ),
-            Distance(
-              distance: widget.trip.distance,
+            Align(
+              alignment: Alignment.topRight,
+              child: RoundedBorderButton(
+                onTap: () {},
+                mainAxisSize: MainAxisSize.min,
+                backgroundColor: kWhite,
+                borderColor: kWhite,
+                horizontalPadding: 8,
+                verticalPadding: 6,
+                margin: const EdgeInsets.only(right: 16, top: 16),
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/map_arrow.svg',
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  Flexible(
+                    child: Text(
+                      '${widget.trip.distance} км',
+                      overflow: TextOverflow.ellipsis,
+                      style: kSFProDisplayRegular.copyWith(
+                        fontSize: 15,
+                        color: kBlack,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/common_widgets/error_screen.dart';
-import '../../../../core/common_widgets/trip_message_dialog.dart';
+import '../../../../core/widgets/dialogs/notification_dialog.dart';
+import '../pages/error_page.dart';
 import '../../../../core/styles/styles.dart';
 
 AppBar buildMenu(
@@ -86,9 +86,9 @@ AppBar buildMenu(
               InkWell(
                 onTap: () async => await showDialog(
                   context: context,
-                  builder: (context) => const TripMessageDialog(
+                  builder: (context) => const NotificationDialog(
                     title: 'Объект добавлен, ожидайте модерации. ',
-                    description: 'Время модерациив среднем\nзанимает 2-3 часа',
+                    description: 'Время модерации среднем\nзанимает 2-3 часа',
                   ),
                 ),
                 child: Row(

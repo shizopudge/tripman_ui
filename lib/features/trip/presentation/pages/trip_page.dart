@@ -6,16 +6,16 @@ import 'package:page_transition/page_transition.dart';
 import '../../../../core/animations/fade_animation_x.dart';
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/common_widgets/bottom_container.dart';
-import '../../../../core/common_widgets/date_range_picker/calendar_bottom_sheet.dart';
-import '../../../../core/common_widgets/rounded_text_button.dart';
-import '../../../../core/common_widgets/trip_message_dialog.dart';
-import '../../../../core/common_widgets/trip_images_carousel.dart';
-import '../../../../core/common_widgets/trip_review_dialog.dart';
+import '../../../../core/widgets/common/bottom_container.dart';
+import '../../../../core/widgets/bottom_sheet/sized_bottom_sheet.dart';
+import '../../../../core/widgets/calendar/calendar.dart';
+import '../../../../core/widgets/buttons/rounded_text_button.dart';
+import '../../../../core/widgets/dialogs/notification_dialog.dart';
+import '../../../../core/widgets/images/images_carousel.dart';
+import '../../../../core/widgets/dialogs/review_dialog.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/styles/styles.dart';
-import '../widgets/more_bottom_sheet.dart';
-import '../widgets/trip_action_button.dart';
+import '../../../../core/widgets/buttons/rectangle_button.dart';
 import 'request_page.dart';
 
 class TripPage extends StatefulWidget {
@@ -82,7 +82,7 @@ class _TripPageState extends State<TripPage> {
         Duration.zero,
         () async => await showDialog(
           context: context,
-          builder: (context) => const TripMessageDialog(
+          builder: (context) => const NotificationDialog(
             title: 'Ваша заявка успешно отправлена',
             description: 'Бронирование будет подтверждено\nв течении 24 часов',
           ),
@@ -91,7 +91,7 @@ class _TripPageState extends State<TripPage> {
             _isRequestSentNotifier.value = false;
             await showDialog(
               context: context,
-              builder: (context) => const TripReviewDialog(),
+              builder: (context) => const ReviewDialog(),
             );
           },
         ),
@@ -106,8 +106,16 @@ class _TripPageState extends State<TripPage> {
         useSafeArea: true,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return MoreBottomSheet(
-            description: widget.trip.description,
+          return SizedBottomSheet(
+            heightFactor: .65,
+            title: 'Подробнее',
+            child: Text(
+              widget.trip.description,
+              style: kSFProDisplayRegular.copyWith(
+                color: kBlack,
+                fontSize: 15,
+              ),
+            ),
           );
         },
       );
@@ -121,9 +129,14 @@ class _TripPageState extends State<TripPage> {
       useSafeArea: true,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return CalendarBottomSheet(
-          selectedIntervalNotifier: _selectedIntervalNotifier,
-          availableRange: widget.trip.interval,
+        return SizedBottomSheet(
+          heightFactor: .8,
+          title: 'Даты поездки',
+          isScrollable: false,
+          child: Calendar(
+            selectedIntervalNotifier: _selectedIntervalNotifier,
+            availableRange: widget.trip.interval,
+          ),
         );
       },
     );
@@ -183,8 +196,6 @@ class _TripPageState extends State<TripPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: RoundedTextButton(
-                          backgroundColor: kBlack,
-                          textColor: kWhite,
                           text: 'На главную',
                           onTap: () => Navigator.of(context).pop(),
                         ),
@@ -202,7 +213,7 @@ class _TripPageState extends State<TripPage> {
                   children: [
                     Hero(
                       tag: widget.trip.id,
-                      child: TripImagesCarousel(
+                      child: ImagesCarousel(
                         height: MediaQuery.of(context).size.height * .35,
                         controller: widget._carouselController,
                         currentImageNotifier: widget._currentImageNotifier,
@@ -214,6 +225,7 @@ class _TripPageState extends State<TripPage> {
                             kBlack.withOpacity(.1),
                           ],
                         ),
+                        gradientAlignment: Alignment.topLeft,
                       ),
                     ),
                     FadeAnimationYDown(
@@ -348,7 +360,7 @@ class _TripPageState extends State<TripPage> {
                         children: [
                           FadeAnimationX(
                             delay: .7,
-                            child: TripActionButton(
+                            child: RectangleButton(
                               onTap: () {},
                               iconPath: 'assets/icons/phone.svg',
                               text: 'Позвонить',
@@ -359,7 +371,7 @@ class _TripPageState extends State<TripPage> {
                           ),
                           FadeAnimationX(
                             delay: .8,
-                            child: TripActionButton(
+                            child: RectangleButton(
                               onTap: () {},
                               iconPath: 'assets/icons/message.svg',
                               text: 'Написать',
@@ -370,7 +382,7 @@ class _TripPageState extends State<TripPage> {
                           ),
                           FadeAnimationX(
                             delay: .9,
-                            child: TripActionButton(
+                            child: RectangleButton(
                               onTap: () {},
                               iconPath: 'assets/icons/share.svg',
                               text: 'Поделиться',
@@ -383,8 +395,8 @@ class _TripPageState extends State<TripPage> {
                 ),
                 FadeAnimationYUp(
                   delay: 1,
-                  child: BottomContainer(
-                    text: Column(
+                  child: BottomShadowContainer(
+                    left: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -403,9 +415,7 @@ class _TripPageState extends State<TripPage> {
                         ),
                       ],
                     ),
-                    button: RoundedTextButton(
-                      backgroundColor: kBlack,
-                      textColor: kWhite,
+                    right: RoundedTextButton(
                       text: 'Свободные даты',
                       onTap: _showCalendar,
                     ),

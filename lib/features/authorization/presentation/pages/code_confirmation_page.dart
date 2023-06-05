@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/common_widgets/rounded_text_button.dart';
+import '../../../../core/widgets/buttons/rounded_border_button.dart';
 import '../../../../core/styles/styles.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/phone_code_input.dart';
@@ -225,12 +225,20 @@ class _CodeConfirmationPageState extends State<CodeConfirmationPage> {
                                       ),
                                     );
                                   } else {
-                                    return RoundedTextButton(
-                                      backgroundColor: Colors.transparent,
-                                      borderColor: kBlack.withOpacity(.2),
-                                      textColor: kBlack,
-                                      text: 'Отправить код повторно',
+                                    return RoundedBorderButton(
                                       onTap: _sendCodeAgain,
+                                      borderColor: kBlack.withOpacity(
+                                        .2,
+                                      ),
+                                      children: [
+                                        Text(
+                                          'Отправить код повторно',
+                                          style: kSFProDisplayMedium.copyWith(
+                                            fontSize: 16,
+                                            color: kBlack,
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   }
                                 },

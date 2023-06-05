@@ -1,12 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/common_widgets/trip_image.dart';
-import '../../../../core/common_widgets/trip_image_placeholder.dart';
-import '../../../../core/entities/trip.dart';
-import '../../../../core/service/date_formater.dart';
-import '../../../../core/styles/styles.dart';
-import 'request_text_row.dart';
+import '../../entities/trip.dart';
+import '../../service/date_formater.dart';
+import '../../styles/styles.dart';
+import '../images/image_cached.dart';
 
 class RequestCard extends StatelessWidget {
   final Trip trip;
@@ -28,33 +25,9 @@ class RequestCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CachedNetworkImage(
+          ImageCached(
             imageUrl: trip.images.first,
-            imageBuilder: (context, imageProvider) => TripImage(
-              height: 160,
-              imageProvider: imageProvider,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(
-                  20,
-                ),
-              ),
-            ),
-            placeholder: (context, url) => const TripImagePlaceholder(
-              height: 160,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(
-                  20,
-                ),
-              ),
-            ),
-            errorWidget: (context, url, error) => const TripImagePlaceholder(
-              height: 160,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(
-                  20,
-                ),
-              ),
-            ),
+            height: 160,
           ),
           Container(
             padding: const EdgeInsets.symmetric(
@@ -84,7 +57,7 @@ class RequestCard extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                RequestTextRow(
+                RequestCardTextRow(
                   title: 'Заезд',
                   info: DateFormater.datesFieldDateFormater(
                     interval: selectedInterval,
@@ -93,14 +66,14 @@ class RequestCard extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                RequestTextRow(
+                RequestCardTextRow(
                   title: 'Вместимость',
                   info: '${trip.minMembersCount}-${trip.maxMembersCount}',
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                RequestTextRow(
+                RequestCardTextRow(
                   title: 'Оплата',
                   info: '${trip.minCost} ₽ / сутки',
                 ),
@@ -109,6 +82,45 @@ class RequestCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RequestCardTextRow extends StatelessWidget {
+  final String title;
+  final String info;
+  const RequestCardTextRow({
+    super.key,
+    required this.title,
+    required this.info,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: kSFProDisplayRegular.copyWith(
+            color: kBlack50,
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        Flexible(
+          child: Text(
+            info,
+            overflow: TextOverflow.visible,
+            style: kSFProDisplayRegular.copyWith(
+              fontSize: 15,
+              color: kBlack,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

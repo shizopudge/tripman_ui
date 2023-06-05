@@ -6,14 +6,14 @@ import 'package:page_transition/page_transition.dart';
 import '../../../../core/animations/fade_animation.dart';
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/common_widgets/error_message_widget.dart';
-import '../../../../core/common_widgets/loader.dart';
+import '../../../../core/widgets/common/error_message.dart';
+import '../../../../core/widgets/common/loader.dart';
 import '../../../../core/enums/auth_type.dart';
 import '../../../../core/styles/styles.dart';
 import '../../../home/presentation/pages/home_page.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/authorization_type_menu.dart';
-import '../widgets/logo.dart';
+import '../../../../core/widgets/text/logo.dart';
 import 'login_with_phone_page.dart';
 
 class StartPage extends StatelessWidget {
@@ -128,7 +128,7 @@ class StartPage extends StatelessWidget {
                       const Spacer(),
                       FadeAnimation(
                         delay: 1,
-                        child: ErrorMessageWidget(
+                        child: ErrorMessage(
                           iconPath: 'assets/icons/error.svg',
                           message: errorState.message,
                         ),

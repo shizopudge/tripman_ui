@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../styles/styles.dart';
+import '../../styles/styles.dart';
 
-class ErrorMessageWidget extends StatelessWidget {
+class ErrorMessage extends StatelessWidget {
   final String iconPath;
   final String message;
   final Color? color;
-  const ErrorMessageWidget({
+  const ErrorMessage({
     super.key,
     required this.message,
     required this.iconPath,

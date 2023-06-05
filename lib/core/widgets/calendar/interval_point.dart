@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../styles/styles.dart';
 
-class IntervalPoint extends StatelessWidget {
+class IntervaledDay extends StatelessWidget {
   final String day;
   final BorderRadius? borderRadius;
-  const IntervalPoint({
+  const IntervaledDay({
     super.key,
     required this.day,
     required this.borderRadius,

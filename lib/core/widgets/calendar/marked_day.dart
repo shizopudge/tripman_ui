@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../styles/styles.dart';
 
-class StartEndPoint extends StatelessWidget {
+class MarkedDay extends StatelessWidget {
   final String day;
   final bool isStart;
   final bool isEqual;
   final bool isOnEdge;
-  const StartEndPoint({
+  const MarkedDay({
     super.key,
     required this.day,
     required this.isStart,

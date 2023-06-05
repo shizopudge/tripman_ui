@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../animations/fade_animation_y_down.dart';
-import '../animations/fade_animation_y_up.dart';
-import '../styles/styles.dart';
-import 'loader.dart';
-import 'rounded_text_button.dart';
+import '../../../../core/animations/fade_animation_y_down.dart';
+import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/styles/styles.dart';
+import '../../../../core/widgets/common/loader.dart';
+import '../../../../core/widgets/buttons/rounded_text_button.dart';
 
 class ErrorScreen extends StatefulWidget {
   const ErrorScreen({super.key});
@@ -97,8 +97,6 @@ class _ErrorScreenState extends State<ErrorScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: RoundedTextButton(
-                          backgroundColor: kBlack,
-                          textColor: kWhite,
                           text: 'Обновить',
                           onTap: _refresh,
                         ),

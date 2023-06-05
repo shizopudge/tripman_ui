@@ -36,6 +36,7 @@ class IntervalField extends StatelessWidget {
               child: InkWell(
                 onTap: interval == null ? null : onTap,
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     SvgPicture.asset(
                       'assets/icons/calendar.svg',
@@ -44,19 +45,26 @@ class IntervalField extends StatelessWidget {
                       width: 15,
                     ),
                     Flexible(
-                      child: Text(
-                        DateFormater.datesFieldDateFormater(interval: interval),
-                        overflow: TextOverflow.ellipsis,
-                        style: kSFProDisplayMedium.copyWith(
-                          color: interval != null ? kBlack : kBlack50,
-                          height: 1,
-                          fontSize: 16,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          DateFormater.datesFieldDateFormater(
+                              interval: interval),
+                          overflow: TextOverflow.ellipsis,
+                          style: kSFProDisplayMedium.copyWith(
+                            color: interval != null ? kBlack : kBlack50,
+                            height: 1,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              width: 8,
             ),
             if (interval != null)
               InkWell(

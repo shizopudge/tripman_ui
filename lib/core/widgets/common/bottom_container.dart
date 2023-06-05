@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../styles/styles.dart';
-import 'rounded_text_button.dart';
+import '../../styles/styles.dart';
 
-class BottomContainer extends StatelessWidget {
-  final Widget text;
-  final RoundedTextButton button;
-  const BottomContainer({
+class BottomShadowContainer extends StatelessWidget {
+  final Widget left;
+  final Widget right;
+  const BottomShadowContainer({
     super.key,
-    required this.text,
-    required this.button,
+    required this.left,
+    required this.right,
   });
 
   @override
@@ -35,14 +34,14 @@ class BottomContainer extends StatelessWidget {
           children: [
             Flexible(
               flex: 2,
-              child: text,
+              child: left,
             ),
             const SizedBox(
               width: 24,
             ),
             Flexible(
               flex: 3,
-              child: button,
+              child: right,
             ),
           ],
         ),

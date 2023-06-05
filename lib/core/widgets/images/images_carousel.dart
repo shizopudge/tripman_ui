@@ -1,12 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:tripman/core/widgets/images/image_cached.dart';
 
-import '../styles/styles.dart';
-import 'trip_image.dart';
-import 'trip_image_placeholder.dart';
+import '../../styles/styles.dart';
 
-class TripImagesCarousel extends StatelessWidget {
+class ImagesCarousel extends StatelessWidget {
   final double height;
   final List<String> images;
   final CarouselController _controller;
@@ -14,13 +12,15 @@ class TripImagesCarousel extends StatelessWidget {
   final BorderRadius? imagesBorderRadius;
   final LinearGradient? gradient;
   final AlignmentGeometry? gradientAlignment;
-  const TripImagesCarousel({
+  final BoxFit? fit;
+  const ImagesCarousel({
     super.key,
     required this.images,
     required this.height,
     this.imagesBorderRadius,
     this.gradient,
     this.gradientAlignment,
+    this.fit,
     required CarouselController controller,
     required ValueNotifier<int> currentImageNotifier,
   })  : _controller = controller,
@@ -37,23 +37,13 @@ class TripImagesCarousel extends StatelessWidget {
             carouselController: _controller,
             items: images
                 .map(
-                  (image) => CachedNetworkImage(
+                  (image) => ImageCached(
                     imageUrl: image,
-                    imageBuilder: (context, imageProvider) => TripImage(
-                      borderRadius: imagesBorderRadius,
-                      height: height,
-                      imageProvider: imageProvider,
-                      gradient: gradient,
-                      gradientAlignment: gradientAlignment,
-                    ),
-                    placeholder: (context, url) => TripImagePlaceholder(
-                      borderRadius: imagesBorderRadius,
-                      height: height,
-                    ),
-                    errorWidget: (context, url, error) => TripImagePlaceholder(
-                      borderRadius: imagesBorderRadius,
-                      height: height,
-                    ),
+                    height: height,
+                    borderRadius: imagesBorderRadius,
+                    gradient: gradient,
+                    gradientAlignment: gradientAlignment,
+                    fit: fit,
                   ),
                 )
                 .toList(),

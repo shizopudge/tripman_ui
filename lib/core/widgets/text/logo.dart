@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/styles/styles.dart';
+import '../../styles/styles.dart';
 
 class Logo extends StatelessWidget {
   const Logo({

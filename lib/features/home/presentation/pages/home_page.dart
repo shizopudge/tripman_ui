@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:tripman/core/common_widgets/rounded_text_button.dart';
+import 'package:tripman/core/widgets/bottom_sheet/sized_bottom_sheet.dart';
+import 'package:tripman/core/widgets/calendar/calendar.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/common_widgets/date_range_picker/calendar_bottom_sheet.dart';
-import '../../../../core/common_widgets/error_message_widget.dart';
-import '../../../../core/common_widgets/loader.dart';
-import '../../../../core/common_widgets/rounded_row_icon_button.dart';
+import '../../../../core/widgets/buttons/rounded_border_button.dart';
+import '../../../../core/widgets/buttons/rounded_text_button.dart';
+import '../../../../core/widgets/common/error_message.dart';
+import '../../../../core/widgets/common/loader.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/entities/trip_type.dart';
@@ -86,8 +87,13 @@ class _HomePageState extends State<HomePage> {
         useSafeArea: true,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return CalendarBottomSheet(
-            selectedIntervalNotifier: _selectedIntervalNotifier,
+          return SizedBottomSheet(
+            heightFactor: .8,
+            title: 'Даты поездки',
+            isScrollable: false,
+            child: Calendar(
+              selectedIntervalNotifier: _selectedIntervalNotifier,
+            ),
           );
         },
       );
@@ -183,19 +189,29 @@ class _HomePageState extends State<HomePage> {
                 ),
           floatingActionButton: FadeAnimationYUp(
             delay: 1.2,
-            child: RoundedRowIconButton(
-              mainAxisSize: MainAxisSize.min,
-              iconPath: 'assets/icons/map.svg',
-              text: 'На карте',
+            child: RoundedBorderButton(
               onTap: _mapTap,
-              verticalPadding: 14,
-              horizontalPadding: 25,
+              mainAxisSize: MainAxisSize.min,
               backgroundColor: kBlack,
               borderColor: kBlack,
-              inRowPadding: 13,
-              textStyle: kSFProDisplayMedium.copyWith(
-                fontSize: 16,
-              ),
+              horizontalPadding: 25,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/map.svg',
+                ),
+                const SizedBox(
+                  width: 13,
+                ),
+                Flexible(
+                  child: Text(
+                    'На карте',
+                    overflow: TextOverflow.ellipsis,
+                    style: kSFProDisplayMedium.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           floatingActionButtonLocation:
@@ -325,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            ErrorMessageWidget(
+                            ErrorMessage(
                               message: errorState.message,
                               iconPath: 'assets/icons/error.svg',
                               color: kBlack,
@@ -393,10 +409,10 @@ class MessageBanner extends StatelessWidget {
             height: 16,
           ),
           RoundedTextButton(
-            backgroundColor: kWhite,
-            textColor: kBlack,
-            text: 'Кнопка',
+            isEnabled: true,
             onTap: () => ScaffoldMessenger.of(context).clearMaterialBanners(),
+            text: 'Кнопка',
+            invertColors: true,
           ),
         ],
       ),

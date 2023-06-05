@@ -3,12 +3,13 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/common_widgets/rounded_text_button.dart';
-import '../../../../core/common_widgets/trip_text_field.dart';
+import '../../../../core/widgets/bottom_sheet/scaffold_bottom_sheet.dart';
+import '../../../../core/widgets/buttons/rounded_text_button.dart';
+import '../../../../core/widgets/common/default_text_field.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/styles/styles.dart';
-import '../../../../core/common_widgets/comment_bottom_sheet.dart';
-import '../widgets/request_card.dart';
+
+import '../../../../core/widgets/cards/request_card.dart';
 
 class RequestPage extends StatefulWidget {
   final Trip trip;
@@ -49,13 +50,13 @@ class _RequestPageState extends State<RequestPage> {
   void _phoneListener() {
     if (_phoneController.text.isNotEmpty) {
       _isPhoneFieldEmptyNotifier.value = false;
-      if (_phoneController.text.length > 3) {
-        _isPhoneFieldValidatedNotifier.value = true;
-      } else {
-        _isPhoneFieldValidatedNotifier.value = false;
-      }
     } else {
       _isPhoneFieldEmptyNotifier.value = true;
+    }
+    if (_phoneController.text.length > 3) {
+      _isPhoneFieldValidatedNotifier.value = true;
+    } else {
+      _isPhoneFieldValidatedNotifier.value = false;
     }
   }
 
@@ -71,9 +72,21 @@ class _RequestPageState extends State<RequestPage> {
         useSafeArea: true,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return CommentBottomSheet(
-            commentController: _commentController,
-            commentFocusNode: _commentFocusNode,
+          return ScaffoldBottomSheet(
+            title: 'Комментарий',
+            child: TextField(
+              controller: _commentController,
+              focusNode: _commentFocusNode,
+              cursorColor: kBlack,
+              maxLines: 5,
+              style: kSFProDisplayRegular.copyWith(
+                color: kBlack,
+                fontSize: 15,
+              ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+              ),
+            ),
           );
         },
       );
@@ -163,7 +176,7 @@ class _RequestPageState extends State<RequestPage> {
                     delay: .9,
                     child: ValueListenableBuilder(
                       valueListenable: _isPhoneFieldEmptyNotifier,
-                      builder: (context, isEmpty, _) => TripTextField(
+                      builder: (context, isEmpty, _) => DefaultTextField(
                         controller: _phoneController,
                         focusNode: _phoneFocusNode,
                         isEmpty: isEmpty,
@@ -189,7 +202,7 @@ class _RequestPageState extends State<RequestPage> {
                   ),
                   FadeAnimationYDown(
                     delay: 1.1,
-                    child: TripTextField(
+                    child: DefaultTextField(
                       controller: _commentController,
                       isReadOnly: true,
                       onTap: _showCommentSheet,
@@ -219,10 +232,9 @@ class _RequestPageState extends State<RequestPage> {
                   valueListenable: _isPhoneFieldValidatedNotifier,
                   builder: (context, isPhoneFieldValidated, _) =>
                       RoundedTextButton(
-                    backgroundColor: isPhoneFieldValidated ? kBlack : kBlack10,
-                    textColor: isPhoneFieldValidated ? kWhite : kBlack50,
+                    isEnabled: isPhoneFieldValidated,
                     text: 'Отправить заявку',
-                    onTap: isPhoneFieldValidated ? _sendRequest : null,
+                    onTap: _sendRequest,
                   ),
                 ),
               ),

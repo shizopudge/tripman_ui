@@ -3,10 +3,10 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/styles/styles.dart';
 
-class TripImagePlaceholder extends StatelessWidget {
+class ImagePlaceholder extends StatelessWidget {
   final double height;
   final BorderRadius? borderRadius;
-  const TripImagePlaceholder({
+  const ImagePlaceholder({
     super.key,
     required this.height,
     this.borderRadius,

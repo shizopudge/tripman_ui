@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../styles/styles.dart';
 
-class DisabledDay extends StatelessWidget {
+class UnavailableDay extends StatelessWidget {
   final String day;
-  const DisabledDay({
+  const UnavailableDay({
     super.key,
     required this.day,
   });

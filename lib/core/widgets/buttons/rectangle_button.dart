@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/styles/styles.dart';
+import '../../styles/styles.dart';
 
-class TripActionButton extends StatelessWidget {
+class RectangleButton extends StatelessWidget {
   final VoidCallback onTap;
   final String iconPath;
   final String text;
-  const TripActionButton({
+  const RectangleButton({
     super.key,
     required this.onTap,
     required this.iconPath,

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../styles/styles.dart';
+import '../../styles/styles.dart';
 
-class TripTextField extends StatelessWidget {
+class DefaultTextField extends StatelessWidget {
   final bool? isEmpty;
   final bool isReadOnly;
   final VoidCallback? onTap;
   final VoidCallback? onClear;
   final TextEditingController _controller;
   final FocusNode? _focusNode;
-  const TripTextField({
+  const DefaultTextField({
     super.key,
     FocusNode? focusNode,
     required TextEditingController controller,
