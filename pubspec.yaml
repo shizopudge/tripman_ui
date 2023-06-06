@@ -27,10 +27,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
 flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/images/
     - assets/fonts/
   fonts:
     - family: SF-Pro-Display
