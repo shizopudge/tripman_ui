@@ -41,6 +41,12 @@ class _TripCardState extends State<TripCard> {
       );
 
   @override
+  void dispose() {
+    _currentImageNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _navigateToTripPage,

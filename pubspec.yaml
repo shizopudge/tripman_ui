@@ -19,6 +19,7 @@ dependencies:
   meta: ^1.9.1
   page_transition: ^2.0.9
   pinput: ^2.2.31
+  restart_app: ^1.2.1
   shimmer: ^3.0.0
   simple_animations: ^5.0.0+3
 

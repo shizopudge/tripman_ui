@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../../../../core/enums/auth_type.dart';
 
@@ -93,6 +94,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         milliseconds: 1000,
       ),
     );
-    emit(AuthInititalState());
+    await Restart.restartApp();
   }
 }
