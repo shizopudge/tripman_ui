@@ -22,8 +22,12 @@ class RectangleButton extends StatelessWidget {
         20,
       ),
       child: Container(
-        height: MediaQuery.of(context).size.height * .1,
-        width: MediaQuery.of(context).size.width * .28,
+        height: MediaQuery.of(context).size.height * .15,
+        width: MediaQuery.of(context).size.width * .26,
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.height * .01,
+          vertical: MediaQuery.of(context).size.width * .015,
+        ),
         decoration: BoxDecoration(
           border: Border.all(color: kBlack.withOpacity(.2)),
           borderRadius: BorderRadius.circular(
@@ -41,6 +45,7 @@ class RectangleButton extends StatelessWidget {
             ),
             Text(
               text,
+              overflow: TextOverflow.ellipsis,
               style: kSFProDisplayRegular.copyWith(
                 color: kBlack,
                 fontSize: MediaQuery.of(context).size.width / 100 * 3.5,

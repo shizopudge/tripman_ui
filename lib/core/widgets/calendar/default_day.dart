@@ -12,7 +12,6 @@ class DefaultDay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       height: double.maxFinite,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
@@ -22,7 +21,7 @@ class DefaultDay extends StatelessWidget {
           day,
           style: kSFProDisplayRegular.copyWith(
             color: kBlack,
-            fontSize: MediaQuery.of(context).size.width / 100 * 3.25,
+            fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
           ),
         ),
       ),

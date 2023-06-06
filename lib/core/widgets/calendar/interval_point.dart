@@ -17,14 +17,12 @@ class IntervaledDay extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           decoration: BoxDecoration(
             color: kBlack10,
             borderRadius: borderRadius,
           ),
         ),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           height: double.maxFinite,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
@@ -35,7 +33,7 @@ class IntervaledDay extends StatelessWidget {
               day,
               style: kSFProDisplayRegular.copyWith(
                 color: kBlack,
-                fontSize: MediaQuery.of(context).size.width / 100 * 3.25,
+                fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
               ),
             ),
           ),

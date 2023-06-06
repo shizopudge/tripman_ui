@@ -291,6 +291,7 @@ class _TripPageState extends State<TripPage> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           FadeAnimationX(
                             delay: .7,

@@ -16,7 +16,7 @@ class UnavailableDay extends StatelessWidget {
         day,
         style: kSFProDisplayRegular.copyWith(
           color: kBlack.withOpacity(.2),
-          fontSize: MediaQuery.of(context).size.width / 100 * 3.25,
+          fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
         ),
       ),
     );

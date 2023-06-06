@@ -14,7 +14,7 @@ AppBar homeMenuBar(
 }) {
   return AppBar(
     automaticallyImplyLeading: false,
-    toolbarHeight: MediaQuery.of(context).size.height * .28,
+    toolbarHeight: MediaQuery.of(context).size.height * .3,
     forceMaterialTransparency: true,
     elevation: 0,
     flexibleSpace: FlexibleSpaceBar(
@@ -25,8 +25,8 @@ AppBar homeMenuBar(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ).copyWith(
-            top: 40,
-            bottom: 24,
+            top: 30,
+            bottom: 15,
           ),
           decoration: const BoxDecoration(
             color: kBlack,
@@ -69,18 +69,22 @@ AppBar homeMenuBar(
                     child: const ErrorPage(),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Объекты',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * .005),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Объекты',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: kSFProDisplaySemiBold.copyWith(
+                          fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               InkWell(
@@ -91,34 +95,42 @@ AppBar homeMenuBar(
                     description: 'Время модерации среднем\nзанимает 2-3 часа',
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Добавить объекты',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * .005),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Добавить объекты',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: kSFProDisplaySemiBold.copyWith(
+                          fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               InkWell(
                 onTap: logout,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Выход',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * .005),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Выход',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: kSFProDisplaySemiBold.copyWith(
+                          fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

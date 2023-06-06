@@ -75,9 +75,6 @@ class SizedBottomSheet extends StatelessWidget {
                           height: 16,
                         ),
                         child,
-                        const SizedBox(
-                          height: 16,
-                        ),
                       ],
                     ),
             ),

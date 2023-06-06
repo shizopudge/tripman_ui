@@ -22,7 +22,6 @@ class MarkedDay extends StatelessWidget {
       children: [
         if (!isEqual && !isOnEdge)
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
             decoration: BoxDecoration(
               color: kBlack10,
               borderRadius: isStart
@@ -35,7 +34,6 @@ class MarkedDay extends StatelessWidget {
             ),
           ),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           height: double.maxFinite,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
@@ -46,7 +44,7 @@ class MarkedDay extends StatelessWidget {
               day,
               style: kSFProDisplayRegular.copyWith(
                 color: kWhite,
-                fontSize: MediaQuery.of(context).size.width / 100 * 3.25,
+                fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
               ),
             ),
           ),

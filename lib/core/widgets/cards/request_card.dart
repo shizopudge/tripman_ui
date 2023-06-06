@@ -65,7 +65,7 @@ class RequestCard extends StatelessWidget {
                 RequestCardTextRow(
                   title: 'Заезд',
                   info: DateFormatUtil.dateRange(
-                    interval: trip.interval,
+                    interval: selectedInterval,
                     dublicateSameMonth: true,
                     spacer: ' ',
                   ),

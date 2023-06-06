@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripman/features/home/presentation/pages/home_page.dart';
 
 import 'features/authorization/presentation/bloc/auth_bloc.dart';
 import 'core/constants/styles/styles.dart';
@@ -24,7 +23,7 @@ class App extends StatelessWidget {
           fontFamily: 'SF-Pro-Display',
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: const StartPage(),
       ),
     );
   }

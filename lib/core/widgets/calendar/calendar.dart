@@ -25,26 +25,27 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  static const int monthCount = 12;
+  final DateTime now = DateTime.now();
+  final int currentDay = DateTime.now().day;
+
   late final ValueNotifier<DateTimeRange?> _calendarSelectedIntervalNotifier;
+
   final List<DateTime> pastDaysOfTheMonth = [];
   final List<int> lastPeviousMonthDays = [];
   final List<DateTime> availableDates = [];
-  final DateTime now = DateTime.now();
-  final int currentDay = DateTime.now().day;
-  final int monthCount = 12;
 
   @override
   void initState() {
-    _getPastDaysOfTheMonth();
+    _setPastDaysOfTheMonth();
     if (widget.availableRange != null) {
-      _getAvailableDates(
+      _setAvailableDates(
         startDate: widget.availableRange!.start,
         endDate: widget.availableRange!.end,
       );
     }
     _calendarSelectedIntervalNotifier =
         ValueNotifier<DateTimeRange?>(widget._selectedIntervalNotifier.value);
-
     super.initState();
   }
 
@@ -54,7 +55,7 @@ class _CalendarState extends State<Calendar> {
     super.dispose();
   }
 
-  void _getAvailableDates(
+  void _setAvailableDates(
       {required DateTime startDate, required DateTime endDate}) {
     for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
       availableDates.add(
@@ -67,7 +68,7 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  void _getPastDaysOfTheMonth() {
+  void _setPastDaysOfTheMonth() {
     for (int j = 0; j < currentDay; j++) {
       pastDaysOfTheMonth.add(DateTime(now.year, now.month, j + 1));
     }
@@ -235,127 +236,115 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Flexible(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              itemCount: monthCount,
-              itemBuilder: (context, calendarIndex) {
-                int k = 0;
-                final ({
-                  int month,
-                  int year,
-                  int startWeekday
-                }) monthAndYearAndStartWeekday =
-                    _getMonthAndYearAndStartWeekday(
-                  index: calendarIndex,
-                );
-                final int previousMonthDayCount = _getPreviousMonthDayCount(
-                  year: monthAndYearAndStartWeekday.year,
-                  month: monthAndYearAndStartWeekday.month,
-                );
-                _setLastPeviousMonthDays(
-                  startWeekday: monthAndYearAndStartWeekday.startWeekday,
-                  previousMonthDayCount: previousMonthDayCount,
-                );
-                final int currentMonthDayCount = DateUtils.getDaysInMonth(
-                  monthAndYearAndStartWeekday.year,
-                  monthAndYearAndStartWeekday.month,
-                );
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FadeAnimationX(
-                        delay: .2 + calendarIndex / 75,
-                        child: Text(
-                          DateFormatUtil.monthYear(
-                            year: monthAndYearAndStartWeekday.year,
-                            month: monthAndYearAndStartWeekday.month,
-                          ),
-                          style: kSFProDisplaySemiBold.copyWith(
-                            color: kBlack,
-                            fontSize: 18,
+    return ValueListenableBuilder(
+      valueListenable: _calendarSelectedIntervalNotifier,
+      builder: (context, selectedInterval, _) => Flexible(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: monthCount,
+                itemBuilder: (context, calendarIndex) {
+                  int k = 0;
+                  final ({
+                    int month,
+                    int year,
+                    int startWeekday
+                  }) monthAndYearAndStartWeekday =
+                      _getMonthAndYearAndStartWeekday(
+                    index: calendarIndex,
+                  );
+                  final int previousMonthDayCount = _getPreviousMonthDayCount(
+                    year: monthAndYearAndStartWeekday.year,
+                    month: monthAndYearAndStartWeekday.month,
+                  );
+                  _setLastPeviousMonthDays(
+                    startWeekday: monthAndYearAndStartWeekday.startWeekday,
+                    previousMonthDayCount: previousMonthDayCount,
+                  );
+                  final int currentMonthDayCount = DateUtils.getDaysInMonth(
+                    monthAndYearAndStartWeekday.year,
+                    monthAndYearAndStartWeekday.month,
+                  );
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FadeAnimationX(
+                          delay: .2 + calendarIndex / 75,
+                          child: Text(
+                            DateFormatUtil.monthYear(
+                              year: monthAndYearAndStartWeekday.year,
+                              month: monthAndYearAndStartWeekday.month,
+                            ),
+                            style: kSFProDisplaySemiBold.copyWith(
+                              color: kBlack,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                      GridView.builder(
-                        itemCount: 7 +
-                            monthAndYearAndStartWeekday.startWeekday +
-                            currentMonthDayCount,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 7,
-                          mainAxisSpacing: 6,
-                          crossAxisSpacing: 0,
-                        ),
-                        itemBuilder: (context, index) {
-                          if (index < 7) {
-                            return FadeAnimationX(
-                              delay: .2 + index / 75,
-                              child: Center(
-                                child: Text(
-                                  DateFormatUtil.ruWeekdayShort(
+                        GridView.builder(
+                          itemCount: 7 +
+                              monthAndYearAndStartWeekday.startWeekday +
+                              currentMonthDayCount,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 7,
+                            mainAxisSpacing: 6,
+                            crossAxisSpacing: 0,
+                          ),
+                          itemBuilder: (context, index) {
+                            if (index < 7) {
+                              return FadeAnimationX(
+                                delay: .2 + index / 75,
+                                child: DefaultDay(
+                                  day: DateFormatUtil.ruWeekdayShort(
                                     dayNumber: index + 1,
                                   ),
-                                  style: kSFProDisplayRegular.copyWith(
-                                    color: kBlack,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width /
-                                            100 *
-                                            3.2,
-                                  ),
                                 ),
-                              ),
-                            );
-                          } else if (index > 6 &&
-                              index <
-                                  7 +
-                                      monthAndYearAndStartWeekday
-                                          .startWeekday) {
-                            k++;
-                            return FadeAnimationX(
-                              delay: .2 + index / 75,
-                              child: UnavailableDay(
-                                day: lastPeviousMonthDays.reversed
-                                    .toList()[k - 1]
-                                    .toString(),
-                              ),
-                            );
-                          } else if (_isDayUnavailable(
-                              index: index, r: monthAndYearAndStartWeekday)) {
-                            return FadeAnimationX(
-                              delay: .2 + index / 75,
-                              child: UnavailableDay(
-                                day: (index -
-                                        6 -
+                              );
+                            } else if (index > 6 &&
+                                index <
+                                    7 +
                                         monthAndYearAndStartWeekday
-                                            .startWeekday)
-                                    .toString(),
-                              ),
-                            );
-                          } else {
-                            return FadeAnimationX(
-                              delay: .2 + index / 75,
-                              child: Center(
-                                child: InkWell(
-                                  onTap: () => _onDateCellTap(
-                                      index: index,
-                                      r: monthAndYearAndStartWeekday),
-                                  child: ValueListenableBuilder(
-                                    valueListenable:
-                                        _calendarSelectedIntervalNotifier,
-                                    builder: (context, selectedDates, _) =>
-                                        switch (selectedDates) {
-                                      (DateTimeRange range)
-                                          when range.start.isAtSameMomentAs(
+                                            .startWeekday) {
+                              k++;
+                              return FadeAnimationX(
+                                delay: .2 + index / 75,
+                                child: UnavailableDay(
+                                  day: lastPeviousMonthDays.reversed
+                                      .toList()[k - 1]
+                                      .toString(),
+                                ),
+                              );
+                            } else if (_isDayUnavailable(
+                                index: index, r: monthAndYearAndStartWeekday)) {
+                              return FadeAnimationX(
+                                delay: .2 + index / 75,
+                                child: UnavailableDay(
+                                  day: (index -
+                                          6 -
+                                          monthAndYearAndStartWeekday
+                                              .startWeekday)
+                                      .toString(),
+                                ),
+                              );
+                            } else {
+                              return FadeAnimationX(
+                                delay: .2 + index / 75,
+                                child: Center(
+                                  child: InkWell(
+                                    onTap: () => _onDateCellTap(
+                                        index: index,
+                                        r: monthAndYearAndStartWeekday),
+                                    child: switch (selectedInterval) {
+                                      (DateTimeRange interval)
+                                          when interval.start.isAtSameMomentAs(
                                             _generateDateTime(
                                                 index: index,
                                                 r: monthAndYearAndStartWeekday),
@@ -367,11 +356,11 @@ class _CalendarState extends State<Calendar> {
                                                       .startWeekday)
                                               .toString(),
                                           isStart: true,
-                                          isEqual: range.start
-                                              .isAtSameMomentAs(range.end),
+                                          isEqual: interval.start
+                                              .isAtSameMomentAs(interval.end),
                                           isOnEdge: _isPointOnEdge(
                                               index: index,
-                                              date: range.start,
+                                              date: interval.start,
                                               isStart: true),
                                         ),
                                       (DateTimeRange range)
@@ -425,22 +414,19 @@ class _CalendarState extends State<Calendar> {
                                     },
                                   ),
                                 ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-          FadeAnimationYUp(
-            delay: .8,
-            child: ValueListenableBuilder(
-              valueListenable: _calendarSelectedIntervalNotifier,
-              builder: (context, selectedInterval, _) => BottomShadowContainer(
+            FadeAnimationYUp(
+              delay: .8,
+              child: BottomShadowContainer(
                 left: selectedInterval != null &&
                         selectedInterval.start != selectedInterval.end
                     ? Text(
@@ -468,8 +454,8 @@ class _CalendarState extends State<Calendar> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
