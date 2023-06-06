@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/utils/popup_utils.dart';
 import '../../../../core/widgets/bottom_sheet/scaffold_bottom_sheet.dart';
+import '../../../../core/widgets/buttons/close_button.dart';
 import '../../../../core/widgets/buttons/rounded_text_button.dart';
 import '../../../../core/widgets/common/default_text_field.dart';
 import '../../../../core/entities/trip.dart';
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
 
 import '../../../../core/widgets/cards/request_card.dart';
 
@@ -65,30 +66,24 @@ class _RequestPageState extends State<RequestPage> {
     _phoneFocusNode.requestFocus();
   }
 
-  void _showCommentSheet() => showModalBottomSheet(
+  void _showCommentSheet() => PopupUtils.showMyBottomSheet(
         context: context,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        useSafeArea: true,
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return ScaffoldBottomSheet(
-            title: 'Комментарий',
-            child: TextField(
-              controller: _commentController,
-              focusNode: _commentFocusNode,
-              cursorColor: kBlack,
-              maxLines: 5,
-              style: kSFProDisplayRegular.copyWith(
-                color: kBlack,
-                fontSize: 15,
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-              ),
+        bottomSheet: ScaffoldBottomSheet(
+          title: 'Комментарий',
+          child: TextField(
+            controller: _commentController,
+            focusNode: _commentFocusNode,
+            cursorColor: kBlack,
+            maxLines: 5,
+            style: kSFProDisplayRegular.copyWith(
+              color: kBlack,
+              fontSize: 15,
             ),
-          );
-        },
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+            ),
+          ),
+        ),
       );
 
   void _sendRequest() {
@@ -111,43 +106,31 @@ class _RequestPageState extends State<RequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        forceMaterialTransparency: true,
+        titleSpacing: 20,
+        title: Text(
+          'Заявка на бронирование',
+          style: kSFProDisplaySemiBold.copyWith(
+            fontSize: 20,
+            color: kBlack,
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 26),
+            child: MyCloseButton(),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            FadeAnimationYDown(
-              delay: .6,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20)
-                    .copyWith(top: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Заявка на бронирование',
-                      style: kSFProDisplaySemiBold.copyWith(
-                        fontSize: 20,
-                        color: kBlack,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 6),
-                        child: SvgPicture.asset(
-                          'assets/icons/close.svg',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
+            Flexible(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 children: [
                   FadeAnimationYDown(
                     delay: .7,

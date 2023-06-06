@@ -1,41 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/animations/fade_animation.dart';
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/utils/navigation_utils.dart';
 import '../../../../core/widgets/common/error_message.dart';
 import '../../../../core/widgets/common/loader.dart';
 import '../../../../core/enums/auth_type.dart';
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
 import '../../../home/presentation/pages/home_page.dart';
 import '../bloc/auth_bloc.dart';
-import '../widgets/authorization_type_menu.dart';
+import '../widgets/auth_type_menu.dart';
 import '../../../../core/widgets/text/logo.dart';
-import 'login_with_phone_page.dart';
+import 'send_sms_verification_code_page.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({
     super.key,
   });
 
-  void _navigateToHomePage(BuildContext context) => Navigator.of(context).push(
-        PageTransition(
-          duration: const Duration(milliseconds: 250),
-          type: PageTransitionType.fade,
-          child: const HomePage(),
-        ),
+  void _navigateToHomePage(BuildContext context) =>
+      NavigationUtils.pushWithFade(
+        context: context,
+        page: const HomePage(),
       );
 
-  void _navigateToLoginWithPhonePage(BuildContext context) =>
-      Navigator.of(context).push(
-        PageTransition(
-          duration: const Duration(milliseconds: 250),
-          type: PageTransitionType.fade,
-          child: const LoginWithPhonePage(),
-        ),
+  void _navigateToSendSmsVerificationCodePage(BuildContext context) =>
+      NavigationUtils.pushWithFade(
+        context: context,
+        page: const SendSmsVerificationCodePage(),
       );
 
   void _login(BuildContext context, AuthType authType) =>
@@ -75,15 +70,19 @@ class StartPage extends StatelessWidget {
                         child: const Logo(),
                       ),
                       const Spacer(),
-                      AuthTypeMenu(
-                        withPhone: () => _navigateToLoginWithPhonePage(context),
-                        withGoogle: () => _login(
-                          context,
-                          AuthType.google,
-                        ),
-                        withApple: () => _login(
-                          context,
-                          AuthType.apple,
+                      FadeAnimationYUp(
+                        delay: 1.5,
+                        child: AuthTypeMenu(
+                          withPhone: () =>
+                              _navigateToSendSmsVerificationCodePage(context),
+                          withGoogle: () => _login(
+                            context,
+                            AuthType.google,
+                          ),
+                          withApple: () => _login(
+                            context,
+                            AuthType.apple,
+                          ),
                         ),
                       ),
                     ],

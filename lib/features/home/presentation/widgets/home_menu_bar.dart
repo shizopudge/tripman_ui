@@ -3,11 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
+import '../../../../core/constants/styles/styles.dart';
 import '../../../../core/widgets/dialogs/notification_dialog.dart';
 import '../pages/error_page.dart';
-import '../../../../core/styles/styles.dart';
 
-AppBar buildMenu(
+AppBar homeMenuBar(
   BuildContext context, {
   required VoidCallback closeShowMenu,
   required VoidCallback logout,
@@ -66,7 +66,7 @@ AppBar buildMenu(
                   PageTransition(
                     duration: const Duration(milliseconds: 250),
                     type: PageTransitionType.fade,
-                    child: const ErrorScreen(),
+                    child: const ErrorPage(),
                   ),
                 ),
                 child: Row(

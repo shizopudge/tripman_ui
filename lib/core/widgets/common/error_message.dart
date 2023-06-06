@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../styles/styles.dart';
+import '../../constants/styles/styles.dart';
 
 class ErrorMessage extends StatelessWidget {
   final String iconPath;

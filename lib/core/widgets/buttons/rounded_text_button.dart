@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../styles/styles.dart';
+import '../../constants/styles/styles.dart';
 
 class RoundedTextButton extends StatelessWidget {
   final VoidCallback? onTap;

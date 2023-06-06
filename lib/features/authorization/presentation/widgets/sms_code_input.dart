@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
 
-class PhoneCodeInput extends StatelessWidget {
+class SmsCodeInput extends StatelessWidget {
   final bool isIncorrectCode;
   final EdgeInsets padding;
   final FocusNode _codeFocus;
   final TextEditingController _codeController;
-  const PhoneCodeInput({
+  const SmsCodeInput({
     super.key,
     required FocusNode codeFocus,
     required TextEditingController codeController,

@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
 
-import '../../../../core/widgets/buttons/rounded_border_button.dart';
-import '../../../../core/entities/trip.dart';
-import '../../../../core/service/date_formater.dart';
-import '../../../../core/styles/styles.dart';
-import '../../../trip/presentation/pages/trip_page.dart';
-import '../../../../core/widgets/images/images_carousel.dart';
+import '../../utils/navigation_utils.dart';
+import '../buttons/rounded_border_button.dart';
+import '../../entities/trip.dart';
+import '../../utils/date_format_util.dart';
+import '../../constants/styles/styles.dart';
+import '../../../features/trip/presentation/pages/trip_page.dart';
+import '../images/images_carousel.dart';
 
 class TripCard extends StatefulWidget {
   final Trip trip;
@@ -31,24 +31,19 @@ class _TripCardState extends State<TripCard> {
     super.initState();
   }
 
-  void _navigateToTripPage(
-          {required BuildContext context, required Trip trip}) =>
-      Navigator.of(context).push(
-        PageTransition(
-          duration: const Duration(milliseconds: 250),
-          type: PageTransitionType.fade,
-          child: TripPage(
-            trip: trip,
-            carouselController: _carouselController,
-            currentImageNotifier: _currentImageNotifier,
-          ),
+  void _navigateToTripPage() => NavigationUtils.pushWithFade(
+        context: context,
+        page: TripPage(
+          trip: widget.trip,
+          carouselController: _carouselController,
+          currentImageNotifier: _currentImageNotifier,
         ),
       );
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _navigateToTripPage(context: context, trip: widget.trip),
+      onTap: _navigateToTripPage,
       child: Container(
         height: 451,
         width: double.infinity,
@@ -124,8 +119,10 @@ class _TripCardState extends State<TripCard> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  DateFormater.tripCardDateFormater(
+                                  DateFormatUtil.dateRange(
                                     interval: widget.trip.interval,
+                                    dublicateSameMonth: true,
+                                    spacer: ' ',
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                   style: kSFProDisplayRegular.copyWith(

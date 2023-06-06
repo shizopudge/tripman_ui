@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../animations/fade_animation_y_down.dart';
-import '../../styles/styles.dart';
+import '../../constants/styles/styles.dart';
+import '../buttons/close_button.dart';
 import 'bottom_sheet_divider.dart';
 
 class ScaffoldBottomSheet extends StatelessWidget {
@@ -56,7 +57,7 @@ class ScaffoldBottomSheet extends StatelessWidget {
                               fontSize: 24,
                             ),
                           ),
-                          const CloseButton(),
+                          const MyCloseButton(),
                         ],
                       ),
                     )

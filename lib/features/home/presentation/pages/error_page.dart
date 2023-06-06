@@ -3,18 +3,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
 import '../../../../core/widgets/common/loader.dart';
 import '../../../../core/widgets/buttons/rounded_text_button.dart';
 
-class ErrorScreen extends StatefulWidget {
-  const ErrorScreen({super.key});
+class ErrorPage extends StatefulWidget {
+  const ErrorPage({super.key});
 
   @override
-  State<ErrorScreen> createState() => _ErrorScreenState();
+  State<ErrorPage> createState() => _ErrorPageState();
 }
 
-class _ErrorScreenState extends State<ErrorScreen> {
+class _ErrorPageState extends State<ErrorPage> {
   late final ValueNotifier<bool> _isLoadingNotifier;
   @override
   void initState() {

@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:tripman/core/widgets/buttons/rounded_text_button.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
+import '../../../../core/utils/navigation_utils.dart';
+import '../../../../core/widgets/buttons/rounded_text_button.dart';
 import '../bloc/auth_bloc.dart';
 import '../../../../core/widgets/common/default_text_field.dart';
 import '../../../../core/widgets/text/notice.dart';
-import 'code_confirmation_page.dart';
+import 'sms_code_confirmation_page.dart';
 
-class LoginWithPhonePage extends StatefulWidget {
-  const LoginWithPhonePage({super.key});
+class SendSmsVerificationCodePage extends StatefulWidget {
+  const SendSmsVerificationCodePage({super.key});
 
   @override
-  State<LoginWithPhonePage> createState() => _LoginWithPhonePageState();
+  State<SendSmsVerificationCodePage> createState() =>
+      _SendSmsVerificationCodePageState();
 }
 
-class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
+class _SendSmsVerificationCodePageState
+    extends State<SendSmsVerificationCodePage> {
   late final TextEditingController _phoneController;
   late final ValueNotifier<bool> _isEmptyNotifier;
   late final ValueNotifier<bool> _isValidatedNotifier;
@@ -62,13 +64,10 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
     }
   }
 
-  void _navigateToCodeConfirmationPage() => Navigator.of(context).push(
-        PageTransition(
-          duration: const Duration(milliseconds: 250),
-          type: PageTransitionType.fade,
-          child: CodeConfirmationPage(
-            phoneNumber: _phoneController.text,
-          ),
+  void _navigateToCodeConfirmationPage() => NavigationUtils.pushWithFade(
+        context: context,
+        page: SmsCodeConfirmationPage(
+          phoneNumber: _phoneController.text,
         ),
       );
 
@@ -95,7 +94,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FadeAnimationYDown(
-                        delay: 1,
+                        delay: .6,
                         child: Padding(
                           padding: const EdgeInsets.only(
                             left: 25,
@@ -129,7 +128,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                         height: 16,
                       ),
                       FadeAnimationYDown(
-                        delay: 1.11,
+                        delay: .7,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 20,
@@ -147,7 +146,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                         height: 28,
                       ),
                       FadeAnimationYDown(
-                        delay: 1.2,
+                        delay: .8,
                         child: Padding(
                           padding: const EdgeInsets.only(
                             left: 21,
@@ -166,7 +165,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                         height: 8,
                       ),
                       FadeAnimationYDown(
-                        delay: 1.3,
+                        delay: .9,
                         child: Padding(
                           padding: const EdgeInsets.only(
                             left: 21,
@@ -192,7 +191,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                     child: Column(
                       children: [
                         FadeAnimationYDown(
-                          delay: 1.4,
+                          delay: 1,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 20,
@@ -215,7 +214,7 @@ class _LoginWithPhonePageState extends State<LoginWithPhonePage> {
                           height: 20,
                         ),
                         const FadeAnimationYDown(
-                          delay: 1.5,
+                          delay: 1.1,
                           child: Notice(),
                         ),
                         const SizedBox(

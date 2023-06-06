@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tripman/core/widgets/images/image_cached.dart';
 
-import '../../styles/styles.dart';
+import '../../constants/styles/styles.dart';
 
 class ImagesCarousel extends StatelessWidget {
   final double height;

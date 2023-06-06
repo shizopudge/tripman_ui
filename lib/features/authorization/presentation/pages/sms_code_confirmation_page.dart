@@ -7,23 +7,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/widgets/buttons/rounded_border_button.dart';
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
 import '../bloc/auth_bloc.dart';
-import '../widgets/phone_code_input.dart';
+import '../widgets/sms_code_input.dart';
 import 'start_page.dart';
 
-class CodeConfirmationPage extends StatefulWidget {
+class SmsCodeConfirmationPage extends StatefulWidget {
   final String phoneNumber;
-  const CodeConfirmationPage({
+  const SmsCodeConfirmationPage({
     super.key,
     required this.phoneNumber,
   });
 
   @override
-  State<CodeConfirmationPage> createState() => _CodeConfirmationPageState();
+  State<SmsCodeConfirmationPage> createState() =>
+      _SmsCodeConfirmationPageState();
 }
 
-class _CodeConfirmationPageState extends State<CodeConfirmationPage> {
+class _SmsCodeConfirmationPageState extends State<SmsCodeConfirmationPage> {
   Timer? _timer;
   late final ValueNotifier<bool> _isIncorrectCodeNotifier;
   late final ValueNotifier<int> _codeLengthNotifier;
@@ -169,8 +170,7 @@ class _CodeConfirmationPageState extends State<CodeConfirmationPage> {
                             builder: (context, isIncorrectCode, _) =>
                                 ValueListenableBuilder(
                               valueListenable: _codeLengthNotifier,
-                              builder: (context, codeLength, _) =>
-                                  PhoneCodeInput(
+                              builder: (context, codeLength, _) => SmsCodeInput(
                                 isIncorrectCode: isIncorrectCode,
                                 padding: codeLength == 0
                                     ? const EdgeInsets.symmetric(horizontal: 48)

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripman/core/styles/styles.dart';
+import 'package:tripman/core/constants/styles/styles.dart';
 
 class RoundedBorderButton extends StatelessWidget {
   final VoidCallback? onTap;

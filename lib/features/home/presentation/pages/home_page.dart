@@ -1,29 +1,27 @@
-import 'dart:math';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:tripman/core/widgets/bottom_sheet/sized_bottom_sheet.dart';
-import 'package:tripman/core/widgets/calendar/calendar.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/utils/navigation_utils.dart';
+import '../../../../core/utils/popup_utils.dart';
+import '../../../../core/widgets/bottom_sheet/sized_bottom_sheet.dart';
 import '../../../../core/widgets/buttons/rounded_border_button.dart';
-import '../../../../core/widgets/buttons/rounded_text_button.dart';
+import '../../../../core/widgets/calendar/calendar.dart';
 import '../../../../core/widgets/common/error_message.dart';
 import '../../../../core/widgets/common/loader.dart';
-import '../../../../core/constants/constants.dart';
+import '../../../../core/constants/fake_data.dart';
 import '../../../../core/entities/trip.dart';
 import '../../../../core/entities/trip_type.dart';
-import '../../../../core/styles/styles.dart';
+import '../../../../core/constants/styles/styles.dart';
 import '../../../authorization/presentation/bloc/auth_bloc.dart';
 import '../../../authorization/presentation/pages/start_page.dart';
 import '../bloc/home_bloc.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/menu.dart';
-import '../widgets/trip_card.dart';
+import '../../../../core/widgets/cards/trip_card.dart';
+import '../widgets/home_app_bar.dart';
+import '../widgets/home_menu_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -41,9 +39,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _selectedTripTypeNotifier = ValueNotifier<TripType>(tripTypes.first)
-      ..addListener(_tripTypeListener);
+      ..addListener(_selectedtripTypeListener);
     _selectedIntervalNotifier = ValueNotifier<DateTimeRange?>(null)
-      ..addListener(_datesListener);
+      ..addListener(_selectedIntervalListener);
     _isMenuOpenedNotifier = ValueNotifier<bool>(false);
     _homeBloc = HomeBloc()..add(HomeInititalEvent());
     super.initState();
@@ -58,27 +56,19 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void _tripTypeListener() {
-    debugPrint(
-        'Get ${_selectedTripTypeNotifier.value.title} trips on trip type change');
-    _homeBloc.add(
-      HomeGetTripsEvent(
-        type: _selectedTripTypeNotifier.value.title,
-        interval: _selectedIntervalNotifier.value,
-      ),
-    );
-  }
+  void _selectedtripTypeListener() => _homeBloc.add(
+        HomeGetTripsEvent(
+          type: _selectedTripTypeNotifier.value.title,
+          interval: _selectedIntervalNotifier.value,
+        ),
+      );
 
-  void _datesListener() {
-    debugPrint(
-        'Get ${_selectedTripTypeNotifier.value.title} trips on interval change');
-    _homeBloc.add(
-      HomeGetTripsEvent(
-        type: _selectedTripTypeNotifier.value.title,
-        interval: _selectedIntervalNotifier.value,
-      ),
-    );
-  }
+  void _selectedIntervalListener() => _homeBloc.add(
+        HomeGetTripsEvent(
+          type: _selectedTripTypeNotifier.value.title,
+          interval: _selectedIntervalNotifier.value,
+        ),
+      );
 
   void _showCalendar() => showModalBottomSheet(
         context: context,
@@ -109,63 +99,14 @@ class _HomePageState extends State<HomePage> {
   void _clearInterval() => _selectedIntervalNotifier.value = null;
 
   void _logout() {
-    Navigator.of(context).push(
-      PageTransition(
-        duration: const Duration(milliseconds: 250),
-        type: PageTransitionType.fade,
-        child: const StartPage(),
-      ),
+    NavigationUtils.pushWithFade(
+      context: context,
+      page: const StartPage(),
     );
     context.read<AuthBloc>().add(AuthLogoutEvent());
   }
 
-  void _mapTap() {
-    ScaffoldMessenger.of(context).clearMaterialBanners();
-    final int random = Random().nextInt(3);
-    ScaffoldMessenger.of(context).showMaterialBanner(
-      switch (random) {
-        (int random) when random == 0 => const MaterialBanner(
-            backgroundColor: Colors.transparent,
-            margin: EdgeInsets.symmetric(vertical: 8),
-            dividerColor: Colors.transparent,
-            actions: [
-              SizedBox(),
-            ],
-            content: MessageBanner(
-              iconPath: 'assets/icons/checkbox.svg',
-              text: 'Автоматическое разрешение\nпроблемы',
-              backgroundColor: kBlack,
-            ),
-          ),
-        (int random) when random == 1 => const MaterialBanner(
-            backgroundColor: Colors.transparent,
-            margin: EdgeInsets.symmetric(vertical: 8),
-            dividerColor: Colors.transparent,
-            actions: [
-              SizedBox(),
-            ],
-            content: MessageBanner(
-              iconPath: 'assets/icons/error_cross.svg',
-              text: 'Ошибка загрузки страниц, неполадок с сервером и тд',
-              backgroundColor: kRed,
-            ),
-          ),
-        (_) => const MaterialBanner(
-            backgroundColor: Colors.transparent,
-            margin: EdgeInsets.symmetric(vertical: 8),
-            dividerColor: Colors.transparent,
-            actions: [
-              SizedBox(),
-            ],
-            content: MessageBanner(
-              iconPath: 'assets/icons/error.svg',
-              text: 'Предупреждающие сообщения о работе системы',
-              backgroundColor: kBlack50,
-            ),
-          ),
-      },
-    );
-  }
+  void _onMapTap() => PopupUtils.showBanner(context: context);
 
   @override
   Widget build(BuildContext context) {
@@ -175,12 +116,12 @@ class _HomePageState extends State<HomePage> {
         valueListenable: _isMenuOpenedNotifier,
         builder: (context, isMenuOpened, _) => Scaffold(
           appBar: isMenuOpened
-              ? buildMenu(
+              ? homeMenuBar(
                   context,
                   closeShowMenu: _closeShowMenu,
                   logout: _logout,
                 )
-              : buildAppBar(
+              : homeAppBar(
                   closeShowMenu: _closeShowMenu,
                   showCalendar: _showCalendar,
                   clear: _clearInterval,
@@ -188,9 +129,9 @@ class _HomePageState extends State<HomePage> {
                   selectedTripTypeNotifier: _selectedTripTypeNotifier,
                 ),
           floatingActionButton: FadeAnimationYUp(
-            delay: 1.2,
+            delay: .8,
             child: RoundedBorderButton(
-              onTap: _mapTap,
+              onTap: _onMapTap,
               mainAxisSize: MainAxisSize.min,
               backgroundColor: kBlack,
               borderColor: kBlack,
@@ -288,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                     final trips = loadedState.trips;
                     if (trips.isNotEmpty) {
                       return FadeAnimationYDown(
-                        delay: 1.1,
+                        delay: .5,
                         child: ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20)
                               .copyWith(top: 18),
@@ -303,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     return FadeAnimationYDown(
-                      delay: 1,
+                      delay: .5,
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 76),
@@ -335,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                   case HomeErrorState:
                     final errorState = state as HomeErrorState;
                     return FadeAnimationYDown(
-                      delay: 1,
+                      delay: .5,
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -357,64 +298,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class MessageBanner extends StatelessWidget {
-  final String iconPath;
-  final String text;
-  final Color backgroundColor;
-  const MessageBanner({
-    super.key,
-    required this.iconPath,
-    required this.text,
-    required this.backgroundColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          16,
-        ),
-        color: backgroundColor,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SvgPicture.asset(
-                iconPath,
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Flexible(
-                child: Text(
-                  text,
-                  overflow: TextOverflow.visible,
-                  style: kSFProDisplayRegular.copyWith(
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          RoundedTextButton(
-            isEnabled: true,
-            onTap: () => ScaffoldMessenger.of(context).clearMaterialBanners(),
-            text: 'Кнопка',
-            invertColors: true,
-          ),
-        ],
       ),
     );
   }

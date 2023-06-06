@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/constants/constants.dart';
+import '../../../../core/constants/fake_data.dart';
+import '../../../../core/constants/styles/styles.dart';
 import '../../../../core/entities/trip_type.dart';
-import '../../../../core/styles/styles.dart';
-import 'interval_field.dart';
-import 'trip_type_card.dart';
+import '../../../../core/widgets/cards/trip_type_card.dart';
+import 'home_selected_interval_field.dart';
 
-AppBar buildAppBar({
+AppBar homeAppBar({
   required VoidCallback closeShowMenu,
   required VoidCallback showCalendar,
   required VoidCallback clear,
@@ -31,7 +31,7 @@ AppBar buildAppBar({
             Row(
               children: [
                 Expanded(
-                  child: IntervalField(
+                  child: SelectedIntervalField(
                     onTap: showCalendar,
                     clear: clear,
                     interval: selectedInterval,

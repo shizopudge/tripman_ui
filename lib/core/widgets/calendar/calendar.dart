@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../animations/fade_animation_x.dart';
 import '../../animations/fade_animation_y_up.dart';
-import '../../service/date_formater.dart';
-import '../../styles/styles.dart';
+import '../../utils/date_format_util.dart';
+import '../../constants/styles/styles.dart';
 import '../buttons/rounded_text_button.dart';
 import '../common/bottom_container.dart';
 import 'default_day.dart';
@@ -26,7 +26,6 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   late final ValueNotifier<DateTimeRange?> _calendarSelectedIntervalNotifier;
-  late final int calendarFirstAvailableDay;
   final List<DateTime> pastDaysOfTheMonth = [];
   final List<int> lastPeviousMonthDays = [];
   final List<DateTime> availableDates = [];
@@ -45,9 +44,7 @@ class _CalendarState extends State<Calendar> {
     }
     _calendarSelectedIntervalNotifier =
         ValueNotifier<DateTimeRange?>(widget._selectedIntervalNotifier.value);
-    calendarFirstAvailableDay = DateTime(pastDaysOfTheMonth.last.year,
-            pastDaysOfTheMonth.last.month, pastDaysOfTheMonth.last.day + 1)
-        .day;
+
     super.initState();
   }
 
@@ -224,9 +221,7 @@ class _CalendarState extends State<Calendar> {
     final int daysInMonthCount =
         DateUtils.getDaysInMonth(date.year, date.month);
     if (isStart) {
-      if (date.day == calendarFirstAvailableDay ||
-          date.day == daysInMonthCount ||
-          date.weekday == 7) {
+      if (date.day == daysInMonthCount || date.weekday == 7) {
         return true;
       }
       return false;
@@ -240,12 +235,14 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Flexible(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
+          Flexible(
             child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               itemCount: monthCount,
               itemBuilder: (context, calendarIndex) {
                 int k = 0;
@@ -275,11 +272,11 @@ class _CalendarState extends State<Calendar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FadeAnimationX(
-                        delay: .6,
+                        delay: .2 + calendarIndex / 75,
                         child: Text(
-                          DateFormater.datePickerMonthYearFormater(
-                            month: monthAndYearAndStartWeekday.month,
+                          DateFormatUtil.monthYear(
                             year: monthAndYearAndStartWeekday.year,
+                            month: monthAndYearAndStartWeekday.month,
                           ),
                           style: kSFProDisplaySemiBold.copyWith(
                             color: kBlack,
@@ -302,10 +299,10 @@ class _CalendarState extends State<Calendar> {
                         itemBuilder: (context, index) {
                           if (index < 7) {
                             return FadeAnimationX(
-                              delay: .2 + index / 25,
+                              delay: .2 + index / 75,
                               child: Center(
                                 child: Text(
-                                  DateFormater.datePickerWeekdayFormater(
+                                  DateFormatUtil.ruWeekdayShort(
                                     dayNumber: index + 1,
                                   ),
                                   style: kSFProDisplayRegular.copyWith(
@@ -325,7 +322,7 @@ class _CalendarState extends State<Calendar> {
                                           .startWeekday) {
                             k++;
                             return FadeAnimationX(
-                              delay: .2 + index / 25,
+                              delay: .2 + index / 75,
                               child: UnavailableDay(
                                 day: lastPeviousMonthDays.reversed
                                     .toList()[k - 1]
@@ -335,7 +332,7 @@ class _CalendarState extends State<Calendar> {
                           } else if (_isDayUnavailable(
                               index: index, r: monthAndYearAndStartWeekday)) {
                             return FadeAnimationX(
-                              delay: .2 + index / 25,
+                              delay: .2 + index / 75,
                               child: UnavailableDay(
                                 day: (index -
                                         6 -
@@ -346,7 +343,7 @@ class _CalendarState extends State<Calendar> {
                             );
                           } else {
                             return FadeAnimationX(
-                              delay: .2 + index / 25,
+                              delay: .2 + index / 75,
                               child: Center(
                                 child: InkWell(
                                   onTap: () => _onDateCellTap(
@@ -444,22 +441,25 @@ class _CalendarState extends State<Calendar> {
             child: ValueListenableBuilder(
               valueListenable: _calendarSelectedIntervalNotifier,
               builder: (context, selectedInterval, _) => BottomShadowContainer(
-                left: Text(
-                  DateFormater.datesFieldDateFormater(
-                    interval: selectedInterval != null &&
-                            selectedInterval.start != selectedInterval.end
-                        ? selectedInterval
-                        : null,
-                  ),
-                  overflow: TextOverflow.visible,
-                  style: kSFProDisplayMedium.copyWith(
-                    fontSize: 16,
-                    color: selectedInterval != null &&
-                            selectedInterval.start != selectedInterval.end
-                        ? kBlack
-                        : kBlack50,
-                  ),
-                ),
+                left: selectedInterval != null &&
+                        selectedInterval.start != selectedInterval.end
+                    ? Text(
+                        DateFormatUtil.dateRange(
+                            interval: selectedInterval, withYear: true),
+                        overflow: TextOverflow.visible,
+                        style: kSFProDisplayMedium.copyWith(
+                          fontSize: 16,
+                          color: kBlack,
+                        ),
+                      )
+                    : Text(
+                        'Даты поездки',
+                        overflow: TextOverflow.visible,
+                        style: kSFProDisplayMedium.copyWith(
+                          fontSize: 16,
+                          color: kBlack50,
+                        ),
+                      ),
                 right: RoundedTextButton(
                   isEnabled: selectedInterval != null &&
                       selectedInterval.start != selectedInterval.end,

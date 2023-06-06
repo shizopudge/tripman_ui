@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../entities/trip.dart';
-import '../../service/date_formater.dart';
-import '../../styles/styles.dart';
+import '../../utils/date_format_util.dart';
+import '../../constants/styles/styles.dart';
 import '../images/image_cached.dart';
 
 class RequestCard extends StatelessWidget {
@@ -28,6 +28,11 @@ class RequestCard extends StatelessWidget {
           ImageCached(
             imageUrl: trip.images.first,
             height: 160,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(
+                20,
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(
@@ -59,8 +64,10 @@ class RequestCard extends StatelessWidget {
                 ),
                 RequestCardTextRow(
                   title: 'Заезд',
-                  info: DateFormater.datesFieldDateFormater(
-                    interval: selectedInterval,
+                  info: DateFormatUtil.dateRange(
+                    interval: trip.interval,
+                    dublicateSameMonth: true,
+                    spacer: ' ',
                   ),
                 ),
                 const SizedBox(

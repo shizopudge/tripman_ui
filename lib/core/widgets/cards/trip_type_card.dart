@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/entities/trip_type.dart';
-import '../../../../core/styles/styles.dart';
+import '../../entities/trip_type.dart';
+import '../../constants/styles/styles.dart';
 
 class TripTypeCard extends StatelessWidget {
   final TripType tripType;

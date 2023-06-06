@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../styles/styles.dart';
+import '../../constants/styles/styles.dart';
 
 class BottomShadowContainer extends StatelessWidget {
   final Widget left;
@@ -14,6 +14,7 @@ class BottomShadowContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 16),
       decoration: const BoxDecoration(
         color: kWhite,
         boxShadow: [
@@ -27,24 +28,21 @@ class BottomShadowContainer extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              flex: 2,
-              child: left,
-            ),
-            const SizedBox(
-              width: 24,
-            ),
-            Flexible(
-              flex: 3,
-              child: right,
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 2,
+            child: left,
+          ),
+          const SizedBox(
+            width: 24,
+          ),
+          Flexible(
+            flex: 3,
+            child: right,
+          ),
+        ],
       ),
     );
   }

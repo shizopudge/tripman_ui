@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../styles/styles.dart';
+import '../../constants/styles/styles.dart';
 import 'bottom_sheet_divider.dart';
 
 class SizedBottomSheet extends StatelessWidget {
@@ -25,7 +25,6 @@ class SizedBottomSheet extends StatelessWidget {
           const BottomSheetDivider(),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: const BoxDecoration(
                 color: kWhite,
                 borderRadius: BorderRadius.only(
@@ -35,6 +34,7 @@ class SizedBottomSheet extends StatelessWidget {
               ),
               child: isScrollable
                   ? ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       children: [
                         const SizedBox(
                           height: 16,
@@ -56,15 +56,19 @@ class SizedBottomSheet extends StatelessWidget {
                       ],
                     )
                   : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
                           height: 16,
                         ),
-                        Text(
-                          title,
-                          style: kSFProDisplaySemiBold.copyWith(
-                            color: kBlack,
-                            fontSize: 24,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            title,
+                            style: kSFProDisplaySemiBold.copyWith(
+                              color: kBlack,
+                              fontSize: 24,
+                            ),
                           ),
                         ),
                         const SizedBox(
