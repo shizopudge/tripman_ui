@@ -33,7 +33,7 @@ class IntervaledDay extends StatelessWidget {
               day,
               style: kSFProDisplayRegular.copyWith(
                 color: kBlack,
-                fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                fontSize: 16,
               ),
             ),
           ),

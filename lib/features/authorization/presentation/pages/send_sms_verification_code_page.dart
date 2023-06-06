@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
+import '../../../../core/constants/input_formatters.dart';
 import '../../../../core/constants/styles/styles.dart';
 import '../../../../core/utils/navigation_utils.dart';
 import '../../../../core/widgets/buttons/rounded_text_button.dart';
@@ -25,6 +27,7 @@ class _SendSmsVerificationCodePageState
   late final ValueNotifier<bool> _isEmptyNotifier;
   late final ValueNotifier<bool> _isValidatedNotifier;
   late final FocusNode _phoneFieldFocusNode;
+  final MaskTextInputFormatter _maskFormatter = ruPhoneFormatter;
 
   @override
   void initState() {
@@ -50,7 +53,8 @@ class _SendSmsVerificationCodePageState
     } else {
       _isEmptyNotifier.value = true;
     }
-    if (_phoneController.text.length > 3) {
+
+    if (_maskFormatter.isFill()) {
       _isValidatedNotifier.value = true;
     } else {
       _isValidatedNotifier.value = false;
@@ -58,7 +62,9 @@ class _SendSmsVerificationCodePageState
   }
 
   void _clearTextField() {
+    _maskFormatter.clear();
     _phoneController.clear();
+
     if (!_phoneFieldFocusNode.hasPrimaryFocus) {
       _phoneFieldFocusNode.requestFocus();
     }
@@ -174,6 +180,9 @@ class _SendSmsVerificationCodePageState
                           child: ValueListenableBuilder(
                             valueListenable: _isEmptyNotifier,
                             builder: (context, isEmpty, _) => DefaultTextField(
+                              inputFormatters: [
+                                _maskFormatter,
+                              ],
                               onClear: _clearTextField,
                               controller: _phoneController,
                               focusNode: _phoneFieldFocusNode,

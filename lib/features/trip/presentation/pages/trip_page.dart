@@ -200,7 +200,7 @@ class _TripPageState extends State<TripPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Flexible(
-                            flex: 3,
+                            flex: 2,
                             child: FadeAnimationYDown(
                               delay: .6,
                               child: Text(
@@ -219,6 +219,7 @@ class _TripPageState extends State<TripPage> {
                             child: FadeAnimationYDown(
                               delay: .7,
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   SvgPicture.asset(
                                     'assets/icons/map_arrow.svg',
@@ -229,8 +230,8 @@ class _TripPageState extends State<TripPage> {
                                   Flexible(
                                     child: Text(
                                       '${widget.trip.distance} км',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.visible,
                                       style: kSFProDisplayMedium.copyWith(
                                         color: kBlack,
                                         fontSize: 15,

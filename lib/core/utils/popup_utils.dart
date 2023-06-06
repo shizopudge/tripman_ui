@@ -37,7 +37,7 @@ class PopupUtils {
             ],
             content: MessageBanner(
               iconPath: 'assets/icons/checkbox.svg',
-              text: 'Автоматическое разрешение\nпроблемы',
+              text: 'Автоматическое разрешение проблемы',
               backgroundColor: kBlack,
             ),
           ),

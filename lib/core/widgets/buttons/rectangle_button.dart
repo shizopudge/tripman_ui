@@ -48,7 +48,7 @@ class RectangleButton extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: kSFProDisplayRegular.copyWith(
                 color: kBlack,
-                fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                fontSize: 15,
               ),
             ),
           ],

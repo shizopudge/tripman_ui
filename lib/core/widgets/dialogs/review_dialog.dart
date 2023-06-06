@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../animations/fade_animation_y_down.dart';
 import '../../constants/styles/styles.dart';
@@ -110,14 +109,15 @@ class _ReviewDialogState extends State<ReviewDialog> {
                       itemPadding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * .025,
                       ),
-                      itemSize: MediaQuery.of(context).size.width * .09,
                       ratingWidget: RatingWidget(
-                        full: SvgPicture.asset(
-                          'assets/icons/star_filled.svg',
+                        full: const Icon(
+                          Icons.star_rounded,
+                          size: 26,
                         ),
                         half: const SizedBox(),
-                        empty: SvgPicture.asset(
-                          'assets/icons/star_empty.svg',
+                        empty: const Icon(
+                          Icons.star_outline_rounded,
+                          size: 26,
                         ),
                       ),
                       onRatingUpdate: (rating) =>

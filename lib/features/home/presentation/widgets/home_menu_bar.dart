@@ -26,7 +26,7 @@ AppBar homeMenuBar(
             horizontal: 20,
           ).copyWith(
             top: 30,
-            bottom: 15,
+            bottom: 24,
           ),
           decoration: const BoxDecoration(
             color: kBlack,
@@ -46,7 +46,7 @@ AppBar homeMenuBar(
                   Text(
                     'Меню',
                     style: kSFProDisplaySemiBold.copyWith(
-                      fontSize: MediaQuery.of(context).size.width / 100 * 4.5,
+                      fontSize: 20,
                     ),
                   ),
                   IconButton(
@@ -80,7 +80,7 @@ AppBar homeMenuBar(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: kSFProDisplaySemiBold.copyWith(
-                          fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                          fontSize: 16,
                         ),
                       ),
                     ],
@@ -106,7 +106,7 @@ AppBar homeMenuBar(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: kSFProDisplaySemiBold.copyWith(
-                          fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                          fontSize: 16,
                         ),
                       ),
                     ],
@@ -126,7 +126,7 @@ AppBar homeMenuBar(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: kSFProDisplaySemiBold.copyWith(
-                          fontSize: MediaQuery.of(context).size.width / 100 * 4,
+                          fontSize: 16,
                         ),
                       ),
                     ],

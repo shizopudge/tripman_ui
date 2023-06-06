@@ -44,7 +44,7 @@ class MarkedDay extends StatelessWidget {
               day,
               style: kSFProDisplayRegular.copyWith(
                 color: kWhite,
-                fontSize: MediaQuery.of(context).size.width / 100 * 3.5,
+                fontSize: 16,
               ),
             ),
           ),

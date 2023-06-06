@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../constants/styles/styles.dart';
 
@@ -9,6 +10,7 @@ class DefaultTextField extends StatelessWidget {
   final VoidCallback? onClear;
   final TextEditingController _controller;
   final FocusNode? _focusNode;
+  final List<TextInputFormatter>? inputFormatters;
   const DefaultTextField({
     super.key,
     FocusNode? focusNode,
@@ -17,6 +19,7 @@ class DefaultTextField extends StatelessWidget {
     this.onClear,
     this.onTap,
     this.isReadOnly = false,
+    this.inputFormatters,
   })  : _controller = controller,
         _focusNode = focusNode;
 
@@ -24,6 +27,7 @@ class DefaultTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onTap: onTap,
+      inputFormatters: inputFormatters,
       controller: _controller,
       focusNode: _focusNode,
       keyboardType: TextInputType.phone,

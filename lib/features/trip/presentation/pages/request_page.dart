@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/constants/input_formatters.dart';
 import '../../../../core/utils/popup_utils.dart';
 import '../../../../core/widgets/bottom_sheet/scaffold_bottom_sheet.dart';
 import '../../../../core/widgets/buttons/close_button.dart';
@@ -35,6 +37,7 @@ class _RequestPageState extends State<RequestPage> {
   late final FocusNode _phoneFocusNode;
   late final FocusNode _commentFocusNode;
   late final TextEditingController _commentController;
+  final MaskTextInputFormatter _maskFormatter = ruPhoneFormatter;
 
   @override
   void initState() {
@@ -54,7 +57,7 @@ class _RequestPageState extends State<RequestPage> {
     } else {
       _isPhoneFieldEmptyNotifier.value = true;
     }
-    if (_phoneController.text.length > 3) {
+    if (_maskFormatter.isFill()) {
       _isPhoneFieldValidatedNotifier.value = true;
     } else {
       _isPhoneFieldValidatedNotifier.value = false;
@@ -64,6 +67,7 @@ class _RequestPageState extends State<RequestPage> {
   void _clearPhoneField() {
     _phoneController.clear();
     _phoneFocusNode.requestFocus();
+    _isPhoneFieldValidatedNotifier.value = false;
   }
 
   void _showCommentSheet() => PopupUtils.showMyBottomSheet(
@@ -160,6 +164,9 @@ class _RequestPageState extends State<RequestPage> {
                     child: ValueListenableBuilder(
                       valueListenable: _isPhoneFieldEmptyNotifier,
                       builder: (context, isEmpty, _) => DefaultTextField(
+                        inputFormatters: [
+                          _maskFormatter,
+                        ],
                         controller: _phoneController,
                         focusNode: _phoneFocusNode,
                         isEmpty: isEmpty,
