@@ -79,6 +79,13 @@ class _TripCardState extends State<TripCard> {
                         20,
                       ),
                     ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      colors: [
+                        kBlack.withOpacity(.4),
+                        kBlack.withOpacity(.2),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(

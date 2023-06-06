@@ -11,7 +11,6 @@ class ImagesCarousel extends StatelessWidget {
   final ValueNotifier<int> _currentImageNotifier;
   final BorderRadius? imagesBorderRadius;
   final LinearGradient? gradient;
-  final AlignmentGeometry? gradientAlignment;
   final BoxFit? fit;
   const ImagesCarousel({
     super.key,
@@ -19,7 +18,6 @@ class ImagesCarousel extends StatelessWidget {
     required this.height,
     this.imagesBorderRadius,
     this.gradient,
-    this.gradientAlignment,
     this.fit,
     required CarouselController controller,
     required ValueNotifier<int> currentImageNotifier,
@@ -42,7 +40,6 @@ class ImagesCarousel extends StatelessWidget {
                     height: height,
                     borderRadius: imagesBorderRadius,
                     gradient: gradient,
-                    gradientAlignment: gradientAlignment,
                     fit: fit,
                   ),
                 )
@@ -71,8 +68,16 @@ class ImagesCarousel extends StatelessWidget {
                         onTap: () => _controller.animateToPage(entry.key),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 250),
-                          height: currentImage == entry.key ? 8 : 6,
-                          width: currentImage == entry.key ? 8 : 6,
+                          height: currentImage == entry.key
+                              ? 8
+                              : entry.key == 0 || entry.key == images.length - 1
+                                  ? 3
+                                  : 6,
+                          width: currentImage == entry.key
+                              ? 8
+                              : entry.key == 0 || entry.key == images.length - 1
+                                  ? 3
+                                  : 6,
                           margin: const EdgeInsets.only(right: 8),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,

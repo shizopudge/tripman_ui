@@ -5,14 +5,18 @@ import '../../constants/styles/styles.dart';
 import '../buttons/rounded_text_button.dart';
 
 class MessageBanner extends StatelessWidget {
+  final VoidCallback onTap;
   final String iconPath;
   final String text;
+  final String buttonText;
   final Color backgroundColor;
   const MessageBanner({
     super.key,
     required this.iconPath,
     required this.text,
     required this.backgroundColor,
+    required this.onTap,
+    required this.buttonText,
   });
 
   @override
@@ -52,8 +56,8 @@ class MessageBanner extends StatelessWidget {
           ),
           RoundedTextButton(
             isEnabled: true,
-            onTap: () => ScaffoldMessenger.of(context).clearMaterialBanners(),
-            text: 'Кнопка',
+            onTap: onTap,
+            text: buttonText,
             invertColors: true,
           ),
         ],

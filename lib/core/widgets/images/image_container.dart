@@ -5,14 +5,13 @@ class ImageContainer extends StatelessWidget {
   final DecorationImage image;
   final BorderRadius? borderRadius;
   final LinearGradient? gradient;
-  final AlignmentGeometry? gradientAlignment;
+
   const ImageContainer({
     super.key,
     required this.height,
     required this.image,
     this.borderRadius,
     this.gradient,
-    this.gradientAlignment,
   });
 
   @override
@@ -26,8 +25,8 @@ class ImageContainer extends StatelessWidget {
       ),
       child: gradient != null
           ? Container(
-              alignment: gradientAlignment ?? Alignment.topLeft,
               decoration: BoxDecoration(
+                borderRadius: borderRadius,
                 gradient: gradient,
               ),
             )

@@ -3,9 +3,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../core/animations/fade_animation_y_down.dart';
 import '../../../../core/animations/fade_animation_y_up.dart';
-import '../../../../core/constants/input_formatters.dart';
 import '../../../../core/utils/popup_utils.dart';
-import '../../../../core/widgets/bottom_sheet/scaffold_bottom_sheet.dart';
+import '../../../../core/widgets/bottom_sheet/comment_bottom_sheet.dart';
 import '../../../../core/widgets/buttons/close_button.dart';
 import '../../../../core/widgets/buttons/rounded_text_button.dart';
 import '../../../../core/widgets/common/default_text_field.dart';
@@ -35,16 +34,18 @@ class _RequestPageState extends State<RequestPage> {
   late final ValueNotifier<bool> _isPhoneFieldValidatedNotifier;
   late final TextEditingController _phoneController;
   late final FocusNode _phoneFocusNode;
-  late final FocusNode _commentFocusNode;
   late final TextEditingController _commentController;
-  final MaskTextInputFormatter _maskFormatter = ruPhoneFormatter;
+  final _maskFormatter = MaskTextInputFormatter(
+    mask: '+7 ### ## ## ###',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   @override
   void initState() {
     _phoneController = TextEditingController()..addListener(_phoneListener);
     _commentController = TextEditingController();
     _phoneFocusNode = FocusNode();
-    _commentFocusNode = FocusNode();
     _isPhoneFieldEmptyNotifier = ValueNotifier<bool>(true);
     _isCommentFieldEmptyNotifier = ValueNotifier<bool>(true);
     _isPhoneFieldValidatedNotifier = ValueNotifier<bool>(false);
@@ -72,21 +73,8 @@ class _RequestPageState extends State<RequestPage> {
 
   void _showCommentSheet() => PopupUtils.showMyBottomSheet(
         context: context,
-        bottomSheet: ScaffoldBottomSheet(
-          title: 'Комментарий',
-          child: TextField(
-            controller: _commentController,
-            focusNode: _commentFocusNode,
-            cursorColor: kBlack,
-            maxLines: 5,
-            style: kSFProDisplayRegular.copyWith(
-              color: kBlack,
-              fontSize: 15,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-          ),
+        bottomSheet: CommentBottomSheet(
+          commentController: _commentController,
         ),
       );
 
@@ -103,7 +91,6 @@ class _RequestPageState extends State<RequestPage> {
     _phoneController.dispose();
     _commentController.dispose();
     _phoneFocusNode.dispose();
-    _commentFocusNode.dispose();
     super.dispose();
   }
 

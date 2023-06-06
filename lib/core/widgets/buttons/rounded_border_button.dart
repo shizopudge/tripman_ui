@@ -34,7 +34,7 @@ class RoundedBorderButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: verticalPadding,
-          horizontal: verticalPadding,
+          horizontal: horizontalPadding,
         ),
         margin: margin,
         decoration: BoxDecoration(

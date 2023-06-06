@@ -14,7 +14,7 @@ AppBar homeMenuBar(
 }) {
   return AppBar(
     automaticallyImplyLeading: false,
-    toolbarHeight: MediaQuery.of(context).size.height * .3,
+    toolbarHeight: MediaQuery.of(context).size.height * .28,
     forceMaterialTransparency: true,
     elevation: 0,
     flexibleSpace: FlexibleSpaceBar(
@@ -25,8 +25,8 @@ AppBar homeMenuBar(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ).copyWith(
-            top: 30,
-            bottom: 24,
+            top: MediaQuery.of(context).size.height * .04,
+            bottom: MediaQuery.of(context).size.height * .02,
           ),
           decoration: const BoxDecoration(
             color: kBlack,
@@ -38,7 +38,7 @@ AppBar homeMenuBar(
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

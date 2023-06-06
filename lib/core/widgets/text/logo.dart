@@ -15,7 +15,8 @@ class Logo extends StatelessWidget {
           'TRIPMAN',
           style: kSFProDisplayBold.copyWith(
             fontSize: 32,
-            letterSpacing: 6.4,
+            height: 1,
+            letterSpacing: 12.8,
           ),
         ),
         const SizedBox(

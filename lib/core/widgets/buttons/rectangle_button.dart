@@ -22,11 +22,11 @@ class RectangleButton extends StatelessWidget {
         20,
       ),
       child: Container(
-        height: MediaQuery.of(context).size.height * .15,
-        width: MediaQuery.of(context).size.width * .26,
+        height: MediaQuery.of(context).size.height * .13,
+        width: MediaQuery.of(context).size.width * .265,
         padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.height * .01,
-          vertical: MediaQuery.of(context).size.width * .015,
+          horizontal: MediaQuery.of(context).size.width * .01,
+          vertical: MediaQuery.of(context).size.height * .005,
         ),
         decoration: BoxDecoration(
           border: Border.all(color: kBlack.withOpacity(.2)),

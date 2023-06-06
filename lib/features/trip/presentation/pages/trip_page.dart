@@ -104,18 +104,13 @@ class _TripPageState extends State<TripPage> {
   void _showMore() => PopupUtils.showMyBottomSheet(
         context: context,
         bottomSheet: SizedBottomSheet(
-          heightFactor: .8,
-          title: 'Даты поездки',
-          isScrollable: false,
-          child: SizedBottomSheet(
-            heightFactor: .65,
-            title: 'Подробнее',
-            child: Text(
-              widget.trip.description,
-              style: kSFProDisplayRegular.copyWith(
-                color: kBlack,
-                fontSize: 15,
-              ),
+          heightFactor: .68,
+          title: 'Подробнее',
+          child: Text(
+            widget.trip.description,
+            style: kSFProDisplayRegular.copyWith(
+              color: kBlack,
+              fontSize: 15,
             ),
           ),
         ),
@@ -126,7 +121,7 @@ class _TripPageState extends State<TripPage> {
     PopupUtils.showMyBottomSheet(
       context: context,
       bottomSheet: SizedBottomSheet(
-        heightFactor: .8,
+        heightFactor: .95,
         title: 'Даты поездки',
         isScrollable: false,
         child: Calendar(
@@ -163,18 +158,18 @@ class _TripPageState extends State<TripPage> {
                     Hero(
                       tag: widget.trip.id,
                       child: ImagesCarousel(
-                        height: MediaQuery.of(context).size.height * .35,
+                        height: MediaQuery.of(context).size.height * .32,
                         controller: widget._carouselController,
                         currentImageNotifier: widget._currentImageNotifier,
                         images: widget.trip.images,
                         gradient: LinearGradient(
+                          begin: Alignment.topLeft,
                           colors: [
-                            kBlack.withOpacity(.35),
+                            kBlack.withOpacity(.4),
                             kBlack.withOpacity(.2),
                             kBlack.withOpacity(.1),
                           ],
                         ),
-                        gradientAlignment: Alignment.topLeft,
                       ),
                     ),
                     FadeAnimationYDown(

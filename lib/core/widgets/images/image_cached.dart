@@ -9,7 +9,6 @@ class ImageCached extends StatelessWidget {
   final double height;
   final BorderRadius? borderRadius;
   final LinearGradient? gradient;
-  final AlignmentGeometry? gradientAlignment;
   final BoxFit? fit;
   const ImageCached({
     super.key,
@@ -17,7 +16,6 @@ class ImageCached extends StatelessWidget {
     required this.height,
     this.borderRadius,
     this.gradient,
-    this.gradientAlignment,
     this.fit,
   });
 
@@ -33,7 +31,6 @@ class ImageCached extends StatelessWidget {
         ),
         borderRadius: borderRadius,
         gradient: gradient,
-        gradientAlignment: gradientAlignment,
       ),
       placeholder: (context, url) => ImagePlaceholder(
         height: height,

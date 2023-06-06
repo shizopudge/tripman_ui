@@ -32,12 +32,15 @@ class TripNotFoundPage extends StatelessWidget {
                 ),
               ),
             ),
-            Center(
-              child: Text(
-                'Объект удалён или не найден.',
-                style: kSFProDisplayRegular.copyWith(
-                  color: kBlack50,
-                  fontSize: 15,
+            FadeAnimationYDown(
+              delay: .5,
+              child: Center(
+                child: Text(
+                  'Объект удалён или не найден.',
+                  style: kSFProDisplayRegular.copyWith(
+                    color: kBlack50,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),

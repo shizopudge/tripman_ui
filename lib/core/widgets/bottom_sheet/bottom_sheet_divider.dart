@@ -16,7 +16,7 @@ class BottomSheetDivider extends StatelessWidget {
         ),
         Container(
           height: 6,
-          width: MediaQuery.of(context).size.width * .2,
+          width: MediaQuery.of(context).size.width * .18,
           color: Colors.transparent,
           child: Center(
             child: Container(

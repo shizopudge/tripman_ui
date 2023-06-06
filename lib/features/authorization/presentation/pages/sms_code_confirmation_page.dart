@@ -113,145 +113,150 @@ class _SmsCodeConfirmationPageState extends State<SmsCodeConfirmationPage> {
       },
       child: Scaffold(
         backgroundColor: kWhite,
-        body: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: IntrinsicHeight(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FadeAnimationYDown(
-                          delay: .5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 25,
-                              top: 58,
-                              right: 20,
-                            ),
-                            child: InkWell(
-                              onTap: () => Navigator.of(context).pop(),
-                              borderRadius: BorderRadius.circular(20),
-                              child: SvgPicture.asset(
-                                'assets/icons/arrow_back.svg',
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 23,
-                        ),
-                        FadeAnimationYDown(
-                          delay: .6,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                            ),
-                            child: Text(
-                              'Введите код подтверждения полученный по СМС',
-                              style: kSFProDisplayRegular.copyWith(
-                                color: kBlack,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 28,
-                        ),
-                        FadeAnimationYDown(
-                          delay: .7,
-                          child: ValueListenableBuilder(
-                            valueListenable: _isIncorrectCodeNotifier,
-                            builder: (context, isIncorrectCode, _) =>
-                                ValueListenableBuilder(
-                              valueListenable: _codeLengthNotifier,
-                              builder: (context, codeLength, _) => SmsCodeInput(
-                                isIncorrectCode: isIncorrectCode,
-                                padding: codeLength == 0
-                                    ? const EdgeInsets.symmetric(horizontal: 48)
-                                    : codeLength < 4
-                                        ? const EdgeInsets.only(
-                                            left: 21,
-                                            right: 48,
-                                          )
-                                        : const EdgeInsets.symmetric(
-                                            horizontal: 21),
-                                codeFocus: _codeFocus,
-                                codeController: _codeController,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: Column(
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           FadeAnimationYDown(
-                            delay: .8,
+                            delay: .5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 25,
+                                top: 30,
+                                right: 20,
+                              ),
+                              child: InkWell(
+                                onTap: () => Navigator.of(context).pop(),
+                                borderRadius: BorderRadius.circular(20),
+                                child: SvgPicture.asset(
+                                  'assets/icons/arrow_back.svg',
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 23,
+                          ),
+                          FadeAnimationYDown(
+                            delay: .6,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                               ),
-                              child: ValueListenableBuilder(
-                                valueListenable: _secondsNotifier,
-                                builder: (context, seconds, _) {
-                                  if (seconds > 0) {
-                                    return RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        text: 'Отправить код повторно ',
-                                        style: kSFProDisplayMedium.copyWith(
-                                          fontSize: 16,
-                                          color: kBlack50,
+                              child: Text(
+                                'Введите код подтверждения полученный по СМС',
+                                style: kSFProDisplayRegular.copyWith(
+                                  color: kBlack,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 28,
+                          ),
+                          FadeAnimationYDown(
+                            delay: .7,
+                            child: ValueListenableBuilder(
+                              valueListenable: _isIncorrectCodeNotifier,
+                              builder: (context, isIncorrectCode, _) =>
+                                  ValueListenableBuilder(
+                                valueListenable: _codeLengthNotifier,
+                                builder: (context, codeLength, _) =>
+                                    SmsCodeInput(
+                                  isIncorrectCode: isIncorrectCode,
+                                  padding: codeLength == 0
+                                      ? const EdgeInsets.symmetric(
+                                          horizontal: 48)
+                                      : codeLength < 4
+                                          ? const EdgeInsets.only(
+                                              left: 21,
+                                              right: 48,
+                                            )
+                                          : const EdgeInsets.symmetric(
+                                              horizontal: 21),
+                                  codeFocus: _codeFocus,
+                                  codeController: _codeController,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Column(
+                          children: [
+                            FadeAnimationYDown(
+                              delay: .8,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                child: ValueListenableBuilder(
+                                  valueListenable: _secondsNotifier,
+                                  builder: (context, seconds, _) {
+                                    if (seconds > 0) {
+                                      return RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          text: 'Отправить код повторно ',
+                                          style: kSFProDisplayMedium.copyWith(
+                                            fontSize: 16,
+                                            color: kBlack50,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: '$seconds сек.',
+                                              style:
+                                                  kSFProDisplayMedium.copyWith(
+                                                fontSize: 16,
+                                                color: kBlack,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return RoundedBorderButton(
+                                        onTap: _sendCodeAgain,
+                                        borderColor: kBlack.withOpacity(
+                                          .2,
                                         ),
                                         children: [
-                                          TextSpan(
-                                            text: '$seconds сек.',
+                                          Text(
+                                            'Отправить код повторно',
                                             style: kSFProDisplayMedium.copyWith(
                                               fontSize: 16,
                                               color: kBlack,
                                             ),
                                           ),
                                         ],
-                                      ),
-                                    );
-                                  } else {
-                                    return RoundedBorderButton(
-                                      onTap: _sendCodeAgain,
-                                      borderColor: kBlack.withOpacity(
-                                        .2,
-                                      ),
-                                      children: [
-                                        Text(
-                                          'Отправить код повторно',
-                                          style: kSFProDisplayMedium.copyWith(
-                                            fontSize: 16,
-                                            color: kBlack,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                },
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

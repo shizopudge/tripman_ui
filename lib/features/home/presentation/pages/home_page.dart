@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
         isScrollControlled: true,
         builder: (BuildContext context) {
           return SizedBottomSheet(
-            heightFactor: .8,
+            heightFactor: .95,
             title: 'Даты поездки',
             isScrollable: false,
             child: Calendar(
@@ -184,8 +184,9 @@ class _HomePageState extends State<HomePage> {
                             const FadeAnimationYDown(
                               delay: 0,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 22,
+                                padding: EdgeInsets.only(
+                                  top: 22,
+                                  bottom: 2,
                                 ),
                                 child: Loader(
                                   color: kBlack,
@@ -196,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                               child: ListView.builder(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20)
-                                        .copyWith(top: 18),
+                                        .copyWith(top: 20),
                                 itemCount: trips.length,
                                 itemBuilder: (context, index) {
                                   final Trip trip = trips[index];
@@ -232,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                         delay: .5,
                         child: ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20)
-                              .copyWith(top: 18),
+                              .copyWith(top: 20),
                           itemCount: trips.length,
                           itemBuilder: (context, index) {
                             final Trip trip = trips[index];
