@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/authorization/presentation/bloc/auth_bloc.dart';
-import 'core/constants/styles/styles.dart';
+import 'core/styles/styles.dart';
 import 'features/authorization/presentation/pages/start_page.dart';
 
 class App extends StatelessWidget {

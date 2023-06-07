@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/constants/fake_data.dart';
-import '../../../../core/constants/styles/styles.dart';
-import '../../../../core/entities/trip_type.dart';
-import '../../../../core/widgets/cards/trip_type_card.dart';
+import '../../../../core/presentation/animations/fade_animation_y_down.dart';
+import '../../../../core/data/fake_data.dart';
+import '../../../../core/styles/styles.dart';
+import '../../../../core/data/entities/trip_type.dart';
+import '../../../../core/presentation/widgets/cards/trip_type_card.dart';
 import 'home_selected_interval_field.dart';
 
 AppBar homeAppBar({

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/constants/styles/styles.dart';
-import '../../../../core/widgets/dialogs/notification_dialog.dart';
-import '../pages/error_page.dart';
+import '../../../../core/presentation/animations/fade_animation_y_down.dart';
+import '../../../../core/styles/styles.dart';
+import '../../../../core/presentation/widgets/dialogs/notification_dialog.dart';
+import '../../../../core/presentation/widgets/pages/error_page.dart';
 
 AppBar homeMenuBar(
   BuildContext context, {

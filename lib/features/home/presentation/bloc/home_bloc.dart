@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/fake_data.dart';
-import '../../../../core/entities/trip.dart';
+import '../../../../core/data/fake_data.dart';
+import '../../../../core/data/entities/trip.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

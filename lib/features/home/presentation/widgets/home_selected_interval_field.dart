@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/utils/date_format_util.dart';
-import '../../../../core/constants/styles/styles.dart';
+import '../../../../core/styles/styles.dart';
 
 class SelectedIntervalField extends StatelessWidget {
   final DateTimeRange? interval;

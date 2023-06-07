@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../core/constants/styles/styles.dart';
+import '../../../../core/styles/styles.dart';
 
 class SmsCodeInput extends StatelessWidget {
   final bool isIncorrectCode;

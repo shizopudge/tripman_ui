@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/constants/styles/styles.dart';
+import '../../../../core/presentation/animations/fade_animation_y_down.dart';
+import '../../../../core/styles/styles.dart';
 import '../../../../core/utils/navigation_utils.dart';
-import '../../../../core/widgets/buttons/rounded_text_button.dart';
+import '../../../../core/presentation/widgets/buttons/rounded_text_button.dart';
 import '../bloc/auth_bloc.dart';
-import '../../../../core/widgets/common/default_text_field.dart';
-import '../../../../core/widgets/text/notice.dart';
+import '../../../../core/presentation/widgets/common/default_text_field.dart';
+import '../../../../core/presentation/widgets/text/notice.dart';
 import 'sms_code_confirmation_page.dart';
 
 class SendSmsVerificationCodePage extends StatefulWidget {

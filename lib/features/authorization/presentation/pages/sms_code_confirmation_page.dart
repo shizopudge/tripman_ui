@@ -5,9 +5,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/widgets/buttons/rounded_border_button.dart';
-import '../../../../core/constants/styles/styles.dart';
+import '../../../../core/presentation/animations/fade_animation_y_down.dart';
+import '../../../../core/presentation/widgets/buttons/rounded_border_button.dart';
+import '../../../../core/styles/styles.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/sms_code_input.dart';
 import 'start_page.dart';

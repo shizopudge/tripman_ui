@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/animations/fade_animation.dart';
-import '../../../../core/animations/fade_animation_y_down.dart';
-import '../../../../core/animations/fade_animation_y_up.dart';
+import '../../../../core/presentation/animations/fade_animation.dart';
+import '../../../../core/presentation/animations/fade_animation_y_down.dart';
+import '../../../../core/presentation/animations/fade_animation_y_up.dart';
 import '../../../../core/utils/navigation_utils.dart';
-import '../../../../core/widgets/common/error_message.dart';
-import '../../../../core/widgets/common/loader.dart';
-import '../../../../core/enums/auth_type.dart';
-import '../../../../core/constants/styles/styles.dart';
-import '../../../home/presentation/pages/home_page.dart';
+import '../../../../core/presentation/widgets/common/error_message.dart';
+import '../../../../core/presentation/widgets/common/loader.dart';
+import '../../../../core/data/enums/auth_type.dart';
+import '../../../../core/styles/styles.dart';
+import '../../../home/presentation/home_page.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/auth_type_menu.dart';
-import '../../../../core/widgets/text/logo.dart';
+import '../../../../core/presentation/widgets/text/logo.dart';
 import 'send_sms_verification_code_page.dart';
 
 class StartPage extends StatelessWidget {

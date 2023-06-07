@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../constants/styles/styles.dart';
-import '../widgets/dialogs/confirmation_banner.dart';
-import '../widgets/dialogs/message_banner.dart';
+import '../styles/styles.dart';
+import '../presentation/widgets/dialogs/confirmation_banner.dart';
+import '../presentation/widgets/dialogs/message_banner.dart';
 
 class PopupUtils {
   static Future<void> showMyBottomSheet({

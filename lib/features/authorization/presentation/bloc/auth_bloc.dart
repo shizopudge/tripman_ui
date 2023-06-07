@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 
-import '../../../../../core/enums/auth_type.dart';
+import '../../../../core/data/enums/auth_type.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/styles/styles.dart';
-import '../../../../core/widgets/buttons/rounded_text_button.dart';
+import '../../../../core/styles/styles.dart';
+import '../../../../core/presentation/widgets/buttons/rounded_text_button.dart';
 
 class TripPageFooter extends StatelessWidget {
   final VoidCallback onTap;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/constants/styles/styles.dart';
-import '../../../../core/widgets/buttons/rounded_border_button.dart';
-import '../../../../core/widgets/text/notice.dart';
+import '../../../../core/styles/styles.dart';
+import '../../../../core/presentation/widgets/buttons/rounded_border_button.dart';
+import '../../../../core/presentation/widgets/text/notice.dart';
 
 class AuthTypeMenu extends StatelessWidget {
   final VoidCallback withPhone;
